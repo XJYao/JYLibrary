@@ -1,0 +1,636 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		54945D7E5BBBC58EA4F27A46 /* libPods-JYLibraryExample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 67E3EBB536FB4BD49D7DB348 /* libPods-JYLibraryExample.a */; };
+		565177AA1DAB287B008010F3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 565177A91DAB287B008010F3 /* main.m */; };
+		565177AD1DAB287B008010F3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 565177AC1DAB287B008010F3 /* AppDelegate.m */; };
+		565177B01DAB287B008010F3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 565177AF1DAB287B008010F3 /* ViewController.m */; };
+		565177B31DAB287B008010F3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 565177B11DAB287B008010F3 /* Main.storyboard */; };
+		565177B51DAB287B008010F3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 565177B41DAB287B008010F3 /* Assets.xcassets */; };
+		565177B81DAB287B008010F3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 565177B61DAB287B008010F3 /* LaunchScreen.storyboard */; };
+		565177C31DAB287B008010F3 /* JYLibraryExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 565177C21DAB287B008010F3 /* JYLibraryExampleTests.m */; };
+		565177CE1DAB287B008010F3 /* JYLibraryExampleUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 565177CD1DAB287B008010F3 /* JYLibraryExampleUITests.m */; };
+		56EE9CCF1DB7607500353025 /* File.html in Resources */ = {isa = PBXBuildFile; fileRef = 56EE9CCE1DB7607500353025 /* File.html */; };
+		56F5E2041DAC9930000B561C /* TestModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 56F5E2031DAC9930000B561C /* TestModel.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		565177BF1DAB287B008010F3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5651779D1DAB287B008010F3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 565177A41DAB287B008010F3;
+			remoteInfo = JYLibraryExample;
+		};
+		565177CA1DAB287B008010F3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5651779D1DAB287B008010F3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 565177A41DAB287B008010F3;
+			remoteInfo = JYLibraryExample;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		4AEE26F55451426547F618D5 /* Pods-JYLibraryExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JYLibraryExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-JYLibraryExample/Pods-JYLibraryExample.release.xcconfig"; sourceTree = "<group>"; };
+		565177A51DAB287B008010F3 /* JYLibraryExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JYLibraryExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		565177A91DAB287B008010F3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		565177AB1DAB287B008010F3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		565177AC1DAB287B008010F3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		565177AE1DAB287B008010F3 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		565177AF1DAB287B008010F3 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		565177B21DAB287B008010F3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		565177B41DAB287B008010F3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		565177B71DAB287B008010F3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		565177B91DAB287B008010F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		565177BE1DAB287B008010F3 /* JYLibraryExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JYLibraryExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		565177C21DAB287B008010F3 /* JYLibraryExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JYLibraryExampleTests.m; sourceTree = "<group>"; };
+		565177C41DAB287B008010F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		565177C91DAB287B008010F3 /* JYLibraryExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JYLibraryExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		565177CD1DAB287B008010F3 /* JYLibraryExampleUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JYLibraryExampleUITests.m; sourceTree = "<group>"; };
+		565177CF1DAB287B008010F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		56EE9CCE1DB7607500353025 /* File.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = File.html; sourceTree = "<group>"; };
+		56F5E2021DAC9930000B561C /* TestModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestModel.h; sourceTree = "<group>"; };
+		56F5E2031DAC9930000B561C /* TestModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestModel.m; sourceTree = "<group>"; };
+		67E3EBB536FB4BD49D7DB348 /* libPods-JYLibraryExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-JYLibraryExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		85F17257CD500023CF521F4A /* Pods-JYLibraryExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JYLibraryExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JYLibraryExample/Pods-JYLibraryExample.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		565177A21DAB287B008010F3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				54945D7E5BBBC58EA4F27A46 /* libPods-JYLibraryExample.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		565177BB1DAB287B008010F3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		565177C61DAB287B008010F3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3F3BB7760C40418187AF499A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				85F17257CD500023CF521F4A /* Pods-JYLibraryExample.debug.xcconfig */,
+				4AEE26F55451426547F618D5 /* Pods-JYLibraryExample.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		5651779C1DAB287B008010F3 = {
+			isa = PBXGroup;
+			children = (
+				565177A71DAB287B008010F3 /* JYLibraryExample */,
+				565177C11DAB287B008010F3 /* JYLibraryExampleTests */,
+				565177CC1DAB287B008010F3 /* JYLibraryExampleUITests */,
+				565177A61DAB287B008010F3 /* Products */,
+				3F3BB7760C40418187AF499A /* Pods */,
+				92832AF893952F5B48F8FB66 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		565177A61DAB287B008010F3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				565177A51DAB287B008010F3 /* JYLibraryExample.app */,
+				565177BE1DAB287B008010F3 /* JYLibraryExampleTests.xctest */,
+				565177C91DAB287B008010F3 /* JYLibraryExampleUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		565177A71DAB287B008010F3 /* JYLibraryExample */ = {
+			isa = PBXGroup;
+			children = (
+				565177AB1DAB287B008010F3 /* AppDelegate.h */,
+				565177AC1DAB287B008010F3 /* AppDelegate.m */,
+				565177AE1DAB287B008010F3 /* ViewController.h */,
+				565177AF1DAB287B008010F3 /* ViewController.m */,
+				565177B11DAB287B008010F3 /* Main.storyboard */,
+				565177B41DAB287B008010F3 /* Assets.xcassets */,
+				565177B61DAB287B008010F3 /* LaunchScreen.storyboard */,
+				565177B91DAB287B008010F3 /* Info.plist */,
+				565177A81DAB287B008010F3 /* Supporting Files */,
+				56F5E2021DAC9930000B561C /* TestModel.h */,
+				56F5E2031DAC9930000B561C /* TestModel.m */,
+				56EE9CCE1DB7607500353025 /* File.html */,
+			);
+			path = JYLibraryExample;
+			sourceTree = "<group>";
+		};
+		565177A81DAB287B008010F3 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				565177A91DAB287B008010F3 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		565177C11DAB287B008010F3 /* JYLibraryExampleTests */ = {
+			isa = PBXGroup;
+			children = (
+				565177C21DAB287B008010F3 /* JYLibraryExampleTests.m */,
+				565177C41DAB287B008010F3 /* Info.plist */,
+			);
+			path = JYLibraryExampleTests;
+			sourceTree = "<group>";
+		};
+		565177CC1DAB287B008010F3 /* JYLibraryExampleUITests */ = {
+			isa = PBXGroup;
+			children = (
+				565177CD1DAB287B008010F3 /* JYLibraryExampleUITests.m */,
+				565177CF1DAB287B008010F3 /* Info.plist */,
+			);
+			path = JYLibraryExampleUITests;
+			sourceTree = "<group>";
+		};
+		92832AF893952F5B48F8FB66 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				67E3EBB536FB4BD49D7DB348 /* libPods-JYLibraryExample.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		565177A41DAB287B008010F3 /* JYLibraryExample */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 565177D21DAB287B008010F3 /* Build configuration list for PBXNativeTarget "JYLibraryExample" */;
+			buildPhases = (
+				62181BFAC6DE7436A2C8FEF5 /* [CP] Check Pods Manifest.lock */,
+				565177A11DAB287B008010F3 /* Sources */,
+				565177A21DAB287B008010F3 /* Frameworks */,
+				565177A31DAB287B008010F3 /* Resources */,
+				63D53533AC4D427A1172E14F /* [CP] Embed Pods Frameworks */,
+				ED5810CC06C0E234000C1532 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = JYLibraryExample;
+			productName = JYLibraryExample;
+			productReference = 565177A51DAB287B008010F3 /* JYLibraryExample.app */;
+			productType = "com.apple.product-type.application";
+		};
+		565177BD1DAB287B008010F3 /* JYLibraryExampleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 565177D51DAB287B008010F3 /* Build configuration list for PBXNativeTarget "JYLibraryExampleTests" */;
+			buildPhases = (
+				565177BA1DAB287B008010F3 /* Sources */,
+				565177BB1DAB287B008010F3 /* Frameworks */,
+				565177BC1DAB287B008010F3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				565177C01DAB287B008010F3 /* PBXTargetDependency */,
+			);
+			name = JYLibraryExampleTests;
+			productName = JYLibraryExampleTests;
+			productReference = 565177BE1DAB287B008010F3 /* JYLibraryExampleTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		565177C81DAB287B008010F3 /* JYLibraryExampleUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 565177D81DAB287B008010F3 /* Build configuration list for PBXNativeTarget "JYLibraryExampleUITests" */;
+			buildPhases = (
+				565177C51DAB287B008010F3 /* Sources */,
+				565177C61DAB287B008010F3 /* Frameworks */,
+				565177C71DAB287B008010F3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				565177CB1DAB287B008010F3 /* PBXTargetDependency */,
+			);
+			name = JYLibraryExampleUITests;
+			productName = JYLibraryExampleUITests;
+			productReference = 565177C91DAB287B008010F3 /* JYLibraryExampleUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5651779D1DAB287B008010F3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0800;
+				ORGANIZATIONNAME = XJY;
+				TargetAttributes = {
+					565177A41DAB287B008010F3 = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = A42W6VHWT2;
+						ProvisioningStyle = Manual;
+					};
+					565177BD1DAB287B008010F3 = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = A42W6VHWT2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 565177A41DAB287B008010F3;
+					};
+					565177C81DAB287B008010F3 = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = A42W6VHWT2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 565177A41DAB287B008010F3;
+					};
+				};
+			};
+			buildConfigurationList = 565177A01DAB287B008010F3 /* Build configuration list for PBXProject "JYLibraryExample" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 5651779C1DAB287B008010F3;
+			productRefGroup = 565177A61DAB287B008010F3 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				565177A41DAB287B008010F3 /* JYLibraryExample */,
+				565177BD1DAB287B008010F3 /* JYLibraryExampleTests */,
+				565177C81DAB287B008010F3 /* JYLibraryExampleUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		565177A31DAB287B008010F3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				56EE9CCF1DB7607500353025 /* File.html in Resources */,
+				565177B81DAB287B008010F3 /* LaunchScreen.storyboard in Resources */,
+				565177B51DAB287B008010F3 /* Assets.xcassets in Resources */,
+				565177B31DAB287B008010F3 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		565177BC1DAB287B008010F3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		565177C71DAB287B008010F3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		62181BFAC6DE7436A2C8FEF5 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		63D53533AC4D427A1172E14F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JYLibraryExample/Pods-JYLibraryExample-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ED5810CC06C0E234000C1532 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JYLibraryExample/Pods-JYLibraryExample-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		565177A11DAB287B008010F3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				565177B01DAB287B008010F3 /* ViewController.m in Sources */,
+				565177AD1DAB287B008010F3 /* AppDelegate.m in Sources */,
+				565177AA1DAB287B008010F3 /* main.m in Sources */,
+				56F5E2041DAC9930000B561C /* TestModel.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		565177BA1DAB287B008010F3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				565177C31DAB287B008010F3 /* JYLibraryExampleTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		565177C51DAB287B008010F3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				565177CE1DAB287B008010F3 /* JYLibraryExampleUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		565177C01DAB287B008010F3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 565177A41DAB287B008010F3 /* JYLibraryExample */;
+			targetProxy = 565177BF1DAB287B008010F3 /* PBXContainerItemProxy */;
+		};
+		565177CB1DAB287B008010F3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 565177A41DAB287B008010F3 /* JYLibraryExample */;
+			targetProxy = 565177CA1DAB287B008010F3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		565177B11DAB287B008010F3 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				565177B21DAB287B008010F3 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		565177B61DAB287B008010F3 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				565177B71DAB287B008010F3 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		565177D01DAB287B008010F3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		565177D11DAB287B008010F3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		565177D31DAB287B008010F3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 85F17257CD500023CF521F4A /* Pods-JYLibraryExample.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = A42W6VHWT2;
+				INFOPLIST_FILE = JYLibraryExample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.xjy.JYLibraryExample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "d9418e92-5877-4be2-8c72-1985ccb5e3f6";
+				PROVISIONING_PROFILE_SPECIFIER = "wisp enterprise dev";
+			};
+			name = Debug;
+		};
+		565177D41DAB287B008010F3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4AEE26F55451426547F618D5 /* Pods-JYLibraryExample.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				DEVELOPMENT_TEAM = A42W6VHWT2;
+				INFOPLIST_FILE = JYLibraryExample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.xjy.JYLibraryExample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "1b885bf9-27f2-47b0-8135-4225c9c6daab";
+				PROVISIONING_PROFILE_SPECIFIER = "wisp enterprise dis";
+			};
+			name = Release;
+		};
+		565177D61DAB287B008010F3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = A42W6VHWT2;
+				INFOPLIST_FILE = JYLibraryExampleTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.xjy.JYLibraryExampleTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/JYLibraryExample.app/JYLibraryExample";
+			};
+			name = Debug;
+		};
+		565177D71DAB287B008010F3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = A42W6VHWT2;
+				INFOPLIST_FILE = JYLibraryExampleTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.xjy.JYLibraryExampleTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/JYLibraryExample.app/JYLibraryExample";
+			};
+			name = Release;
+		};
+		565177D91DAB287B008010F3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = A42W6VHWT2;
+				INFOPLIST_FILE = JYLibraryExampleUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.xjy.JYLibraryExampleUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = JYLibraryExample;
+			};
+			name = Debug;
+		};
+		565177DA1DAB287B008010F3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = A42W6VHWT2;
+				INFOPLIST_FILE = JYLibraryExampleUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.xjy.JYLibraryExampleUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = JYLibraryExample;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		565177A01DAB287B008010F3 /* Build configuration list for PBXProject "JYLibraryExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				565177D01DAB287B008010F3 /* Debug */,
+				565177D11DAB287B008010F3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		565177D21DAB287B008010F3 /* Build configuration list for PBXNativeTarget "JYLibraryExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				565177D31DAB287B008010F3 /* Debug */,
+				565177D41DAB287B008010F3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		565177D51DAB287B008010F3 /* Build configuration list for PBXNativeTarget "JYLibraryExampleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				565177D61DAB287B008010F3 /* Debug */,
+				565177D71DAB287B008010F3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		565177D81DAB287B008010F3 /* Build configuration list for PBXNativeTarget "JYLibraryExampleUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				565177D91DAB287B008010F3 /* Debug */,
+				565177DA1DAB287B008010F3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 5651779D1DAB287B008010F3 /* Project object */;
+}

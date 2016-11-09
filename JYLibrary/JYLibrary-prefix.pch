@@ -1,0 +1,20 @@
+//
+//  JYLibrary-prefix.pch
+//  JYLibrary
+//
+//  Created by XJY on 16/7/30.
+//  Copyright © 2016年 XJY. All rights reserved.
+//
+
+#ifndef JYLibrary_prefix_pch
+#define JYLibrary_prefix_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#import "XMacro.h"
+#import "NSArray+XArray.h"
+#import "NSDictionary+XDictionary.h"
+#import "NSSet+XSet.h"
+
+#endif /* JYLibrary_prefix_pch */
