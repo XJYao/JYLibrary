@@ -1,35 +1,35 @@
 {
-  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "E4B5A47E6D55B9071C27D94EBD672DD27E5565C5",
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "1CE5534CDCF41C940A3C7C2BE85B229C33C6088B",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
-    "983e48db-4d21-934a-b8c0-d23330a51662++4170" : {
+    "1CE5534CDCF41C940A3C7C2BE85B229C33C6088B" : {
 
     },
-    "E4B5A47E6D55B9071C27D94EBD672DD27E5565C5" : {
+    "983e48db-4d21-934a-b8c0-d23330a51662++4170" : {
 
     }
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
-    "983e48db-4d21-934a-b8c0-d23330a51662++4170" : 0,
-    "E4B5A47E6D55B9071C27D94EBD672DD27E5565C5" : 9223372036854775807
+    "1CE5534CDCF41C940A3C7C2BE85B229C33C6088B" : 9223372036854775807,
+    "983e48db-4d21-934a-b8c0-d23330a51662++4170" : 0
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "0D9815C0-8CBB-427F-996A-7FAF1C166578",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "983e48db-4d21-934a-b8c0-d23330a51662++4170" : "JYLibrary\/",
-    "E4B5A47E6D55B9071C27D94EBD672DD27E5565C5" : "JYLibrary\/"
+    "1CE5534CDCF41C940A3C7C2BE85B229C33C6088B" : "JYLibrary\/",
+    "983e48db-4d21-934a-b8c0-d23330a51662++4170" : "JYLibrary\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "JYLibrary",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
   "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "JYLibrary.xcodeproj",
   "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
     {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/XJYao\/JYLibrary.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "1CE5534CDCF41C940A3C7C2BE85B229C33C6088B"
+    },
+    {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/192.168.210.189\/svn\/WISP",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "983e48db-4d21-934a-b8c0-d23330a51662++4170"
-    },
-    {
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/XJYao\/JYLibrary.git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "E4B5A47E6D55B9071C27D94EBD672DD27E5565C5"
     }
   ]
 }
