@@ -46,6 +46,8 @@
             confirmResult = result;
             waitResult = NO;
         }];
+    } else {
+        waitResult = NO;
     }
     
     while (waitResult) {
@@ -64,6 +66,8 @@
             resultString = result;
             waitResult = NO;
         }];
+    } else {
+        waitResult = NO;
     }
     
     while (waitResult) {
@@ -490,6 +494,10 @@
     
     if (_delegate && [_delegate respondsToSelector:@selector(webManager:confirmWithMessage:completionHandler:)]) {
         [_delegate webManager:self confirmWithMessage:message completionHandler:completionHandler];
+    } else {
+        if (completionHandler) {
+            completionHandler(NO);
+        }
     }
 }
 
@@ -498,6 +506,10 @@
     
     if (_delegate && [_delegate respondsToSelector:@selector(webManager:textInputWithPrompt:defaultText:completionHandler:)]) {
         [_delegate webManager:self textInputWithPrompt:prompt defaultText:defaultText completionHandler:completionHandler];
+    } else {
+        if (completionHandler) {
+            completionHandler(nil);
+        }
     }
 }
 
@@ -659,6 +671,10 @@
     
     if (_delegate && [_delegate respondsToSelector:@selector(webManager:confirmWithMessage:completionHandler:)]) {
         [_delegate webManager:self confirmWithMessage:message completionHandler:completionHandler];
+    } else {
+        if (completionHandler) {
+            completionHandler(NO);
+        }
     }
 }
 
@@ -668,6 +684,10 @@
     
     if (_delegate && [_delegate respondsToSelector:@selector(webManager:textInputWithPrompt:defaultText:completionHandler:)]) {
         [_delegate webManager:self textInputWithPrompt:prompt defaultText:defaultText completionHandler:completionHandler];
+    } else {
+        if (completionHandler) {
+            completionHandler(nil);
+        }
     }
 }
 
