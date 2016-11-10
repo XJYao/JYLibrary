@@ -47,6 +47,7 @@
 @property (nonatomic, assign) NSUInteger cUInteger;
 
 @property (nonatomic, copy, setter=setCustomName:) NSString *name;
+@property (nonatomic, copy, getter=getCustomName) NSString *home;
 
 @end
 

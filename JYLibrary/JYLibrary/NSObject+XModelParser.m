@@ -319,7 +319,8 @@ NSString *XModelParser_SettingName(NSString *gettingName) {
                         
                         if ([type isEqualToString:@"@\"NSMutableString\""] ||
                             [type isEqualToString:@"@\"NSAttributedString\""] ||
-                            [type isEqualToString:@"@\"NSMutableAttributedString\""]) {
+                            [type isEqualToString:@"@\"NSMutableAttributedString\""] ||
+                            [type isEqualToString:@"@\"NSURL\""]) {
                             
                             if ([value isKindOfClass:NSStringClass()]) {
                                 NSString *className = [type substringWithRange:NSMakeRange(2, type.length - 3)];
