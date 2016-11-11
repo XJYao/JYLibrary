@@ -29,8 +29,12 @@
     [web addScriptMessageHandlerWithName:@"AppModel"];
     
     NSString *path = [[NSBundle mainBundle] pathForResource:@"File" ofType:@"html"];
+    NSURL *url = [NSURL fileURLWithPath:path];
     
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[NSURL fileURLWithPath:path] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:30];
+//    path = @"http://192.168.0.117:9818/h5rjmoa/File.html";
+//    url = [NSURL URLWithString:path];
+    
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:30];
     [web loadRequest:request];
     [self.view addSubview:web.webView];
     
@@ -118,6 +122,10 @@
 }
 
 #pragma mark - XWebManagerDelegate
+
+- (void)webManager:(XWebManager *)manager didFailLoadWithError:(NSError *)error {
+    int i = 0;
+}
 
 /*! @abstract 捕捉到JavaScript执行alert
  */
