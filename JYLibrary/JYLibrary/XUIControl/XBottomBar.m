@@ -424,7 +424,7 @@
             scale = itemImageView.image.size.width * 1.0 / itemImageView.image.size.height;
         }
         
-        CGFloat itemImageViewHeight = (itemViewHeight - offset * 3) * 2 / 3.0;
+        CGFloat itemImageViewHeight = (scale == 0 ? 0 : (itemViewHeight - offset * 3) * 2 / 3.0);
         
         if (itemImageViewHeight < 0) {
             itemImageViewHeight = 0;
@@ -448,8 +448,8 @@
         CGFloat itemLabelX = (itemViewWidth - itemLabelWidth) / 2.0;
         CGFloat itemLabelY = 0;
         
-        itemImageViewY = (itemViewHeight - itemImageViewHeight - offset - itemLabelHeight) / 2.0;
-        itemLabelY = itemImageViewY + itemImageViewHeight + offset;
+        itemImageViewY = (scale == 0 ? 0 : (itemViewHeight - itemImageViewHeight - offset - itemLabelHeight) / 2.0);
+        itemLabelY = (scale == 0 ? (itemViewHeight - itemLabelHeight) / 2.0 : itemImageViewY + itemImageViewHeight + offset);
         
         [itemView setFrame:CGRectMake(itemViewX, itemViewY, itemViewWidth, itemViewHeight)];
         [itemImageView setFrame:CGRectMake(itemImageViewX, itemImageViewY, itemImageViewWidth, itemImageViewHeight)];
