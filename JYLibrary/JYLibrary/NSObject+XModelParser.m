@@ -14,25 +14,25 @@
 
 @implementation NSObject (XModelParser)
 
-+ (id)modelFromDictionary:(NSDictionary *)dictionary {
++ (id)x_modelFromDictionary:(NSDictionary *)dictionary {
     if ([XTool isObjectNull:dictionary]) {
         return nil;
     }
-    id object = [self objectInstance];
-    BOOL success = [object setValueFromDictionary:dictionary];
+    id object = [self x_objectInstance];
+    BOOL success = [object x_setValueFromDictionary:dictionary];
     return success ? object : nil;
 }
 
-+ (id)modelFromJson:(id)json {
++ (id)x_modelFromJson:(id)json {
     if ([XTool isObjectNull:json]) {
         return nil;
     }
-    id object = [self objectInstance];
-    BOOL success = [object setValueFromJson:json];
+    id object = [self x_objectInstance];
+    BOOL success = [object x_setValueFromJson:json];
     return success ? object : nil;
 }
 
-+ (id)modelsFromCollection:(id)collection {
++ (id)x_modelsFromCollection:(id)collection {
     if ([XTool isObjectNull:collection]) {
         return nil;
     }
@@ -53,11 +53,11 @@
         
         id value = nil;
         if ([sub isKindOfClass:NSDictionaryClass()]) {
-            value = [self modelFromDictionary:sub];
+            value = [self x_modelFromDictionary:sub];
         } else if ([sub isKindOfClass:NSStringClass()] || [sub isKindOfClass:NSDataClass()]) {
-            value = [self modelFromJson:sub];
+            value = [self x_modelFromJson:sub];
         } else if ([sub isKindOfClass:NSArrayClass()] || [sub isKindOfClass:NSSetClass()]) {
-            value = [self modelsFromCollection:sub];
+            value = [self x_modelsFromCollection:sub];
         }
         if (![XTool isObjectNull:value]) {
             [models addObject:value];
@@ -66,15 +66,37 @@
     return models;
 }
 
-+ (BOOL)copyValueFrom:(id)from to:(id)to {
-    return [from copyValueTo:to];
++ (NSDictionary *)x_dictionaryFromModel:(id)model {
+    return [model x_toDictionary];
 }
 
-- (BOOL)setValueFromDictionary:(NSDictionary *)dictionary {
-    return [NSObject setValueTo:self valueForName:dictionary typeForName:nil isCopy:NO];
++ (NSArray<NSDictionary *> *)x_dictionariesFromModels:(NSArray *)models {
+    if ([XTool isObjectNull:models]) {
+        return nil;
+    }
+    if (models.count == 0) {
+        return @[];
+    }
+    
+    NSMutableArray *dictionaries = [NSMutableArray arrayWithCapacity:models.count];
+    for (id model in models) {
+        NSDictionary *dictionary = [model x_toDictionary];
+        if (![XTool isObjectNull:dictionary]) {
+            [dictionaries x_addObject:dictionary];
+        }
+    }
+    return dictionaries;
 }
 
-- (BOOL)setValueFromJson:(id)json {
++ (BOOL)x_copyValueFrom:(id)from to:(id)to {
+    return [from x_copyValueTo:to];
+}
+
+- (BOOL)x_setValueFromDictionary:(NSDictionary *)dictionary {
+    return [NSObject x_setValueTo:self valueForName:dictionary typeForName:nil isCopy:NO];
+}
+
+- (BOOL)x_setValueFromJson:(id)json {
     BOOL isJsonNull = NO;
     if ([XTool isObjectNull:json]) {
         isJsonNull = YES;
@@ -87,7 +109,7 @@
             NSError *jsonError = nil;
             jsonObject = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:&jsonError];
         }
-        return [self setValueFromDictionary:jsonObject];
+        return [self x_setValueFromDictionary:jsonObject];
         
     } else if (!isJsonNull && [json isKindOfClass:NSDataClass()]) {
         id jsonObject = nil;
@@ -96,17 +118,17 @@
             jsonObject = [NSJSONSerialization JSONObjectWithData:json options:NSJSONReadingAllowFragments error:&jsonError];
         }
         
-        return [self setValueFromDictionary:jsonObject];
+        return [self x_setValueFromDictionary:jsonObject];
     } else {
         
-        return [self setValueFromDictionary:json];
+        return [self x_setValueFromDictionary:json];
     }
 }
 
-- (NSDictionary *)toDictionary {
+- (NSDictionary *)x_toDictionary {
     NSDictionary *valueForName = nil;
     
-    BOOL getSuccess = [NSObject getValueForName:&valueForName typeForName:NULL from:self];
+    BOOL getSuccess = [NSObject x_getValueForName:&valueForName typeForName:NULL from:self];
     if (!getSuccess) {
         return nil;
     }
@@ -142,26 +164,26 @@
     return multableValueForName;
 }
 
-- (BOOL)clearValue {
-    return [self setValueFromDictionary:nil];
+- (BOOL)x_clearValue {
+    return [self x_setValueFromDictionary:nil];
 }
 
-- (BOOL)copyValueTo:(id)model {
+- (BOOL)x_copyValueTo:(id)model {
     
     NSDictionary *valueForName = nil;
     NSDictionary *typeForName = nil;
     
-    BOOL getSuccess = [NSObject getValueForName:&valueForName typeForName:&typeForName from:self];
+    BOOL getSuccess = [NSObject x_getValueForName:&valueForName typeForName:&typeForName from:self];
     if (!getSuccess) {
         return NO;
     }
     
-    return [NSObject setValueTo:model valueForName:valueForName typeForName:typeForName isCopy:YES];
+    return [NSObject x_setValueTo:model valueForName:valueForName typeForName:typeForName isCopy:YES];
 }
 
 #pragma mark - help
 
-+ (id)objectInstance {
++ (id)x_objectInstance {
     Class cls = [self class];
     id object = [[cls alloc] init];
     return object;
@@ -179,7 +201,7 @@ NSString *XModelParser_SettingName(NSString *gettingName) {
     return setName;
 }
 
-+ (BOOL)setValueTo:(id)model valueForName:(NSDictionary *)valueForName typeForName:(NSDictionary *)typeForName isCopy:(BOOL)isCopy {
++ (BOOL)x_setValueTo:(id)model valueForName:(NSDictionary *)valueForName typeForName:(NSDictionary *)typeForName isCopy:(BOOL)isCopy {
     
     if ([XTool isObjectNull:model]) {
         return NO;
@@ -396,7 +418,7 @@ NSString *XModelParser_SettingName(NSString *gettingName) {
                                         if ([subValue isKindOfClass:NSDictionaryClass()]) {
                                             
                                             id subObject = [[subClass alloc] init];
-                                            [subObject setValueFromDictionary:subValue];
+                                            [subObject x_setValueFromDictionary:subValue];
                                             [newValueArray addObject:subObject];
                                         } else {
                                             [newValueArray addObject:subValue];
@@ -422,7 +444,7 @@ NSString *XModelParser_SettingName(NSString *gettingName) {
                                 NSString *className = [type substringWithRange:NSMakeRange(2, type.length - 3)];
                                 
                                 id subModel = [[NSClassFromString(className) alloc] init];
-                                [subModel setValueFromDictionary:value];
+                                [subModel x_setValueFromDictionary:value];
                                 
                                 newValue = subModel;
                             }
@@ -710,7 +732,7 @@ NSString *XModelParser_SettingName(NSString *gettingName) {
     return YES;
 }
 
-+ (BOOL)getValueForName:(NSDictionary **)valueForName typeForName:(NSDictionary **)typeForName from:(id)model {
++ (BOOL)x_getValueForName:(NSDictionary **)valueForName typeForName:(NSDictionary **)typeForName from:(id)model {
     if ([XTool isObjectNull:model]) {
         return NO;
     }

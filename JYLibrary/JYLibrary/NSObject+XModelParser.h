@@ -53,51 +53,61 @@
 /**
  传入字典返回model实例，失败返回nil.
  */
-+ (id)modelFromDictionary:(NSDictionary *)dictionary;
++ (id)x_modelFromDictionary:(NSDictionary *)dictionary;
 
 /**
  传入json返回model实例，支持NSString、NSData，失败返回nil.
  */
-+ (id)modelFromJson:(id)json;
++ (id)x_modelFromJson:(id)json;
 
 /**
  传入集合返回model实例，支持NSArray、NSSet，失败返回nil.
  */
-+ (id)modelsFromCollection:(id)collection;
++ (id)x_modelsFromCollection:(id)collection;
+
+/**
+ 指定model转换成字典
+ */
++ (NSDictionary *)x_dictionaryFromModel:(id)model;
+
+/**
+ 指定model数组转换成字典数组
+ */
++ (NSArray<NSDictionary *> *)x_dictionariesFromModels:(NSArray *)models;
 
 /**
  从model1拷贝值到model2，仅拷贝相同名称相同类型的属性，忽略readonly
  返回：YES：成功；NO：失败
  */
-+ (BOOL)copyValueFrom:(id)from to:(id)to;
++ (BOOL)x_copyValueFrom:(id)from to:(id)to;
 
 /**
  传入字典，model自动赋值.
  返回：YES：成功；NO：失败
  */
-- (BOOL)setValueFromDictionary:(NSDictionary *)dictionary;
+- (BOOL)x_setValueFromDictionary:(NSDictionary *)dictionary;
 
 /**
  传入json给model自动赋值，支持NSString、NSData.
  返回：YES：成功；NO：失败
  */
-- (BOOL)setValueFromJson:(id)json;
+- (BOOL)x_setValueFromJson:(id)json;
 
 /**
  转换成字典
  */
-- (NSDictionary *)toDictionary;
+- (NSDictionary *)x_toDictionary;
 
 /**
  清空值，如果有默认值则置为默认
  返回：YES：成功；NO：失败
  */
-- (BOOL)clearValue;
+- (BOOL)x_clearValue;
 
 /**
- 拷贝值到指定model，仅拷贝相同名称相同类型的属性，忽略readonly
+ 浅拷贝值到指定model，仅拷贝相同名称相同类型的属性，忽略readonly
  返回：YES：成功；NO：失败
  */
-- (BOOL)copyValueTo:(id)model;
+- (BOOL)x_copyValueTo:(id)model;
 
 @end
