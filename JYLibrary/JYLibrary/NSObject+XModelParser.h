@@ -41,6 +41,11 @@
    id>//默认值
 *)XModelParserModelPropertyDefaultValue;
 
+/**
+ 不参与转换成字典的属性名
+ */
+- (NSArray<NSString *> *)XModelParserModelPropertyNameDoNotConvertToDictionary;
+
 @end
 
 @interface NSObject (XModelParser)
@@ -77,6 +82,11 @@
  返回：YES：成功；NO：失败
  */
 - (BOOL)setValueFromJson:(id)json;
+
+/**
+ 转换成字典
+ */
+- (NSDictionary *)toDictionary;
 
 /**
  清空值，如果有默认值则置为默认

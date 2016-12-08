@@ -103,6 +103,45 @@
     }
 }
 
+- (NSDictionary *)toDictionary {
+    NSDictionary *valueForName = nil;
+    
+    BOOL getSuccess = [NSObject getValueForName:&valueForName typeForName:NULL from:self];
+    if (!getSuccess) {
+        return nil;
+    }
+    if (!valueForName) {
+        return nil;
+    }
+    
+    NSMutableDictionary *multableValueForName = [valueForName mutableCopy];
+    
+    //get property name do not convert to dictionary
+    if ([[self class] instancesRespondToSelector:@selector(XModelParserModelPropertyNameDoNotConvertToDictionary)]) {
+        NSArray *propertyNames = [(id)self XModelParserModelPropertyNameDoNotConvertToDictionary];
+        for (NSString *name in propertyNames) {
+            [multableValueForName removeObjectForKey:name];
+        }
+    }
+    
+    //get mapper
+    if ([[self class] instancesRespondToSelector:@selector(XModelParserModelPropertyNameMapper)]) {
+        NSDictionary *propertyNameMapper = [(id)self XModelParserModelPropertyNameMapper];
+        
+        for (NSString *key in propertyNameMapper.allKeys) {
+            id value = [multableValueForName objectForKey:key];
+            
+            NSString *mapperName = [propertyNameMapper objectForKey:key];
+            if (![XTool isObjectNull:value] && ![XTool isStringEmpty:mapperName]) {
+                [multableValueForName removeObjectForKey:key];
+                [multableValueForName x_setObject:value forKey:mapperName];
+            }
+        }
+    }
+    
+    return multableValueForName;
+}
+
 - (BOOL)clearValue {
     return [self setValueFromDictionary:nil];
 }
@@ -724,21 +763,28 @@ NSString *XModelParser_SettingName(NSString *gettingName) {
     
     //get value and type for property name
     NSMutableDictionary *valueForNameDictionary = nil;
-    if (*valueForName) {
-        valueForNameDictionary = [(*valueForName) mutableCopy];
+    if (valueForName) {
+        if (*valueForName) {
+            valueForNameDictionary = [(*valueForName) mutableCopy];
+        } else {
+            valueForNameDictionary = [NSMutableDictionary dictionary];
+        }
+        *valueForName = valueForNameDictionary;
     } else {
         valueForNameDictionary = [NSMutableDictionary dictionary];
     }
     
     NSMutableDictionary *typeForNameDictionary = nil;
-    if (*typeForName) {
-        typeForNameDictionary = [(*typeForName) mutableCopy];
+    if (typeForName) {
+        if (*typeForName) {
+            typeForNameDictionary = [(*typeForName) mutableCopy];
+        } else {
+            typeForNameDictionary = [NSMutableDictionary dictionary];
+        }
+        *typeForName = typeForNameDictionary;
     } else {
         typeForNameDictionary = [NSMutableDictionary dictionary];
     }
-    
-    *valueForName = valueForNameDictionary;
-    *typeForName = typeForNameDictionary;
     
     unsigned int ivarsCount = 0;
     Ivar *ivars = class_copyIvarList(cls, &ivarsCount);
