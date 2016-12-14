@@ -433,7 +433,7 @@
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     
-    debugLog(@"%@", NSStringFromSelector(_cmd));
+    NSLog(@"%@", NSStringFromSelector(_cmd));
     
     BOOL allow = YES;
     if (_delegate && [_delegate respondsToSelector:@selector(webManager:allowLoadURL:)]) {
@@ -444,7 +444,7 @@
 
 - (void)webViewDidStartLoad:(UIWebView *)webView {
     
-    debugLog(@"%@", NSStringFromSelector(_cmd));
+    NSLog(@"%@", NSStringFromSelector(_cmd));
     
     if (_delegate && [_delegate respondsToSelector:@selector(webManagerDidStartLoad:)]) {
         [_delegate webManagerDidStartLoad:self];
@@ -455,7 +455,7 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
     
-    debugLog(@"%@", NSStringFromSelector(_cmd));
+    NSLog(@"%@", NSStringFromSelector(_cmd));
     
     if (_delegate && [_delegate respondsToSelector:@selector(webManagerDidFinishLoad:)]) {
         [_delegate webManagerDidFinishLoad:self];
@@ -470,7 +470,7 @@
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     
-    debugLog(@"%@", NSStringFromSelector(_cmd));
+    NSLog(@"%@", NSStringFromSelector(_cmd));
     
     if (_delegate && [_delegate respondsToSelector:@selector(webManager:didFailLoadWithError:)]) {
         [_delegate webManager:self didFailLoadWithError:error];
@@ -482,7 +482,7 @@
 #pragma mark - XCustomUIWebViewDelegate
 
 - (void)webView:(id)webView runJavaScriptAlertPanelWithMessage:(NSString *)message {
-    debugLog(@"%@", NSStringFromSelector(_cmd));
+    NSLog(@"%@", NSStringFromSelector(_cmd));
     
     if (_delegate && [_delegate respondsToSelector:@selector(webManager:alertWithMessage:)]) {
         [_delegate webManager:self alertWithMessage:message];
@@ -490,7 +490,7 @@
 }
 
 - (void)webView:(id)webView runJavaScriptConfirmPanelWithMessage:(NSString *)message completionHandler:(void (^)(BOOL))completionHandler {
-    debugLog(@"%@", NSStringFromSelector(_cmd));
+    NSLog(@"%@", NSStringFromSelector(_cmd));
     
     if (_delegate && [_delegate respondsToSelector:@selector(webManager:confirmWithMessage:completionHandler:)]) {
         [_delegate webManager:self confirmWithMessage:message completionHandler:completionHandler];
@@ -502,7 +502,7 @@
 }
 
 - (void)webView:(id)webView runJavaScriptTextInputPanelWithPrompt:(NSString *)prompt defaultText:(NSString *)defaultText completionHandler:(void (^)(NSString *))completionHandler {
-    debugLog(@"%@", NSStringFromSelector(_cmd));
+    NSLog(@"%@", NSStringFromSelector(_cmd));
     
     if (_delegate && [_delegate respondsToSelector:@selector(webManager:textInputWithPrompt:defaultText:completionHandler:)]) {
         [_delegate webManager:self textInputWithPrompt:prompt defaultText:defaultText completionHandler:completionHandler];
@@ -517,7 +517,7 @@
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
     
-    debugLog(@"%@", NSStringFromSelector(_cmd));
+    NSLog(@"%@", NSStringFromSelector(_cmd));
     
     BOOL allow = YES;
     if (_delegate && [_delegate respondsToSelector:@selector(webManager:allowLoadURL:)]) {
@@ -531,7 +531,7 @@
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler {
     
-    debugLog(@"%@", NSStringFromSelector(_cmd));
+    NSLog(@"%@", NSStringFromSelector(_cmd));
     
     BOOL allow = YES;
     if (_delegate && [_delegate respondsToSelector:@selector(webManager:allowNavigateAfterResponse:)]) {
@@ -545,7 +545,7 @@
 
 - (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(null_unspecified WKNavigation *)navigation {
     
-    debugLog(@"%@", NSStringFromSelector(_cmd));
+    NSLog(@"%@", NSStringFromSelector(_cmd));
     
     if (_delegate && [_delegate respondsToSelector:@selector(webManagerDidStartLoad:)]) {
         [_delegate webManagerDidStartLoad:self];
@@ -554,7 +554,7 @@
 
 - (void)webView:(WKWebView *)webView didReceiveServerRedirectForProvisionalNavigation:(null_unspecified WKNavigation *)navigation {
     
-    debugLog(@"%@", NSStringFromSelector(_cmd));
+    NSLog(@"%@", NSStringFromSelector(_cmd));
     
     if (_delegate && [_delegate respondsToSelector:@selector(webManagerDidReceiveServerRedirectForProvisionalNavigation:)]) {
         [_delegate webManagerDidReceiveServerRedirectForProvisionalNavigation:self];
@@ -563,7 +563,7 @@
 
 - (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(null_unspecified WKNavigation *)navigation withError:(NSError *)error {
     
-    debugLog(@"%@", NSStringFromSelector(_cmd));
+    NSLog(@"%@", NSStringFromSelector(_cmd));
     
     if (_delegate && [_delegate respondsToSelector:@selector(webManager:didFailLoadWithError:)]) {
         [_delegate webManager:self didFailLoadWithError:error];
@@ -572,7 +572,7 @@
 
 - (void)webView:(WKWebView *)webView didCommitNavigation:(null_unspecified WKNavigation *)navigation {
     
-    debugLog(@"%@", NSStringFromSelector(_cmd));
+    NSLog(@"%@", NSStringFromSelector(_cmd));
     
     if (_delegate && [_delegate respondsToSelector:@selector(webManagerContentStartsArriving:)]) {
         [_delegate webManagerContentStartsArriving:self];
@@ -581,7 +581,7 @@
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(null_unspecified WKNavigation *)navigation {
     
-    debugLog(@"%@", NSStringFromSelector(_cmd));
+    NSLog(@"%@", NSStringFromSelector(_cmd));
     
     if (_delegate && [_delegate respondsToSelector:@selector(webManagerDidFinishLoad:)]) {
         [_delegate webManagerDidFinishLoad:self];
@@ -590,7 +590,7 @@
 
 - (void)webView:(WKWebView *)webView didFailNavigation:(null_unspecified WKNavigation *)navigation withError:(NSError *)error {
     
-    debugLog(@"%@", NSStringFromSelector(_cmd));
+    NSLog(@"%@", NSStringFromSelector(_cmd));
     
     if (_delegate && [_delegate respondsToSelector:@selector(webManager:didFailLoadContentWithError:)]) {
         [_delegate webManager:self didFailLoadContentWithError:error];
@@ -599,7 +599,7 @@
 
 - (void)webView:(WKWebView *)webView didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential * _Nullable credential))completionHandler {
     
-    debugLog(@"%@", NSStringFromSelector(_cmd));
+    NSLog(@"%@", NSStringFromSelector(_cmd));
     
     if (completionHandler) {
         if (_delegate && [_delegate respondsToSelector:@selector(webManager:didReceiveAuthenticationChallenge:completionHandler:)]) {
@@ -621,7 +621,7 @@
 
 - (void)webViewWebContentProcessDidTerminate:(WKWebView *)webView {//ios9
     
-    debugLog(@"%@", NSStringFromSelector(_cmd));
+    NSLog(@"%@", NSStringFromSelector(_cmd));
     
     if (_delegate && [_delegate respondsToSelector:@selector(webManagerWebContentProcessDidTerminate:)]) {
         [_delegate webManagerWebContentProcessDidTerminate:self];
@@ -632,7 +632,7 @@
 
 - (nullable WKWebView *)webView:(WKWebView *)webView createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration forNavigationAction:(WKNavigationAction *)navigationAction windowFeatures:(WKWindowFeatures *)windowFeatures {
     
-    debugLog(@"%@", NSStringFromSelector(_cmd));
+    NSLog(@"%@", NSStringFromSelector(_cmd));
     
     XWebManager *newManager = [[XWebManager alloc] initWithFrame:_webView.frame configuration:configuration useUIWebView:useUIWebView];
     
@@ -645,7 +645,7 @@
 
 - (void)webViewDidClose:(WKWebView *)webView {//ios9
     
-    debugLog(@"%@", NSStringFromSelector(_cmd));
+    NSLog(@"%@", NSStringFromSelector(_cmd));
     
     if (_delegate && [_delegate respondsToSelector:@selector(webManagerDidClose:)]) {
         [_delegate webManagerDidClose:self];
@@ -654,7 +654,7 @@
 
 - (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler {
     
-    debugLog(@"%@", NSStringFromSelector(_cmd));
+    NSLog(@"%@", NSStringFromSelector(_cmd));
     
     if (_delegate && [_delegate respondsToSelector:@selector(webManager:alertWithMessage:)]) {
         [_delegate webManager:self alertWithMessage:message];
@@ -667,7 +667,7 @@
 
 - (void)webView:(WKWebView *)webView runJavaScriptConfirmPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(BOOL result))completionHandler {
     
-    debugLog(@"%@", NSStringFromSelector(_cmd));
+    NSLog(@"%@", NSStringFromSelector(_cmd));
     
     if (_delegate && [_delegate respondsToSelector:@selector(webManager:confirmWithMessage:completionHandler:)]) {
         [_delegate webManager:self confirmWithMessage:message completionHandler:completionHandler];
@@ -680,7 +680,7 @@
 
 - (void)webView:(WKWebView *)webView runJavaScriptTextInputPanelWithPrompt:(NSString *)prompt defaultText:(nullable NSString *)defaultText initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(NSString * __nullable result))completionHandler {
     
-    debugLog(@"%@", NSStringFromSelector(_cmd));
+    NSLog(@"%@", NSStringFromSelector(_cmd));
     
     if (_delegate && [_delegate respondsToSelector:@selector(webManager:textInputWithPrompt:defaultText:completionHandler:)]) {
         [_delegate webManager:self textInputWithPrompt:prompt defaultText:defaultText completionHandler:completionHandler];
@@ -694,7 +694,7 @@
 #pragma mark - WKScriptMessageHandler
 
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
-    debugLog(@"%@", NSStringFromSelector(_cmd));
+    NSLog(@"%@", NSStringFromSelector(_cmd));
     
     if (_delegate && [_delegate respondsToSelector:@selector(webManager:didReceiveScriptMessage:handlerName:)]) {
         [_delegate webManager:self didReceiveScriptMessage:message.body handlerName:message.name];

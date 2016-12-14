@@ -190,22 +190,22 @@
     mib[4] = NET_RT_IFLIST;
     
     if ((mib[5] = if_nametoindex("en0")) == 0) {
-        debugLog(@"Error: if_nametoindex error\n");
+        NSLog(@"Error: if_nametoindex error\n");
         return NULL;
     }
     
     if (sysctl(mib, 6, NULL, &len, NULL, 0) < 0) {
-        debugLog(@"Error: sysctl, take 1\n");
+        NSLog(@"Error: sysctl, take 1\n");
         return NULL;
     }
     
     if ((buf = malloc(len)) == NULL) {
-        debugLog(@"Could not allocate memory. error!\n");
+        NSLog(@"Could not allocate memory. error!\n");
         return NULL;
     }
     
     if (sysctl(mib, 6, buf, &len, NULL, 0) < 0) {
-        debugLog(@"Error: sysctl, take 2");
+        NSLog(@"Error: sysctl, take 2");
         free(buf);
         return NULL;
     }

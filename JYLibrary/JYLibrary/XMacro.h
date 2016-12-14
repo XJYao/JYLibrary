@@ -16,11 +16,11 @@
  调试输出
  */
 #ifdef DEBUG
-#define debugLog(...)   NSLog(__VA_ARGS__)
-#define debugMethod()   NSLog(@"%s", __func__)
+#define NSLog(...)      NSLog(__VA_ARGS__)
+#define NSLogMethod()   NSLog(@"%s", __func__)
 #else
-#define debugLog(...)
-#define debugMethod()
+#define NSLog(...)
+#define NSLogMethod()
 #endif
 
 /**
