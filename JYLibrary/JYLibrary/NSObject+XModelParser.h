@@ -46,6 +46,11 @@
  */
 - (NSArray<NSString *> *)XModelParserModelPropertyNameDoNotConvertToDictionary;
 
+/**
+ 要参与判断值是否相等的字段，不实现该方法则默认全部判断。
+ */
+- (NSArray<NSString *> *)XModelParserModelPropertyNamesForJudgeTheValueIsEqual;
+
 @end
 
 @interface NSObject (XModelParser)

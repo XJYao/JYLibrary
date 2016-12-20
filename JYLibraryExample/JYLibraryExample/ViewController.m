@@ -23,22 +23,22 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    web = [[XWebManager alloc] init];
-    [web setDelegate:self];
+//    web = [[XWebManager alloc] init];
+//    [web setDelegate:self];
+//    
+//    [web addScriptMessageHandlerWithName:@"AppModel"];
+//    
+//    NSString *path = [[NSBundle mainBundle] pathForResource:@"File" ofType:@"html"];
+//    NSURL *url = [NSURL fileURLWithPath:path];
+//    
+////    path = @"http://192.168.0.117:9818/h5rjmoa/File.html";
+////    url = [NSURL URLWithString:path];
+//    
+//    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:30];
+//    [web loadRequest:request];
+//    [self.view addSubview:web.webView];
     
-    [web addScriptMessageHandlerWithName:@"AppModel"];
-    
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"File" ofType:@"html"];
-    NSURL *url = [NSURL fileURLWithPath:path];
-    
-//    path = @"http://192.168.0.117:9818/h5rjmoa/File.html";
-//    url = [NSURL URLWithString:path];
-    
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:30];
-    [web loadRequest:request];
-    [self.view addSubview:web.webView];
-    
-    web.webView.x_edge.x_equalTo(self.view).x_constant(0);
+//    web.webView.x_edge.x_equalTo(self.view).x_constant(0);
     
 //    JSContext *context = [[JSContext alloc] init];
     
@@ -96,24 +96,24 @@
     NSData *jsonData = [XJsonParser jsonDataWithObject:dic error:NULL];
     NSString *jsonString = [XJsonParser jsonStringWithObject:dic error:NULL];
     
-    TestModel *model1 = [TestModel modelFromDictionary:dic];
-    TestModel *model2 = [TestModel modelFromJson:jsonData];
-    TestModel *model3 = [TestModel modelFromJson:jsonString];
+    TestModel *model1 = [TestModel x_modelFromDictionary:dic];
+    TestModel *model2 = [TestModel x_modelFromJson:jsonData];
+    TestModel *model3 = [TestModel x_modelFromJson:jsonString];
 
     TestModel *model4 = [[TestModel alloc] init];
-    [model4 setValueFromDictionary:dic];
+    [model4 x_setValueFromDictionary:dic];
     TestModel *model5 = [[TestModel alloc] init];
-    [model5 setValueFromJson:jsonData];
+    [model5 x_setValueFromJson:jsonData];
     TestModel *model6 = [[TestModel alloc] init];
-    [model6 setValueFromJson:jsonString];
+    [model6 x_setValueFromJson:jsonString];
     
-    id models7 = [TestModel modelsFromCollection:@[dic, [dic mutableCopy]]];
-    id models8 = [TestModel modelsFromCollection:[NSSet setWithObjects:dic, @{@"name" : @"大废物废物"}, nil]];
+    id models7 = [TestModel x_modelsFromCollection:@[dic, [dic mutableCopy]]];
+    id models8 = [TestModel x_modelsFromCollection:[NSSet setWithObjects:dic, @{@"name" : @"大废物废物"}, nil]];
     
     TestModel *model9 = [[TestModel alloc] init];
-    [model1 copyValueTo:model9];
+    [model1 x_copyValueTo:model9];
     
-    debugLog(@"hja");
+    NSLog(@"hja");
 }
 
 - (void)didReceiveMemoryWarning {
