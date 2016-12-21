@@ -113,6 +113,9 @@
     TestModel *model9 = [[TestModel alloc] init];
     [model1 x_copyValueTo:model9];
     
+    BOOL isEqualResult1 = [TestModel x_isEqualFrom:model1 to:model3];
+    BOOL isEqualResult2 = [model1 x_isEqualTo:models8];
+    
     NSLog(@"hja");
 }
 

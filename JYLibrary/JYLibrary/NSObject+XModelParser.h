@@ -87,6 +87,11 @@
 + (BOOL)x_copyValueFrom:(id)from to:(id)to;
 
 /**
+ 比较两个model的属性值是否相等
+ */
++ (BOOL)x_isEqualFrom:(id)from to:(id)to;
+
+/**
  传入字典，model自动赋值.
  返回：YES：成功；NO：失败
  */
@@ -114,5 +119,10 @@
  返回：YES：成功；NO：失败
  */
 - (BOOL)x_copyValueTo:(id)model;
+
+/**
+ 判断与指定model的属性值是否相等
+ */
+- (BOOL)x_isEqualTo:(id)model;
 
 @end

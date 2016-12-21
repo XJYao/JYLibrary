@@ -92,6 +92,19 @@
     return [from x_copyValueTo:to];
 }
 
++ (BOOL)x_isEqualFrom:(id)from to:(id)to {
+    BOOL isFromNull = [XTool isObjectNull:from];
+    BOOL isToNull = [XTool isObjectNull:to];
+    
+    if (isFromNull && isToNull) {
+        return YES;
+    } else if (isFromNull == (!isToNull)) {
+        return NO;
+    }
+    
+    return [from x_isEqualTo:to];
+}
+
 - (BOOL)x_setValueFromDictionary:(NSDictionary *)dictionary {
     return [NSObject x_setValueTo:self valueForName:dictionary typeForName:nil isCopy:NO];
 }
@@ -181,12 +194,76 @@
     return [NSObject x_setValueTo:model valueForName:valueForName typeForName:typeForName isCopy:YES];
 }
 
-- (BOOL)x_isEqualTo:(id)model deep:(BOOL)deep {
+- (BOOL)x_isEqualTo:(id)model {
     if ([XTool isObjectNull:model]) {
         return NO;
     }
+    if (model == self) {
+        return YES;
+    }
+    
     if (![self isKindOfClass:[model class]]) {
         return NO;
+    }
+    
+    if ([model isKindOfClass:NSNumberClass()]) {
+        
+        if (![model isEqualToNumber:self]) {
+            return NO;
+        }
+        return [model compare:self] == NSOrderedSame;
+        
+    } else if ([model isKindOfClass:NSStringClass()]) {
+        
+        return [model isEqualToString:self];
+        
+    } else if ([model isKindOfClass:NSAttributedStringClass()]) {
+        
+        return [model isEqualToAttributedString:self];
+        
+    } else if ([model isKindOfClass:NSArrayClass()] ||
+               [model isKindOfClass:NSSetClass()]) {
+        
+        if ([model count] != [(id)self count]) {
+            return NO;
+        }
+        for (id obj1 in model) {
+            BOOL foundSame = NO;
+            for (id obj2 in self) {
+                if ([obj1 x_isEqualTo:obj2]) {
+                    foundSame = YES;
+                    break;
+                }
+            }
+            if (!foundSame) {
+                return NO;
+            }
+        }
+        
+        return YES;
+        
+    } else if ([model isKindOfClass:NSDictionaryClass()]) {
+        if ([model count] != [(id)self count]) {
+            return NO;
+        }
+        for (NSString *key in [model allKeys]) {
+            id valueForSelf = [(id)self objectForKey:key];
+            id valueForModel = [model objectForKey:key];
+            
+            BOOL isValueForSelfNull = [XTool isObjectNull:valueForSelf];
+            BOOL isValueForModelNull = [XTool isObjectNull:valueForModel];
+            
+            if (isValueForSelfNull && isValueForModelNull) {
+                continue;
+            } else if (isValueForSelfNull == (!isValueForModelNull)) {
+                return NO;
+            }
+            if ([valueForSelf x_isEqualTo:valueForModel]) {
+                continue;
+            }
+            return NO;
+        }
+        return YES;
     }
     
     NSDictionary *valueForNameForSelf = nil;
@@ -255,125 +332,14 @@
             return NO;
         }
         
-        if (valueForSelf == valueForOther) {
+        if ([valueForSelf x_isEqualTo:valueForOther]) {
             continue;
         }
-        if (![valueForSelf isKindOfClass:[valueForOther class]]) {
-            return NO;
-        }
-        
-        if ([valueForSelf isKindOfClass:NSNumberClass()]) {
-            
-            if (![valueForSelf isEqualToNumber:valueForOther]) {
-                return NO;
-            }
-            
-            if ([valueForSelf compare:valueForOther] != NSOrderedSame) {
-                return NO;
-            }
-        } else if ([valueForSelf isKindOfClass:NSStringClass()]) {
-            if (![valueForSelf isEqualToString:valueForOther]) {
-                return NO;
-            }
-        } else if ([valueForSelf isKindOfClass:NSAttributedStringClass()]) {
-            
-            if (valueForSelf != valueForOther) {
-                return NO;
-            }
-            
-        } else if ([valueForSelf isKindOfClass:[NSArray class]]) {
-            
-        } else if ([valueForSelf isKindOfClass:[NSDictionary class]]) {
-            
-        } else if ([valueForSelf isKindOfClass:[NSSet class]]) {
-            
-        } else {
-            NSString *type = [typeForNameForSelf objectForKey:name];
-            if ([XTool isEqualFromString:type toString:@"@"]) {
-                if (valueForSelf != valueForOther) {
-                    return NO;
-                }
-            } else {
-                if (![valueForSelf x_isEqualTo:valueForOther]) {
-                    return NO;
-                }
-            }
-        }
+        return NO;
     }
     
     return YES;
 }
-
-//- (BOOL)x_isNotCustomModelEqualTo:(id)model isDeep:(BOOL)isDeep {
-//    BOOL isValueForSelfNull = [XTool isObjectNull:self];
-//    BOOL isValueForOtherNull = [XTool isObjectNull:model];
-//    
-//    if (isValueForSelfNull && isValueForOtherNull) {
-//        return YES;
-//    } else if (isValueForSelfNull == (!isValueForOtherNull)) {
-//        return NO;
-//    }
-//    
-//    if (self == model) {
-//        return YES;
-//    }
-//    
-//    if (![self isKindOfClass:[model class]]) {
-//        return NO;
-//    }
-//    
-//    if ([model isKindOfClass:NSNumberClass()]) {
-//        
-//        if (![model isEqualToNumber:self]) {
-//            return NO;
-//        }
-//        if ([model compare:self] != NSOrderedSame) {
-//            return NO;
-//        }
-//    } else if ([model isKindOfClass:NSStringClass()]) {
-//        if (![model isEqualToString:self]) {
-//            return NO;
-//        }
-//    } else if ([model isKindOfClass:NSAttributedStringClass()]) {
-//        
-//        if (self != model) {
-//            return NO;
-//        }
-//        
-//    } else if ([model isKindOfClass:[NSArray class]] ||
-//               [model isKindOfClass:[NSSet class]]) {
-//        
-//        if ([model count] != [(id)self count]) {
-//            return NO;
-//        }
-//        for (id obj1 in model) {
-//            BOOL isEqualTo = NO;
-//            for (id obj2 in self) {
-//                if ([obj1 x_isNotCustomModelEqualTo:obj2]) {
-//                    isEqualTo = YES;
-//                    break;
-//                }
-//            }
-//            if (!isEqualTo) {
-//                return NO;
-//            }
-//        }
-//        
-//    } else if ([model isKindOfClass:[NSDictionary class]]) {
-//        
-//        if ([model count] != [(id)self count]) {
-//            return NO;
-//        }
-//        for (NSString *key in [model allKeys]) {
-//            
-//        }
-//        
-//    } else {
-//        return NO;
-//    }
-//    
-//    return YES;
-//}
 
 #pragma mark - help
 
