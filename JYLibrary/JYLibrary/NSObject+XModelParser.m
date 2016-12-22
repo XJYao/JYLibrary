@@ -202,30 +202,28 @@
         return YES;
     }
     
-    NSString *classNameForSelf = NSStringFromClass([self class]);
-    NSString *classNameForModel = NSStringFromClass([model class]);
-    
-    if (![XTool isEqualFromString:classNameForSelf toString:classNameForModel]) {
-        return NO;
-    }
-    
-    if ([model isKindOfClass:NSNumberClass()]) {
+    if ([self isKindOfClass:NSNumberClass()] &&
+        [model isKindOfClass:NSNumberClass()]) {
         
         if (![model isEqualToNumber:self]) {
             return NO;
         }
         return [model compare:self] == NSOrderedSame;
         
-    } else if ([model isKindOfClass:NSStringClass()]) {
+    } else if ([self isKindOfClass:NSStringClass()] &&
+               [model isKindOfClass:NSStringClass()]) {
         
         return [model isEqualToString:self];
         
-    } else if ([model isKindOfClass:NSAttributedStringClass()]) {
+    } else if ([self isKindOfClass:NSAttributedStringClass()] &&
+               [model isKindOfClass:NSAttributedStringClass()]) {
         
         return [model isEqualToAttributedString:self];
         
-    } else if ([model isKindOfClass:NSArrayClass()] ||
-               [model isKindOfClass:NSSetClass()]) {
+    } else if (([self isKindOfClass:NSArrayClass()] &&
+                [model isKindOfClass:NSArrayClass()]) ||
+               ([self isKindOfClass:NSSetClass()] &&
+                [model isKindOfClass:NSSetClass()])) {
         
         if ([model count] != [(id)self count]) {
             return NO;
@@ -245,7 +243,8 @@
         
         return YES;
         
-    } else if ([model isKindOfClass:NSDictionaryClass()]) {
+    } else if ([self isKindOfClass:NSDictionaryClass()] &&
+               [model isKindOfClass:NSDictionaryClass()]) {
         if ([model count] != [(id)self count]) {
             return NO;
         }
@@ -267,6 +266,10 @@
             return NO;
         }
         return YES;
+    }
+    
+    if (![self isKindOfClass:[model class]]) {
+        return NO;
     }
     
     NSDictionary *valueForNameForSelf = nil;
