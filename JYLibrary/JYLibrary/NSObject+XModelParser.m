@@ -202,7 +202,10 @@
         return YES;
     }
     
-    if (![self isKindOfClass:[model class]]) {
+    NSString *classNameForSelf = NSStringFromClass([self class]);
+    NSString *classNameForModel = NSStringFromClass([model class]);
+    
+    if (![XTool isEqualFromString:classNameForSelf toString:classNameForModel]) {
         return NO;
     }
     
