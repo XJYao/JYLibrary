@@ -277,7 +277,7 @@
     NSDictionary *valueForNameForOther = nil;
     NSDictionary *typeForNameForOther = nil;
     
-    BOOL getOtherSuccess = [NSObject x_getValueForName:&valueForNameForOther typeForName:&typeForNameForOther from:self];
+    BOOL getOtherSuccess = [NSObject x_getValueForName:&valueForNameForOther typeForName:&typeForNameForOther from:model];
     if (!getOtherSuccess) {
         return NO;
     }
