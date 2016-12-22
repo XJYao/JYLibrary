@@ -10,7 +10,6 @@
 #import <WebKit/WebKit.h>
 #import <pthread/pthread.h>
 #import "XIOSVersion.h"
-#import "XTool.h"
 #import "XFileManager.h"
 
 #pragma mark - custom UIWebView
