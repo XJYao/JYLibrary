@@ -47,6 +47,11 @@
 + (BOOL)isDataEmpty:(NSData *)data;
 
 /**
+ 判断NSURL是否为空
+ */
++ (BOOL)isURLEmpty:(NSURL *)url;
+
+/**
  判断类是否为空
  */
 + (BOOL)isClassNull:(Class)cls;

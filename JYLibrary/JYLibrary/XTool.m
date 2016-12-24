@@ -69,6 +69,14 @@
     }
 }
 
++ (BOOL)isURLEmpty:(NSURL *)url {
+    if ([self isObjectNull:url] || [self isStringEmpty:url.absoluteString]) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
 + (BOOL)isClassNull:(Class)cls {
     if (!cls || cls == Nil) {
         return YES;
