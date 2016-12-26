@@ -23,22 +23,22 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-//    web = [[XWebManager alloc] init];
-//    [web setDelegate:self];
-//    
-//    [web addScriptMessageHandlerWithName:@"AppModel"];
-//    
-//    NSString *path = [[NSBundle mainBundle] pathForResource:@"File" ofType:@"html"];
-//    NSURL *url = [NSURL fileURLWithPath:path];
-//    
-////    path = @"http://192.168.0.117:9818/h5rjmoa/File.html";
-////    url = [NSURL URLWithString:path];
-//    
-//    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:30];
-//    [web loadRequest:request];
-//    [self.view addSubview:web.webView];
+    web = [[XWebManager alloc] initWithUseUIWebView:YES];
+    [web setDelegate:self];
     
-//    web.webView.x_edge.x_equalTo(self.view).x_constant(0);
+    [web addScriptMessageHandlerWithName:@"AppModel"];
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"File" ofType:@"html"];
+    NSURL *url = [NSURL fileURLWithPath:path];
+    
+    path = @"http://115.236.35.117:8181/eden.oa/mobile/admin/mobileDispatch/indexMobileManage.action?userid=zouh";
+    url = [NSURL URLWithString:path];
+    
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:30];
+    [web loadRequest:request];
+    [self.view addSubview:web.webView];
+    
+    web.webView.x_edge.x_equalTo(self.view).x_constant(0);
     
 //    JSContext *context = [[JSContext alloc] init];
     
