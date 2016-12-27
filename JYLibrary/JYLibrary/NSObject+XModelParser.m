@@ -205,68 +205,68 @@
     if ([self isKindOfClass:NSNumberClass()] &&
         [model isKindOfClass:NSNumberClass()]) {
         
-        if (![model isEqualToNumber:self]) {
+        if (![model isEqualToNumber:(id)self]) {
             return NO;
         }
-        return [model compare:self] == NSOrderedSame;
+        return [model compare:(id)self] == NSOrderedSame;
         
     } else if ([self isKindOfClass:NSStringClass()] &&
                [model isKindOfClass:NSStringClass()]) {
         
-        return [model isEqualToString:self];
+        return [model isEqualToString:(id)self];
         
     } else if ([self isKindOfClass:NSAttributedStringClass()] &&
                [model isKindOfClass:NSAttributedStringClass()]) {
         
-        return [model isEqualToAttributedString:self];
+        return [model isEqualToAttributedString:(id)self];
         
     } else if (([self isKindOfClass:NSArrayClass()] &&
                 [model isKindOfClass:NSArrayClass()]) ||
                ([self isKindOfClass:NSSetClass()] &&
                 [model isKindOfClass:NSSetClass()])) {
-        
-        if ([model count] != [(id)self count]) {
-            return NO;
-        }
-        for (id obj1 in model) {
-            BOOL foundSame = NO;
-            for (id obj2 in self) {
-                if ([obj1 x_isEqualTo:obj2]) {
-                    foundSame = YES;
-                    break;
-                }
-            }
-            if (!foundSame) {
-                return NO;
-            }
-        }
-        
-        return YES;
-        
-    } else if ([self isKindOfClass:NSDictionaryClass()] &&
-               [model isKindOfClass:NSDictionaryClass()]) {
-        if ([model count] != [(id)self count]) {
-            return NO;
-        }
-        for (NSString *key in [model allKeys]) {
-            id valueForSelf = [(id)self objectForKey:key];
-            id valueForModel = [model objectForKey:key];
-            
-            BOOL isValueForSelfNull = [XTool isObjectNull:valueForSelf];
-            BOOL isValueForModelNull = [XTool isObjectNull:valueForModel];
-            
-            if (isValueForSelfNull && isValueForModelNull) {
-                continue;
-            } else if (isValueForSelfNull == (!isValueForModelNull)) {
-                return NO;
-            }
-            if ([valueForSelf x_isEqualTo:valueForModel]) {
-                continue;
-            }
-            return NO;
-        }
-        return YES;
-    }
+                   
+                   if ([model count] != [(id)self count]) {
+                       return NO;
+                   }
+                   for (id obj1 in model) {
+                       BOOL foundSame = NO;
+                       for (id obj2 in (id)self) {
+                           if ([obj1 x_isEqualTo:obj2]) {
+                               foundSame = YES;
+                               break;
+                           }
+                       }
+                       if (!foundSame) {
+                           return NO;
+                       }
+                   }
+                   
+                   return YES;
+                   
+               } else if ([self isKindOfClass:NSDictionaryClass()] &&
+                          [model isKindOfClass:NSDictionaryClass()]) {
+                   if ([model count] != [(id)self count]) {
+                       return NO;
+                   }
+                   for (NSString *key in [model allKeys]) {
+                       id valueForSelf = [(id)self objectForKey:key];
+                       id valueForModel = [model objectForKey:key];
+                       
+                       BOOL isValueForSelfNull = [XTool isObjectNull:valueForSelf];
+                       BOOL isValueForModelNull = [XTool isObjectNull:valueForModel];
+                       
+                       if (isValueForSelfNull && isValueForModelNull) {
+                           continue;
+                       } else if (isValueForSelfNull == (!isValueForModelNull)) {
+                           return NO;
+                       }
+                       if ([valueForSelf x_isEqualTo:valueForModel]) {
+                           continue;
+                       }
+                       return NO;
+                   }
+                   return YES;
+               }
     
     if (![self isKindOfClass:[model class]]) {
         return NO;
@@ -549,10 +549,10 @@ NSString *XModelParser_SettingName(NSString *gettingName) {
                             [type isEqualToString:@"@\"NSMutableAttributedString\""] ||
                             [type isEqualToString:@"@\"NSURL\""]) {
                             
-                            if ([value isKindOfClass:NSStringClass()]) {
-                                NSString *className = [type substringWithRange:NSMakeRange(2, type.length - 3)];
-                                newValue = [[NSClassFromString(className) alloc] initWithString:value];
-                            }
+                            newValue = [NSString stringWithFormat:@"%@", value];
+                            
+                            NSString *className = [type substringWithRange:NSMakeRange(2, type.length - 3)];
+                            newValue = [[NSClassFromString(className) alloc] initWithString:newValue];
                             
                         } else if ([type isEqualToString:@"@\"NSArray\""] ||
                                    [type isEqualToString:@"@\"NSMutableArray\""] ||
@@ -599,12 +599,15 @@ NSString *XModelParser_SettingName(NSString *gettingName) {
                         } else {
                             
                             if ([type isEqualToString:@"@"] ||
-                                [type isEqualToString:@"@\"NSString\""] ||
                                 [type isEqualToString:@"@\"NSNumber\""] ||
                                 [type isEqualToString:@"@\"NSDictionary\""] ||
                                 [type isEqualToString:@"@\"NSMutableDictionary\""]) {
                                 
                                 newValue = value;
+                                
+                            } else if ([type isEqualToString:@"@\"NSString\""]) {
+                                
+                                newValue = [NSString stringWithFormat:@"%@", value];
                                 
                             } else {
                                 NSString *className = [type substringWithRange:NSMakeRange(2, type.length - 3)];
