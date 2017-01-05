@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@class XScrollView;
-
 @protocol XPageViewControllerDelegate <NSObject>
 
 @optional
@@ -45,7 +43,7 @@
 
 @property (nonatomic, strong)   NSMutableArray  *   viewControllers;
 
-@property (nonatomic, strong)   XScrollView     *   scrollView;
+@property (nonatomic, strong, readonly)   UIScrollView    *   scrollView;
 
 - (instancetype)initWithViewControllers:(NSArray *)viewControllers;
 

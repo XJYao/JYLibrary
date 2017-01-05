@@ -11,7 +11,7 @@
 #import "XScrollView.h"
 
 @interface XPageViewController () <UIScrollViewDelegate> {
-    
+    XScrollView *pageScrollView;
 }
 
 @end
@@ -42,18 +42,18 @@
 }
 
 - (void)updateFrame {
-    if (!_scrollView) {
+    if (!pageScrollView) {
         return;
     }
     
     CGRect scrollViewFrame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
-    if (!CGRectEqualToRect(_scrollView.frame, scrollViewFrame)) {
-        [_scrollView setFrame:scrollViewFrame];
+    if (!CGRectEqualToRect(pageScrollView.frame, scrollViewFrame)) {
+        [pageScrollView setFrame:scrollViewFrame];
     }
     
-    CGSize contentSize = CGSizeMake(_scrollView.frame.size.width * _scrollView.subviews.count, _scrollView.frame.size.height);
-    if (!CGSizeEqualToSize(_scrollView.contentSize, contentSize)) {
-        [_scrollView setContentSize:contentSize];
+    CGSize contentSize = CGSizeMake(pageScrollView.frame.size.width * pageScrollView.subviews.count, pageScrollView.frame.size.height);
+    if (!CGSizeEqualToSize(pageScrollView.contentSize, contentSize)) {
+        [pageScrollView setContentSize:contentSize];
     }
     
     if ([XTool isArrayEmpty:self.childViewControllers]) {
@@ -64,7 +64,7 @@
         if (childViewController.view.superview) {
             NSInteger index = [self.childViewControllers indexOfObject:childViewController];
             
-            CGRect childViewFrame = CGRectMake(_scrollView.frame.size.width * index, 0, _scrollView.frame.size.width, _scrollView.frame.size.height);
+            CGRect childViewFrame = CGRectMake(pageScrollView.frame.size.width * index, 0, pageScrollView.frame.size.width, pageScrollView.frame.size.height);
             if (!CGRectEqualToRect(childViewController.view.frame, childViewFrame)) {
                 [childViewController.view setFrame:childViewFrame];
             }
@@ -88,7 +88,7 @@
     }
     [_viewControllers x_addObject:viewController];
     
-    if (!_scrollView) {
+    if (!pageScrollView) {
         return;
     }
     [self addChildViewController:viewController atIndex:_viewControllers.count - 1];
@@ -111,7 +111,7 @@
 
     [_viewControllers x_insertObject:viewController atIndex:atIndex];
 
-    if (!_scrollView) {
+    if (!pageScrollView) {
         return;
     }
     
@@ -169,13 +169,17 @@
 
 #pragma mark property
 
+- (UIScrollView *)scrollView {
+    return pageScrollView;
+}
+
 - (void)setCurrentPageIndex:(NSInteger)currentPageIndex {
     [self scrollToPageAtIndex:currentPageIndex];
 }
 
 - (void)setBounce:(BOOL)bounce {
     _bounce = bounce;
-    [_scrollView setBounces:_bounce];
+    [pageScrollView setBounces:_bounce];
 }
 
 - (void)setViewControllers:(NSArray *)viewControllers {
@@ -189,7 +193,7 @@
         [_viewControllers addObjectsFromArray:viewControllers];
     }
     
-    if (!_scrollView) {
+    if (!pageScrollView) {
         return;
     }
     
@@ -251,16 +255,16 @@
 }
 
 - (void)addPageScrollView {
-    _scrollView = [[XScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    [_scrollView setBackgroundColor:[UIColor clearColor]];
-    [_scrollView setPagingEnabled:YES];
-    [_scrollView setBounces:_bounce];
-    [_scrollView setShowsHorizontalScrollIndicator:NO];
-    [_scrollView setShowsVerticalScrollIndicator:NO];
-    [_scrollView setScrollsToTop:NO];
-    [_scrollView setDelaysContentTouches:NO];
-    [_scrollView setDelegate:self];
-    [self.view addSubview:_scrollView];
+    pageScrollView = [[XScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    [pageScrollView setBackgroundColor:[UIColor clearColor]];
+    [pageScrollView setPagingEnabled:YES];
+    [pageScrollView setBounces:_bounce];
+    [pageScrollView setShowsHorizontalScrollIndicator:NO];
+    [pageScrollView setShowsVerticalScrollIndicator:NO];
+    [pageScrollView setScrollsToTop:NO];
+    [pageScrollView setDelaysContentTouches:NO];
+    [pageScrollView setDelegate:self];
+    [self.view addSubview:pageScrollView];
 }
 
 //add viewControllers to self's childViewController, add viewController's view on the scrollview
@@ -271,7 +275,7 @@
         [childViewController removeFromParentViewController];
     }
     
-    for (UIView *subView in _scrollView.subviews) {
+    for (UIView *subView in pageScrollView.subviews) {
         [subView removeFromSuperview];
     }
     
@@ -288,12 +292,12 @@
     
     if (!childViewController.view.superview) {
         
-        CGRect childViewFrame = CGRectMake(_scrollView.frame.size.width * atIndex, 0, _scrollView.frame.size.width, _scrollView.frame.size.height);
+        CGRect childViewFrame = CGRectMake(pageScrollView.frame.size.width * atIndex, 0, pageScrollView.frame.size.width, pageScrollView.frame.size.height);
         if (!CGRectEqualToRect(childViewController.view.frame, childViewFrame)) {
             [childViewController.view setFrame:childViewFrame];
         }
         
-        [_scrollView addSubview:childViewController.view];
+        [pageScrollView addSubview:childViewController.view];
         [childViewController didMoveToParentViewController:self];
     }
 }
@@ -341,14 +345,14 @@
         return;
     }
     
-    if (!_scrollView) {
+    if (!pageScrollView) {
         return;
     }
     
-    CGPoint contentOffset = _scrollView.contentOffset;
-    if (contentOffset.x != _scrollView.frame.size.width * atIndex) {
-        contentOffset.x = _scrollView.frame.size.width * atIndex;
-        [_scrollView setContentOffset:contentOffset animated:YES];
+    CGPoint contentOffset = pageScrollView.contentOffset;
+    if (contentOffset.x != pageScrollView.frame.size.width * atIndex) {
+        contentOffset.x = pageScrollView.frame.size.width * atIndex;
+        [pageScrollView setContentOffset:contentOffset animated:YES];
     }
 }
 
