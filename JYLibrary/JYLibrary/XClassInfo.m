@@ -205,6 +205,8 @@ XEncodingType getEncodingType(const char *typeEncoding) {
         _name = [NSString stringWithUTF8String:name];
     }
     
+    _attributes = property_getAttributes(property);
+    
     XEncodingType type = XEncodingTypeUnknown;
     
     unsigned int attributesCount = 0;

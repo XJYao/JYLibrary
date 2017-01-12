@@ -149,6 +149,7 @@ typedef NS_OPTIONS(NSUInteger, XEncodingType) {
 @property (nonatomic, assign, readonly) Class cls;
 @property (nonatomic, assign, readonly) SEL getter;
 @property (nonatomic, assign, readonly) SEL setter;
+@property (nonatomic, readonly)         const char *attributes;
 
 - (instancetype)initWithProperty:(objc_property_t)property;
 
