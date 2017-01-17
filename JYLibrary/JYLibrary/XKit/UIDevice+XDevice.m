@@ -71,11 +71,11 @@
 }
 
 - (NSString *)ipAddressWIFI {
-    return [self ipAddressWithIfaName:@"en0"];
+    return [self ipAddressWithIfaName:@"en0" ipv6:NO];
 }
 
 - (NSString *)ipAddressCell {
-    return [self ipAddressWithIfaName:@"pdp_ip0"];
+    return [self ipAddressWithIfaName:@"pdp_ip0" ipv6:NO];
 }
 
 - (NSString *)machineModel {
@@ -259,7 +259,7 @@
     return (__bridge_transfer NSString *)string;
 }
 
-- (NSString *)ipAddressWithIfaName:(NSString *)name {
+- (NSString *)ipAddressWithIfaName:(NSString *)name ipv6:(BOOL)ipv6 {
     if (name.length == 0) return nil;
     NSString *address = nil;
     struct ifaddrs *addrs = NULL;
@@ -278,10 +278,12 @@
                     } break;
                         
                     case AF_INET6: { // IPv6
-                        char str[INET6_ADDRSTRLEN] = {0};
-                        inet_ntop(family, &(((struct sockaddr_in6 *)addr->ifa_addr)->sin6_addr), str, sizeof(str));
-                        if (strlen(str) > 0) {
-                            address = [NSString stringWithUTF8String:str];
+                        if (ipv6) {
+                            char str[INET6_ADDRSTRLEN] = {0};
+                            inet_ntop(family, &(((struct sockaddr_in6 *)addr->ifa_addr)->sin6_addr), str, sizeof(str));
+                            if (strlen(str) > 0) {
+                                address = [NSString stringWithUTF8String:str];
+                            }
                         }
                     }
                         
