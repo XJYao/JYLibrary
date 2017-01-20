@@ -623,4 +623,50 @@
     return [@"http://" stringByAppendingString:URL];
 }
 
++ (BOOL)IsCertificatesTrusted:(NSArray<NSData *> *)certDatas {
+    
+    if (certDatas.count == 0) {
+        return NO;
+    }
+    
+    CFMutableArrayRef certs = CFArrayCreateMutable(CFAllocatorGetDefault(), 0, &kCFTypeArrayCallBacks);
+    
+    for (NSData *certData in certDatas) {
+        SecCertificateRef cert = SecCertificateCreateWithData(NULL, (__bridge CFDataRef) certData);
+        if (!cert) {
+            continue;
+        }
+        
+        CFArrayAppendValue(certs, cert);
+        CFRelease(cert);
+    }
+    
+    SecPolicyRef policy = SecPolicyCreateBasicX509();
+    SecTrustRef trust;
+    
+    OSStatus err = SecTrustCreateWithCertificates(certs, policy, &trust);
+    CFRelease(certs);
+    CFRelease(policy);
+    if (!trust) {
+        return NO;
+    }
+    if (err != errSecSuccess) {
+        CFRelease(trust);
+        return NO;
+    }
+    
+    SecTrustResultType trustResult = -1;
+    err = SecTrustEvaluate(trust, &trustResult);
+    CFRelease(trust);
+    if (err != errSecSuccess) {
+        return NO;
+    }
+    
+    if(trustResult == kSecTrustResultUnspecified) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
 @end

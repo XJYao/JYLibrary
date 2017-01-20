@@ -226,4 +226,9 @@
  */
 + (NSString *)insertHTTPAtURLPrefixIfNotFound:(NSString *)URL;
 
+/**
+ 判断指定证书是否已信任，必须是DER格式证书
+ */
++ (BOOL)IsCertificatesTrusted:(NSArray<NSData *> *)certDatas;
+
 @end
