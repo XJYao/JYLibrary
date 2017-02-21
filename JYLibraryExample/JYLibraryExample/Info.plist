@@ -40,9 +40,9 @@
 		<true/>
 	</dict>
 	<key>LSApplicationQueriesSchemes</key>
-	<array>
-		<string>rjportal</string>
-	</array>
+	<array/>
+	<key>NSContactsUsageDescription</key>
+	<string>访问通讯录</string>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

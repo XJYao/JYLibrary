@@ -63,6 +63,7 @@
 #import "UIViewController+XViewController.h"
 #import "UIViewController+XBackButtonHandler.h"
 #import "UIDevice+XDevice.h"
+#import "UIView+XDataBindingView.h"
 
 #import "XImageView.h"
 #import "XScrollView.h"
@@ -75,6 +76,7 @@
 #import "XWebManager.h"
 #import "XLabel.h"
 #import "XFullScreenPopGestureNavigationController.h"
+#import "XEaseInOutImageView.h"
 
 //XFoundation
 #import "NSArray+XArray.h"
