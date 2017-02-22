@@ -10,6 +10,7 @@
 #include <JYLibrary/JYLibrary.h>
 #import "TestModel.h"
 //#import <JavaScriptCore/JavaScriptCore.h>
+#import "JYLabel.h"
 
 @interface ViewController () <XWebManagerDelegate> {
     XWebManager *web;
@@ -23,22 +24,28 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    web = [[XWebManager alloc] initWithUseUIWebView:YES];
-    [web setDelegate:self];
+    JYLabel *label = [[JYLabel alloc] init];
+    [label setBackgroundColor:[UIColor whiteColor]];
+    [self.view addSubview:label];
+    label.x_edge.x_equalTo(self.view).x_constant(0);
     
-    [web addScriptMessageHandlerWithName:@"AppModel"];
     
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"File" ofType:@"html"];
-    NSURL *url = [NSURL fileURLWithPath:path];
-    
-    path = @"http://115.236.35.117:8181/eden.oa/mobile/admin/mobileDispatch/indexMobileManage.action?userid=zouh";
-    url = [NSURL URLWithString:path];
-    
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:30];
-    [web loadRequest:request];
-    [self.view addSubview:web.webView];
-    
-    web.webView.x_edge.x_equalTo(self.view).x_constant(0);
+//    web = [[XWebManager alloc] initWithUseUIWebView:YES];
+//    [web setDelegate:self];
+//    
+//    [web addScriptMessageHandlerWithName:@"AppModel"];
+//    
+//    NSString *path = [[NSBundle mainBundle] pathForResource:@"File" ofType:@"html"];
+//    NSURL *url = [NSURL fileURLWithPath:path];
+//    
+//    path = @"http://115.236.35.117:8181/eden.oa/mobile/admin/mobileDispatch/indexMobileManage.action?userid=zouh";
+//    url = [NSURL URLWithString:path];
+//    
+//    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:30];
+//    [web loadRequest:request];
+//    [self.view addSubview:web.webView];
+//    
+//    web.webView.x_edge.x_equalTo(self.view).x_constant(0);
     
 //    JSContext *context = [[JSContext alloc] init];
     
@@ -70,53 +77,53 @@
 //    [context evaluateScript:@"OCObj.sum = OCObj.add(2,3)"];
     
     
-    
-    NSDictionary *dic = @{@"unknownObj" : [NSNull null], @"str" : @"abc", @"mutableStr" : @"cdef", @"attributedStr" : @"wewr", @"mutableAttributedStr" : @"sdcwwwe", @"number" : @(9),
-                          @"cInt" : @(-1), @"democUInt" : @(2), @"cShort" : @(-10), @"cUShort" : @(11), @"cLong" : @(1234), @"cULong" : @(1232),
-                          @"cLongLong" : @(-1287362), @"cULongLong" : @(2112112), @"cChar" : @(false), @"ocBOOL" : @(YES), @"cbool" : @(true),
-                          @"cFloat" : @(1.09), @"cDouble" : @(2.09382), @"cLongDouble" : @(3.12134), @"cCGFloat" : @(23.13412),
-                          @"cInteger" : @"-9834", @"cUInteger" : @"9821",
-                          
-                          @"arr" : @[@"12", @"23"],
-                          @"subTestModelArr" : @[@{@"name" : @"小明", @"age" : @(3)}, @{@"name" : @"老王", @"age" : @(88)}],
-                          @"mutableArr" : @[@"dsf", @"ewcew", @(993)],
-                          
-                          @"dic" : @{@"heh" : @"zzcc"},
-                          @"mutableDic" : @{@"cca" : @"dwwe"},
-                          
-                          @"set" : @[@"cwe", @"qwaf"],
-                          @"mutableSet" : @[@{@"name" : @"哈哈", @"age" : @(11)}, @{@"name" : @"呵呵", @"age" : @(13)}],
-                          @"countedSet" : @[@(YES), @"NO", @"dfede"],
-                          
-                          @"subTestModel" : @{@"name" : @"翠花", @"age" : @(18)},
-                          
-                          @"name" : @"自定义"
-                          };
-    
-    NSData *jsonData = [XJsonParser jsonDataWithObject:dic error:NULL];
-    NSString *jsonString = [XJsonParser jsonStringWithObject:dic error:NULL];
-    
-    TestModel *model1 = [TestModel x_modelFromDictionary:dic];
-    TestModel *model2 = [TestModel x_modelFromJson:jsonData];
-    TestModel *model3 = [TestModel x_modelFromJson:jsonString];
-
-    TestModel *model4 = [[TestModel alloc] init];
-    [model4 x_setValueFromDictionary:dic];
-    TestModel *model5 = [[TestModel alloc] init];
-    [model5 x_setValueFromJson:jsonData];
-    TestModel *model6 = [[TestModel alloc] init];
-    [model6 x_setValueFromJson:jsonString];
-    
-    id models7 = [TestModel x_modelsFromCollection:@[dic, [dic mutableCopy]]];
-    id models8 = [TestModel x_modelsFromCollection:[NSSet setWithObjects:dic, @{@"name" : @"大废物废物"}, nil]];
-    
-    TestModel *model9 = [[TestModel alloc] init];
-    [model1 x_copyValueTo:model9];
-    
-    BOOL isEqualResult1 = [TestModel x_isEqualFrom:model1 to:model3];
-    BOOL isEqualResult2 = [model1 x_isEqualTo:models8];
-    
-    NSLog(@"hja");
+//    
+//    NSDictionary *dic = @{@"unknownObj" : [NSNull null], @"str" : @"abc", @"mutableStr" : @"cdef", @"attributedStr" : @"wewr", @"mutableAttributedStr" : @"sdcwwwe", @"number" : @(9),
+//                          @"cInt" : @(-1), @"democUInt" : @(2), @"cShort" : @(-10), @"cUShort" : @(11), @"cLong" : @(1234), @"cULong" : @(1232),
+//                          @"cLongLong" : @(-1287362), @"cULongLong" : @(2112112), @"cChar" : @(false), @"ocBOOL" : @(YES), @"cbool" : @(true),
+//                          @"cFloat" : @(1.09), @"cDouble" : @(2.09382), @"cLongDouble" : @(3.12134), @"cCGFloat" : @(23.13412),
+//                          @"cInteger" : @"-9834", @"cUInteger" : @"9821",
+//                          
+//                          @"arr" : @[@"12", @"23"],
+//                          @"subTestModelArr" : @[@{@"name" : @"小明", @"age" : @(3)}, @{@"name" : @"老王", @"age" : @(88)}],
+//                          @"mutableArr" : @[@"dsf", @"ewcew", @(993)],
+//                          
+//                          @"dic" : @{@"heh" : @"zzcc"},
+//                          @"mutableDic" : @{@"cca" : @"dwwe"},
+//                          
+//                          @"set" : @[@"cwe", @"qwaf"],
+//                          @"mutableSet" : @[@{@"name" : @"哈哈", @"age" : @(11)}, @{@"name" : @"呵呵", @"age" : @(13)}],
+//                          @"countedSet" : @[@(YES), @"NO", @"dfede"],
+//                          
+//                          @"subTestModel" : @{@"name" : @"翠花", @"age" : @(18)},
+//                          
+//                          @"name" : @"自定义"
+//                          };
+//    
+//    NSData *jsonData = [XJsonParser jsonDataWithObject:dic error:NULL];
+//    NSString *jsonString = [XJsonParser jsonStringWithObject:dic error:NULL];
+//    
+//    TestModel *model1 = [TestModel x_modelFromDictionary:dic];
+//    TestModel *model2 = [TestModel x_modelFromJson:jsonData];
+//    TestModel *model3 = [TestModel x_modelFromJson:jsonString];
+//
+//    TestModel *model4 = [[TestModel alloc] init];
+//    [model4 x_setValueFromDictionary:dic];
+//    TestModel *model5 = [[TestModel alloc] init];
+//    [model5 x_setValueFromJson:jsonData];
+//    TestModel *model6 = [[TestModel alloc] init];
+//    [model6 x_setValueFromJson:jsonString];
+//    
+//    id models7 = [TestModel x_modelsFromCollection:@[dic, [dic mutableCopy]]];
+//    id models8 = [TestModel x_modelsFromCollection:[NSSet setWithObjects:dic, @{@"name" : @"大废物废物"}, nil]];
+//    
+//    TestModel *model9 = [[TestModel alloc] init];
+//    [model1 x_copyValueTo:model9];
+//    
+//    BOOL isEqualResult1 = [TestModel x_isEqualFrom:model1 to:model3];
+//    BOOL isEqualResult2 = [model1 x_isEqualTo:models8];
+//    
+//    NSLog(@"hja");
 }
 
 - (void)didReceiveMemoryWarning {

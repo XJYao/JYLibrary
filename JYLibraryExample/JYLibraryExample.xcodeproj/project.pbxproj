@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		54945D7E5BBBC58EA4F27A46 /* libPods-JYLibraryExample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 67E3EBB536FB4BD49D7DB348 /* libPods-JYLibraryExample.a */; };
+		562DF4921E5D7D5900AD10DD /* JYLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 562DF4911E5D7D5900AD10DD /* JYLabel.m */; };
 		565177AA1DAB287B008010F3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 565177A91DAB287B008010F3 /* main.m */; };
 		565177AD1DAB287B008010F3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 565177AC1DAB287B008010F3 /* AppDelegate.m */; };
 		565177B01DAB287B008010F3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 565177AF1DAB287B008010F3 /* ViewController.m */; };
@@ -39,6 +40,8 @@
 
 /* Begin PBXFileReference section */
 		4AEE26F55451426547F618D5 /* Pods-JYLibraryExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JYLibraryExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-JYLibraryExample/Pods-JYLibraryExample.release.xcconfig"; sourceTree = "<group>"; };
+		562DF4901E5D7D5900AD10DD /* JYLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYLabel.h; sourceTree = "<group>"; };
+		562DF4911E5D7D5900AD10DD /* JYLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYLabel.m; sourceTree = "<group>"; };
 		565177A51DAB287B008010F3 /* JYLibraryExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JYLibraryExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		565177A91DAB287B008010F3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		565177AB1DAB287B008010F3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -134,6 +137,8 @@
 				56F5E2021DAC9930000B561C /* TestModel.h */,
 				56F5E2031DAC9930000B561C /* TestModel.m */,
 				56EE9CCE1DB7607500353025 /* File.html */,
+				562DF4901E5D7D5900AD10DD /* JYLabel.h */,
+				562DF4911E5D7D5900AD10DD /* JYLabel.m */,
 			);
 			path = JYLibraryExample;
 			sourceTree = "<group>";
@@ -361,6 +366,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				565177B01DAB287B008010F3 /* ViewController.m in Sources */,
+				562DF4921E5D7D5900AD10DD /* JYLabel.m in Sources */,
 				565177AD1DAB287B008010F3 /* AppDelegate.m in Sources */,
 				565177AA1DAB287B008010F3 /* main.m in Sources */,
 				56F5E2041DAC9930000B561C /* TestModel.m in Sources */,
