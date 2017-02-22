@@ -19,10 +19,7 @@
 @end
 
 @implementation ViewController
-- (void)ddd {
-    NSLog(@"12");
-           NSLog(@"");
-}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
