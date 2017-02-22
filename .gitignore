@@ -5,3 +5,4 @@ output
 JYLibraryExample/Podfile.lock
 JYLibraryExample/Pods
 JYLibraryExample/JYLibraryExample.xcworkspace
+.clang-format
