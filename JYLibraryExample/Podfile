@@ -9,7 +9,7 @@ end
 
 #第三方
 def vendorsPod
-    pod 'SpaceCommander'
+    
 end
 
 target 'JYLibraryExample' do

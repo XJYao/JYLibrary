@@ -171,6 +171,14 @@
     [selectPickerButton setTitle:_selectButtonTitle forState:UIControlStateNormal];
 }
 
+- (BOOL)isShowing {
+    return !self.isHidden;
+}
+
+- (NSArray *)titles {
+    return [NSArray arrayWithArray:pickerTitlesArray];
+}
+
 #pragma mark TouchEvent Method
 
 - (void)cancelPicker {

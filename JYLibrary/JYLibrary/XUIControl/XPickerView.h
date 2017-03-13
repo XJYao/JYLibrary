@@ -26,6 +26,9 @@
 @property (nonatomic, copy) NSString *cancelButtonTitle;
 @property (nonatomic, copy) NSString *selectButtonTitle;
 
+@property (nonatomic, assign, readonly) BOOL isShowing;
+@property (nonatomic, strong, readonly) NSArray *titles;
+
 - (instancetype)initWithTitles:(NSArray *)titles onView:(UIView *)view;
 
 - (void)setFrameWithX:(CGFloat)x y:(CGFloat)y width:(CGFloat)width;

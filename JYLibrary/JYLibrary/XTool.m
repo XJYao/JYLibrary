@@ -22,10 +22,10 @@
 }
 
 + (BOOL)isStringEmpty:(NSString *)str {
-    if ([self isObjectNull:str] || [str isEqualToString:@""] || str.length <= 0) {
-        return YES;
-    } else {
+    if (![self isObjectNull:str] && str.length > 0) {
         return NO;
+    } else {
+        return YES;
     }
 }
 
