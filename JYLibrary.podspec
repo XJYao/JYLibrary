@@ -121,7 +121,7 @@ Pod::Spec.new do |s|
   # s.library   = "iconv"
   s.libraries = "z.1.2.5"
 
-
+ 
   # ――― Project Settings ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #
   #  If your library depends on compiler flags you can set them in the xcconfig hash
