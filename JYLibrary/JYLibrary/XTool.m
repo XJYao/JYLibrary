@@ -259,7 +259,7 @@
         launchImageName = @"Default-568h@2x";
     } else if (resolution.width == 750 && resolution.height == 1334) {
         launchImageName = @"Default-667h@2x";
-    } else if (resolution.width == 1242 && resolution.height == 2208) {
+    } else {
         launchImageName = @"Default-736h@3x";
     }
     
