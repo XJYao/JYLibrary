@@ -9,11 +9,17 @@
 #import "UIScrollView+XScrollView.h"
 #import <objc/runtime.h>
 
+typedef void (^XScrollViewObserveContentSizeBlock)(CGSize contentSize);
+typedef void (^XScrollDirectionBlock)(XScrollDirection scrollDirection);
+
 @interface UIScrollView ()
 
-@property (nonatomic, assign) BOOL                  isObserving;
-@property (nonatomic, assign) XScrollDirectionBlock scrollDirectionBlock;
-@property (nonatomic, assign) CGFloat               beginObserveScrollMinOffset;
+@property (nonatomic, assign) BOOL                  x_isContentSizeObserving;
+@property (nonatomic, assign) XScrollViewObserveContentSizeBlock x_observeContentSizeBlock;
+
+@property (nonatomic, assign) BOOL                  x_isContentOffsetObserving;
+@property (nonatomic, assign) XScrollDirectionBlock x_scrollDirectionBlock;
+@property (nonatomic, assign) CGFloat               x_beginObserveScrollMinOffset;
 
 @end
 
@@ -21,20 +27,34 @@
 
 #pragma mark - Public
 
-- (void)observeScrollDirection:(CGFloat)minOffset direction:(XScrollDirectionBlock)block {
-    if (!self.isObserving) {
-        [self addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionOld context:NULL];
-        self.isObserving = YES;
+- (void)x_observeContentSize:(void (^)(CGSize))block {
+    self.x_observeContentSizeBlock = block;
+    if (!self.x_isContentSizeObserving) {
+        [self addObserver:self forKeyPath:@"contentSize" options:NSKeyValueObservingOptionOld context:NULL];
+        self.x_isContentSizeObserving = YES;
     }
-
-    self.beginObserveScrollMinOffset = minOffset;
-    self.scrollDirectionBlock = block;
 }
 
-- (void)removeScrollDirectionObserver {
-    if (self.isObserving) {
+- (void)x_removeContentSizeObserver {
+    if (self.x_isContentSizeObserving) {
+        [self removeObserver:self forKeyPath:@"contentSize"];
+        self.x_isContentSizeObserving = NO;
+    }
+}
+
+- (void)x_observeScrollDirection:(CGFloat)minOffset direction:(void (^)(XScrollDirection))block {
+    self.x_beginObserveScrollMinOffset = minOffset;
+    self.x_scrollDirectionBlock = block;
+    if (!self.x_isContentOffsetObserving) {
+        [self addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionOld context:NULL];
+        self.x_isContentOffsetObserving = YES;
+    }
+}
+
+- (void)x_removeScrollDirectionObserver {
+    if (self.x_isContentOffsetObserving) {
         [self removeObserver:self forKeyPath:@"contentOffset"];
-        self.isObserving = NO;
+        self.x_isContentOffsetObserving = NO;
     }
 }
 
@@ -42,31 +62,50 @@
 
 #pragma mark Private Property
 
-static const void *XScrollViewIsObservingKey = &XScrollViewIsObservingKey;
+static const void *XScrollViewIsContentSizeObservingKey = &XScrollViewIsContentSizeObservingKey;
+static const void *XScrollViewObserveContentSizeBlockKey = &XScrollViewObserveContentSizeBlockKey;
+
+- (void)setX_isContentSizeObserving:(BOOL)isObserving {
+    objc_setAssociatedObject(self, XScrollViewIsContentSizeObservingKey, [NSNumber numberWithBool:isObserving], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (BOOL)x_isContentSizeObserving {
+    return [objc_getAssociatedObject(self, XScrollViewIsContentSizeObservingKey) boolValue];
+}
+
+- (void)setX_observeContentSizeBlock:(XScrollViewObserveContentSizeBlock)block {
+    objc_setAssociatedObject(self, XScrollViewObserveContentSizeBlockKey, block, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (XScrollViewObserveContentSizeBlock)x_observeContentSizeBlock {
+    return objc_getAssociatedObject(self, XScrollViewObserveContentSizeBlockKey);
+}
+
+static const void *XScrollViewIsContentOffsetObservingKey = &XScrollViewIsContentOffsetObservingKey;
 static const void *XScrollViewScrollDirectionBlockKey = &XScrollViewScrollDirectionBlockKey;
 static const void *XScrollViewBeginObserveScrollMinOffsetKey = &XScrollViewBeginObserveScrollMinOffsetKey;
 
-- (void)setIsObserving:(BOOL)observing {
-    objc_setAssociatedObject(self, XScrollViewIsObservingKey, [NSNumber numberWithBool:observing], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)setX_isContentOffsetObserving:(BOOL)isObserving {
+    objc_setAssociatedObject(self, XScrollViewIsContentOffsetObservingKey, [NSNumber numberWithBool:isObserving], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (BOOL)isObserving {
-    return [objc_getAssociatedObject(self, XScrollViewIsObservingKey) boolValue];
+- (BOOL)x_isContentOffsetObserving {
+    return [objc_getAssociatedObject(self, XScrollViewIsContentOffsetObservingKey) boolValue];
 }
 
-- (void)setScrollDirectionBlock:(XScrollDirectionBlock)block {
+- (void)setX_scrollDirectionBlock:(XScrollDirectionBlock)block {
     objc_setAssociatedObject(self, XScrollViewScrollDirectionBlockKey, block, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (XScrollDirectionBlock)scrollDirectionBlock {
+- (XScrollDirectionBlock)x_scrollDirectionBlock {
     return objc_getAssociatedObject(self, XScrollViewScrollDirectionBlockKey);
 }
 
-- (void)setBeginObserveScrollMinOffset:(CGFloat)offset {
+- (void)setX_beginObserveScrollMinOffset:(CGFloat)offset {
     objc_setAssociatedObject(self, XScrollViewBeginObserveScrollMinOffsetKey, [NSNumber numberWithFloat:offset], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (CGFloat)beginObserveScrollMinOffset {
+- (CGFloat)x_beginObserveScrollMinOffset {
     return [objc_getAssociatedObject(self, XScrollViewBeginObserveScrollMinOffsetKey) floatValue];
 }
 
@@ -85,28 +124,36 @@ static const void *XScrollViewBeginObserveScrollMinOffsetKey = &XScrollViewBegin
         } else {
             if (newContentOffset.x == oldContentOffset.x) {
                 scrollDirection = XScrollDirectionHorizontalStop;
-            } else if (newContentOffset.x > oldContentOffset.x + self.beginObserveScrollMinOffset) {
+            } else if (newContentOffset.x > oldContentOffset.x + self.x_beginObserveScrollMinOffset) {
                 scrollDirection = XScrollDirectionHorizontalRight;
-            } else if (newContentOffset.x < oldContentOffset.x - self.beginObserveScrollMinOffset) {
+            } else if (newContentOffset.x < oldContentOffset.x - self.x_beginObserveScrollMinOffset) {
                 scrollDirection = XScrollDirectionHorizontalLeft;
             }
             
             if (newContentOffset.y == oldContentOffset.y) {
                 scrollDirection |= XScrollDirectionVerticalStop;
-            } else if (newContentOffset.y > oldContentOffset.y + self.beginObserveScrollMinOffset) {
+            } else if (newContentOffset.y > oldContentOffset.y + self.x_beginObserveScrollMinOffset) {
                 scrollDirection |= XScrollDirectionVerticalBottom;
-            } else if (newContentOffset.y < oldContentOffset.y - self.beginObserveScrollMinOffset) {
+            } else if (newContentOffset.y < oldContentOffset.y - self.x_beginObserveScrollMinOffset) {
                 scrollDirection |= XScrollDirectionVerticalTop;
             }
         }
         
-        if (self.scrollDirectionBlock) {
-            self.scrollDirectionBlock(scrollDirection);
+        if (self.x_scrollDirectionBlock) {
+            self.x_scrollDirectionBlock(scrollDirection);
         }
         
         id x_delegate = self.delegate;
-        if(x_delegate && [x_delegate respondsToSelector:@selector(x_scrollDirection:)]) {
-            [x_delegate x_scrollDirection:scrollDirection];
+        if(x_delegate && [x_delegate respondsToSelector:@selector(x_scrollView:scrollDirection:)]) {
+            [x_delegate x_scrollView:self scrollDirection:scrollDirection];
+        }
+    } else if ([keyPath isEqualToString:@"contentSize"]) {
+        if (self.x_observeContentSizeBlock) {
+            self.x_observeContentSizeBlock(self.contentSize);
+        }
+        id x_delegate = self.delegate;
+        if(x_delegate && [x_delegate respondsToSelector:@selector(x_scrollView:contentSize:)]) {
+            [x_delegate x_scrollView:self contentSize:self.contentSize];
         }
     }
 }

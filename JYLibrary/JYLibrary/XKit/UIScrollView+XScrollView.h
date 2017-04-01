@@ -23,16 +23,19 @@ typedef NS_OPTIONS(NSUInteger, XScrollDirection) {
 @protocol XScrollViewDirectionDelegate <UIScrollViewDelegate>
 
 @optional
-- (void)x_scrollDirection:(XScrollDirection)scrollDirection;
+- (void)x_scrollView:(UIScrollView *)scrollView scrollDirection:(XScrollDirection)scrollDirection;
+- (void)x_scrollView:(UIScrollView *)scrollView contentSize:(CGSize)contentSize;
 
 @end
 
 @interface UIScrollView (XScrollView)
 
-typedef void (^XScrollDirectionBlock)(XScrollDirection scrollDirection);
+- (void)x_observeContentSize:(void (^)(CGSize contentSize))block;
 
-- (void)observeScrollDirection:(CGFloat)minOffset direction:(XScrollDirectionBlock)block;
+- (void)x_removeContentSizeObserver;
 
-- (void)removeScrollDirectionObserver;
+- (void)x_observeScrollDirection:(CGFloat)minOffset direction:(void (^)(XScrollDirection scrollDirection))block;
+
+- (void)x_removeScrollDirectionObserver;
 
 @end
