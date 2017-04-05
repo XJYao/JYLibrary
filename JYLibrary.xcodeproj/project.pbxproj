@@ -27,6 +27,7 @@
 		568C52E01DBDA8D4009A7047 /* XDeviceAuthorization.m in Sources */ = {isa = PBXBuildFile; fileRef = 568C52DF1DBDA8D4009A7047 /* XDeviceAuthorization.m */; };
 		568C52E11DBDA8E4009A7047 /* XDeviceAuthorization.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 568C52DE1DBDA8D4009A7047 /* XDeviceAuthorization.h */; };
 		5690DD561D51B0350095D298 /* NSString+XMD5Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = 5690DD551D51B0350095D298 /* NSString+XMD5Addition.m */; };
+		56924D571E94F2DB00BFB1EE /* NSAttributedString+XAttributedString.m in Sources */ = {isa = PBXBuildFile; fileRef = 56924D561E94F2DB00BFB1EE /* NSAttributedString+XAttributedString.m */; };
 		56A52F721D51B1CB00AA27E2 /* NSString+XMD5Addition.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5690DD541D51B0350095D298 /* NSString+XMD5Addition.h */; };
 		56A605CA1D55C2DF00BC790D /* XFullScreenPopGestureNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56A605C91D55C2DF00BC790D /* XFullScreenPopGestureNavigationController.m */; };
 		56A84BDB1D50720D0051F889 /* UIViewController+XBackButtonHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 56A84BDA1D50720D0051F889 /* UIViewController+XBackButtonHandler.m */; };
@@ -316,6 +317,8 @@
 		568C52DF1DBDA8D4009A7047 /* XDeviceAuthorization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XDeviceAuthorization.m; sourceTree = "<group>"; };
 		5690DD541D51B0350095D298 /* NSString+XMD5Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+XMD5Addition.h"; sourceTree = "<group>"; };
 		5690DD551D51B0350095D298 /* NSString+XMD5Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+XMD5Addition.m"; sourceTree = "<group>"; };
+		56924D551E94F2DB00BFB1EE /* NSAttributedString+XAttributedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+XAttributedString.h"; sourceTree = "<group>"; };
+		56924D561E94F2DB00BFB1EE /* NSAttributedString+XAttributedString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+XAttributedString.m"; sourceTree = "<group>"; };
 		56A605C81D55C2DF00BC790D /* XFullScreenPopGestureNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XFullScreenPopGestureNavigationController.h; sourceTree = "<group>"; };
 		56A605C91D55C2DF00BC790D /* XFullScreenPopGestureNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XFullScreenPopGestureNavigationController.m; sourceTree = "<group>"; };
 		56A84BD91D50720D0051F889 /* UIViewController+XBackButtonHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+XBackButtonHandler.h"; sourceTree = "<group>"; };
@@ -640,6 +643,8 @@
 				563C469B1D56E96200891B03 /* NSDate+XDate.m */,
 				561FF0141DCAFE47006F2230 /* NSString+XPinyin.h */,
 				561FF0151DCAFE47006F2230 /* NSString+XPinyin.m */,
+				56924D551E94F2DB00BFB1EE /* NSAttributedString+XAttributedString.h */,
+				56924D561E94F2DB00BFB1EE /* NSAttributedString+XAttributedString.m */,
 			);
 			path = XFoundation;
 			sourceTree = "<group>";
@@ -959,6 +964,7 @@
 				56CBF2CF1D4C574A0081886E /* XScrollView.m in Sources */,
 				56CBF2F01D4C574A0081886E /* XPhotoBrowser.m in Sources */,
 				56CBF2E21D4C574A0081886E /* XTaskQueue.m in Sources */,
+				56924D571E94F2DB00BFB1EE /* NSAttributedString+XAttributedString.m in Sources */,
 				56CBF2B01D4C574A0081886E /* XContactAccess.m in Sources */,
 				56CBF2C51D4C574A0081886E /* UIImage+XImage.m in Sources */,
 				56CBF2CC1D4C574A0081886E /* UIWebView+XWebView.m in Sources */,
