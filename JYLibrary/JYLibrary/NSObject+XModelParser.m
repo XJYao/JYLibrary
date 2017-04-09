@@ -36,11 +36,16 @@
     if ([XTool isObjectNull:collection]) {
         return nil;
     }
-    if (![collection isKindOfClass:NSArrayClass()] && ![collection isKindOfClass:NSSetClass()]) {
+    Class cls;
+    if ([collection isKindOfClass:NSArrayClass()]) {
+        cls = NSMutableArrayClass();
+    } else if ([collection isKindOfClass:NSSetClass()]) {
+        cls = NSMutableSetClass();
+    } else {
         return nil;
     }
     
-    id models = [[[[collection class] alloc] init] mutableCopy];
+    id models = [[cls alloc] init];
     
     if ([collection count] == 0) {
         return models;
