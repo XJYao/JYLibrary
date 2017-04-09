@@ -145,4 +145,14 @@ static inline void x_exchangeSelectorFromDifferentClasses(Class theClass1, SEL s
     method_exchangeImplementations(firstMethod, secondMethod);
 }
 
+#define x_singleInstance() \
++ (instancetype)manager { \
+    static id manager = nil; \
+    static dispatch_once_t onceToken; \
+    dispatch_once(&onceToken, ^{ \
+        manager = [[[self class] alloc] init]; \
+    }); \
+    return manager; \
+}
+
 #endif /* XMacro_h */
