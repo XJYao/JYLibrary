@@ -16,6 +16,8 @@
     UIButton *cancelPickerButton;
     UIButton *selectPickerButton;
     NSMutableArray *pickerTitlesArray;
+    
+    XPickerViewBlock selectPickerBlock;
 }
 
 @end
@@ -92,6 +94,10 @@
 
 - (void)selectRow:(NSInteger)row animated:(BOOL)animated {
     [picker selectRow:row inComponent:0 animated:animated];
+}
+
+- (void)selectPickerBlock:(XPickerViewBlock)block {
+    selectPickerBlock = block;
 }
 
 #pragma mark - Private
@@ -188,15 +194,19 @@
 }
 
 - (void)selectPicker {
+    NSString *selectedTitle = @"";
+    NSInteger atIndex = NSNotFound;
+    
+    if (![XTool isArrayEmpty:pickerTitlesArray]) {
+        atIndex = [picker selectedRowInComponent:0];
+        selectedTitle = [pickerTitlesArray x_objectAtIndex:atIndex];
+    }
+    
+    if (selectPickerBlock) {
+        selectPickerBlock(self, selectedTitle, atIndex);
+    }
+    
     if(_delegate && [_delegate respondsToSelector:@selector(selectPicker:withTitle:atIndex:)]) {
-        NSString *selectedTitle = @"";
-        NSInteger atIndex = NSNotFound;
-        
-        if (![XTool isArrayEmpty:pickerTitlesArray]) {
-            atIndex = [picker selectedRowInComponent:0];
-            selectedTitle = [pickerTitlesArray x_objectAtIndex:atIndex];
-        }
-        
         [_delegate selectPicker:self withTitle:selectedTitle atIndex:atIndex];
     }
 }

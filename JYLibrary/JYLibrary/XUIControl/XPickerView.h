@@ -21,6 +21,8 @@
 
 @interface XPickerView : UIView
 
+typedef void (^XPickerViewBlock)(XPickerView *pickerView, NSString *title, NSInteger index);
+
 @property (nonatomic, weak) id <XPickerViewDelegate> delegate;
 
 @property (nonatomic, copy) NSString *cancelButtonTitle;
@@ -42,5 +44,7 @@
 - (void)hide:(BOOL)animated;
 
 - (void)selectRow:(NSInteger)row animated:(BOOL)animated;
+
+- (void)selectPickerBlock:(XPickerViewBlock)block;
 
 @end
