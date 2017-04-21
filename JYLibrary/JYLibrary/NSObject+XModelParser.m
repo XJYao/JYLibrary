@@ -639,7 +639,7 @@ NSString *XModelParser_SettingName(NSString *gettingName) {
                 
             case _C_CHR: {//char / int8 / BOOL
                 
-                char charValue;
+                char charValue = 0;
                 if (value && [value isKindOfClass:NSNumberClass()]) {
                     charValue = [value charValue];
                 } else if (value && [value isKindOfClass:NSStringClass()]) {
@@ -731,7 +731,7 @@ NSString *XModelParser_SettingName(NSString *gettingName) {
                 
             case _C_UCHR: {//unsigned char / unsigned int8
                 
-                unsigned char uCharValue;
+                unsigned char uCharValue = 0;
                 if (value && [value isKindOfClass:NSNumberClass()]) {
                     uCharValue = [value unsignedCharValue];
                 } else if (value && [value isKindOfClass:NSStringClass()]) {

@@ -90,9 +90,9 @@
     NSRange foregroundWhiteColorRange = NSMakeRange(text.length - 3, 3);
     
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text];
-    [attributedString addAttribute:kCTForegroundColorAttributeName value:(id)color.CGColor range:foregroundColorRange];
+    [attributedString addAttribute:(__bridge NSString *)kCTForegroundColorAttributeName value:(id)color.CGColor range:foregroundColorRange];
     [attributedString addAttribute:NSForegroundColorAttributeName value:color range:foregroundColorRange];
-    [attributedString addAttribute:kCTForegroundColorAttributeName value:(id)whiteColor.CGColor range:foregroundWhiteColorRange];
+    [attributedString addAttribute:(__bridge NSString *)kCTForegroundColorAttributeName value:(id)whiteColor.CGColor range:foregroundWhiteColorRange];
     [attributedString addAttribute:NSForegroundColorAttributeName value:whiteColor range:foregroundWhiteColorRange];
     [attributedString addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, text.length)];
     [attributedString addAttribute:NSFontAttributeName value:subFont range:NSMakeRange(text.length - 4, 1)];

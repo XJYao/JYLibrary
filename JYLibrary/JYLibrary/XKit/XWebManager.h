@@ -22,11 +22,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*! @abstract 是否允许在收到响应后跳转
  */
-- (BOOL)webManager:(XWebManager *)manager allowNavigateAfterResponse:(NSURL *)URL; NS_AVAILABLE(10_10, 8_0);
+- (BOOL)webManager:(XWebManager *)manager allowNavigateAfterResponse:(NSURL *)URL NS_AVAILABLE(10_10, 8_0);
 
 /*! @abstract 接收到服务器跳转请求
  */
-- (BOOL)webManagerDidReceiveServerRedirectForProvisionalNavigation:(XWebManager *)manager; NS_AVAILABLE(10_10, 8_0);
+- (BOOL)webManagerDidReceiveServerRedirectForProvisionalNavigation:(XWebManager *)manager NS_AVAILABLE(10_10, 8_0);
 
 /*! @abstract 开始加载
  */
@@ -42,7 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*! @abstract 内容加载失败
  */
-- (void)webManager:(XWebManager *)manager didFailLoadContentWithError:(NSError *)error; NS_AVAILABLE(10_10, 8_0);
+- (void)webManager:(XWebManager *)manager didFailLoadContentWithError:(NSError *)error NS_AVAILABLE(10_10, 8_0);
 
 /*! @abstract 加载进度
  */
@@ -54,7 +54,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*! @abstract 身份认证
  */
-- (void)webManager:(XWebManager *)manager didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential * credential))completionHandler; NS_AVAILABLE(10_10, 8_0);
+- (void)webManager:(XWebManager *)manager didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential * credential))completionHandler NS_AVAILABLE(10_10, 8_0);
 
 /*! @abstract 打开新窗口
  */
@@ -86,7 +86,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*! @abstract 捕捉到JavaScript调oc的消息
  */
-- (void)webManager:(XWebManager *)manager didReceiveScriptMessage:(id)message handlerName:(NSString *)name; NS_AVAILABLE(10_10, 8_0);
+- (void)webManager:(XWebManager *)manager didReceiveScriptMessage:(id)message handlerName:(NSString *)name NS_AVAILABLE(10_10, 8_0);
 
 @end
 
