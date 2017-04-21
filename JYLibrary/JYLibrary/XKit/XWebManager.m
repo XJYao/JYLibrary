@@ -223,6 +223,7 @@
     [[NSFileManager defaultManager] removeItemAtPath:webKitFolderInCachesfs error:&error];
     
     [[NSURLCache sharedURLCache] removeAllCachedResponses];
+    [[NSURLCache sharedURLCache] setDiskCapacity:0];
 }
 
 + (void)clearCookies {
