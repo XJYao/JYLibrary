@@ -164,7 +164,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*! @abstract 添加js调oc方法的桥梁名。
  */
-- (void)addScriptMessageHandlerWithName:(NSString *)name; NS_AVAILABLE(10_10, 8_0);
+- (void)addScriptMessageHandlerWithName:(NSString *)name NS_AVAILABLE(10_10, 8_0);
 
 @end
 
