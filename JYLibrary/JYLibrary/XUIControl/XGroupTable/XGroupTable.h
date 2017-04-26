@@ -42,6 +42,8 @@ typedef NSArray * (^GetNextLevelDataBlock)(id model);//用于获取下一级数�
 
 @property (nonatomic, assign)   UITableViewCellSeparatorStyle separatorStyle;//分割线样式
 
+@property (nonatomic, assign) BOOL showSelectedBackground;//显示cell选中背景，默认为NO
+
 #pragma mark ---------- method ----------
 
 #pragma mark init

@@ -105,6 +105,9 @@
     if (!cell.currentGroupTableModel) {
         return;
     }
+    if (_showSelectedBackground) {
+        [_tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+    }
     
     if (cell.currentGroupTableModel.nextIsShowing) {//下一级已展开,点击后收起, 从当前点击的行往下查找, 当level比当前行高(即等级更低), 就删除, 一旦遇到等级一样或者更高时, 就退出循环。
         [cell.currentGroupTableModel setNextIsShowing:NO];
@@ -979,6 +982,7 @@
     groupTableCellClassesNameDic = [[NSMutableDictionary alloc] init];
     
     _animated = YES;
+    _showSelectedBackground = NO;
     _separatorStyle = UITableViewCellSeparatorStyleNone;
     groupTableStyle = style;
 }
@@ -1397,7 +1401,10 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    if (!_showSelectedBackground) {
+        [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    }
+    
     XGroupTableCell *cell = (XGroupTableCell *)[tableView cellForRowAtIndexPath:indexPath];
     [self selectRowAtIndexPath:indexPath withCurrentGroupModel:cell.currentGroupTableModel];
 }
