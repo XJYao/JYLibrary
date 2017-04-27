@@ -8,6 +8,7 @@
 
 #import "XCurvesDrawer.h"
 #import "XCurveInfo.h"
+#import "NSArray+XArray.h"
 
 @interface XCurvesDrawer () {
     NSMutableArray<XCurveInfo *> *currentCurves;        //所有曲线

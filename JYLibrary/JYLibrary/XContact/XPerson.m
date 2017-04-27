@@ -8,6 +8,7 @@
 
 #import "XPerson.h"
 #import "XTool.h"
+#import "NSDictionary+XDictionary.h"
 
 @implementation XPerson
 

@@ -9,6 +9,7 @@
 #import "UIImage+XGif.h"
 #import <ImageIO/ImageIO.h>
 #import "UIImage+XImage.h"
+#import "NSArray+XArray.h"
 
 @implementation UIImage (XGif)
 

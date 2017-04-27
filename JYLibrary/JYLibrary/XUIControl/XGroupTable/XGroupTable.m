@@ -13,6 +13,8 @@
 #import "UITableView+XTableView.h"
 #import "XTableView.h"
 #import "XConstraint.h"
+#import "NSDictionary+XDictionary.h"
+#import "NSArray+XArray.h"
 
 @interface XGroupTable() <UITableViewDataSource, UITableViewDelegate> {
     NSMutableDictionary *   groupsDictionary;

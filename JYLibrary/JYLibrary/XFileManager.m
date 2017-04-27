@@ -8,6 +8,7 @@
 
 #import "XFileManager.h"
 #import "XTool.h"
+#import "NSArray+XArray.h"
 
 @implementation XFileManager
 

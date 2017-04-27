@@ -9,6 +9,7 @@
 #import "XContactGroup.h"
 #import "XContactAccess.h"
 #import "XTool.h"
+#import "NSArray+XArray.h"
 
 @implementation XContactGroup
 

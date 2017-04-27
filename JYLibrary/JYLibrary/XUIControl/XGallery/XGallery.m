@@ -11,6 +11,7 @@
 #import "UILabel+XLabel.h"
 #import "XTool.h"
 #import "XFileManager.h"
+#import "NSArray+XArray.h"
 
 @interface XGallery() <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout> {
     UILabel             *   pageNumberLabel;

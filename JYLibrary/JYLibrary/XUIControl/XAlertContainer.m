@@ -11,6 +11,7 @@
 #import "XAnimation.h"
 #import "XTool.h"
 #import "UIColor+XColor.h"
+#import "NSArray+XArray.h"
 
 const UIWindowLevel UIWindowLevelXAlertContainerBackground = 1998.0; // below the alert window, default.
 

@@ -9,6 +9,7 @@
 #import "XCurveInfo.h"
 #import "UIColor+XColor.h"
 #import "XTool.h"
+#import "NSArray+XArray.h"
 
 @implementation XCurveInfo
 

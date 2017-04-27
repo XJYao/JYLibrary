@@ -8,6 +8,7 @@
 
 #import "NSString+XString.h"
 #import "XIOSVersion.h"
+#import "NSArray+XArray.h"
 
 @implementation NSString (XString)
 

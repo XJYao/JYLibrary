@@ -12,6 +12,8 @@
 #import "XAnimation.h"
 #import "UILabel+XLabel.h"
 #import "UIColor+XColor.h"
+#import "NSArray+XArray.h"
+#import "XMacro.h"
 
 @interface XTabBar() <UIScrollViewDelegate> {
     XScrollView     *   tabBarScrollView;

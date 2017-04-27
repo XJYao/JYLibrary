@@ -9,6 +9,7 @@
 #import "XPageViewController.h"
 #import "XTool.h"
 #import "XScrollView.h"
+#import "NSArray+XArray.h"
 
 @interface XPageViewController () <UIScrollViewDelegate> {
     XScrollView *pageScrollView;

@@ -11,6 +11,8 @@
 #import "XTool.h"
 #import "UILabel+XLabel.h"
 #import "UIImageView+XWebImageView.h"
+#import "XMacro.h"
+#import "NSArray+XArray.h"
 
 @implementation XBottomBarModel
 

@@ -8,6 +8,8 @@
 
 #import "XTaskQueue.h"
 #import "XTask.h"
+#import "NSDictionary+XDictionary.h"
+#import "NSArray+XArray.h"
 
 @interface XTaskQueue () {
     NSMutableDictionary *taskDictionary;

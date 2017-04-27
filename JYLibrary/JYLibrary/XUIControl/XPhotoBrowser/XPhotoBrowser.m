@@ -13,6 +13,7 @@
 #import "XFileManager.h"
 #import "UIImage+XImage.h"
 #import "XThread.h"
+#import "NSArray+XArray.h"
 
 @interface XPhotoBrowser() <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout> {
     UILabel             *   pageNumberLabel;

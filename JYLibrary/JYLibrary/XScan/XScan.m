@@ -10,6 +10,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "XDeviceAuthorization.h"
 #import "XIOSVersion.h"
+#import "NSArray+XArray.h"
 
 typedef void (^XScanCompletedBlock)(NSString *);
 

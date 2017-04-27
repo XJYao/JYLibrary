@@ -9,6 +9,7 @@
 #import "XTitleView.h"
 #import "XTool.h"
 #import "UILabel+XLabel.h"
+#import "XMacro.h"
 
 #define maxLeftTextLength   2
 #define leftControlTag      1

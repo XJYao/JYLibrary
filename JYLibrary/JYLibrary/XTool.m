@@ -10,6 +10,8 @@
 #import "XThread.h"
 #import "XFileManager.h"
 #import "XIOSVersion.h"
+#import "XMacro.h"
+#import "NSArray+XArray.h"
 
 @implementation XTool
 

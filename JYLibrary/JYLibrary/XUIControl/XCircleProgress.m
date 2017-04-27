@@ -12,6 +12,8 @@
 #import "UIColor+XColor.h"
 #import "XThread.h"
 #import "XNotification.h"
+#import "XMacro.h"
+#import "NSArray+XArray.h"
 
 @interface XCircleProgress () {
     NSArray *observableKeypaths;

@@ -10,6 +10,7 @@
 #import "XTool.h"
 #import "XAnimation.h"
 #import "UIImage+XImage.h"
+#import "NSArray+XArray.h"
 
 @interface XPickerView () <UIPickerViewDataSource, UIPickerViewDelegate> {
     UIPickerView *picker;

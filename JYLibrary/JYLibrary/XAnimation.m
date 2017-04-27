@@ -8,6 +8,7 @@
 
 #import "XAnimation.h"
 #import <QuartzCore/QuartzCore.h>
+#import "NSArray+XArray.h"
 
 @implementation XAnimation
 

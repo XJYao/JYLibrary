@@ -12,6 +12,8 @@
 #import <objc/runtime.h>
 #import "XThread.h"
 #import "XContactAccess.h"
+#import "NSArray+XArray.h"
+#import "NSDictionary+XDictionary.h"
 
 @implementation XContactPerson
 

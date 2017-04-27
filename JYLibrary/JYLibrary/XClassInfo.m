@@ -7,6 +7,8 @@
 //
 
 #import "XClassInfo.h"
+#import "NSArray+XArray.h"
+#import "NSDictionary+XDictionary.h"
 
 XEncodingType getEncodingType(const char *typeEncoding) {
     char *type = (char *)typeEncoding;

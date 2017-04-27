@@ -9,6 +9,8 @@
 #import "UIImage+XImage.h"
 #import "XTool.h"
 #import "XFileManager.h"
+#import "NSArray+XArray.h"
+#import "XMacro.h"
 
 @implementation UIImage (XImage)
 

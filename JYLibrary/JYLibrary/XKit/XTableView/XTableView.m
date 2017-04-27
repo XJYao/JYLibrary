@@ -10,6 +10,7 @@
 #import "XTool.h"
 #import "XThread.h"
 #import "UITableView+XTableView.h"
+#import "NSArray+XArray.h"
 
 @interface XTableView () {
     XTableViewLoadVisibleRowsCompletedBlock loadVisibleRowsCompletedBlock;

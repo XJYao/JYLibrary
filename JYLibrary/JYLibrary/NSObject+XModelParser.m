@@ -11,6 +11,8 @@
 #import <objc/message.h>
 #import "XTool.h"
 #import "XClass.h"
+#import "NSArray+XArray.h"
+#import "NSDictionary+XDictionary.h"
 
 @implementation NSObject (XModelParser)
 

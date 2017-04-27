@@ -9,6 +9,7 @@
 #import "XConstraint.h"
 #import <objc/runtime.h>
 #import "XIOSVersion.h"
+#import "NSArray+XArray.h"
 
 @interface UIView ()
 

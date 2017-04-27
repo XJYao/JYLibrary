@@ -12,6 +12,8 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import "XTool.h"
 #import <UserNotifications/UserNotifications.h>
+#import "NSArray+XArray.h"
+#import "NSDictionary+XDictionary.h"
 
 @interface XNotification() {
     NSMutableDictionary *observersDictionary;
