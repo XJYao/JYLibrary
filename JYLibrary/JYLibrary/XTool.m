@@ -671,4 +671,34 @@
     }
 }
 
++ (BOOL)isImageWithMIMEType:(NSString *)mimeType {
+    if ([self isStringEmpty:mimeType]) {
+        return NO;
+    }
+    
+    if ([self isEqualFromString:mimeType toString:@"image/bmp"] ||
+        [self isEqualFromString:mimeType toString:@"image/cis-cod"] ||
+        [self isEqualFromString:mimeType toString:@"image/gif"] ||
+        [self isEqualFromString:mimeType toString:@"image/ief"] ||
+        [self isEqualFromString:mimeType toString:@"image/jpeg"] ||
+        [self isEqualFromString:mimeType toString:@"image/pipeg"] ||
+        [self isEqualFromString:mimeType toString:@"image/svg+xml"] ||
+        [self isEqualFromString:mimeType toString:@"image/tiff"] ||
+        [self isEqualFromString:mimeType toString:@"image/x-cmu-raster"] ||
+        [self isEqualFromString:mimeType toString:@"image/x-cmx"] ||
+        [self isEqualFromString:mimeType toString:@"image/x-icon"] ||
+        [self isEqualFromString:mimeType toString:@"image/x-portable-anymap"] ||
+        [self isEqualFromString:mimeType toString:@"image/x-portable-bitmap"] ||
+        [self isEqualFromString:mimeType toString:@"image/x-portable-graymap"] ||
+        [self isEqualFromString:mimeType toString:@"image/x-portable-pixmap"] ||
+        [self isEqualFromString:mimeType toString:@"image/x-rgb"] ||
+        [self isEqualFromString:mimeType toString:@"image/x-xbitmap"] ||
+        [self isEqualFromString:mimeType toString:@"image/x-xpixmap"] ||
+        [self isEqualFromString:mimeType toString:@"image/x-xwindowdump"]) {
+        return YES;
+    }
+    
+    return NO;
+}
+
 @end

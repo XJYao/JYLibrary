@@ -231,4 +231,9 @@
  */
 + (BOOL)IsCertificatesTrusted:(NSArray<NSData *> *)certDatas;
 
+/**
+ 根据MIMEType判断是否是图片
+ */
++ (BOOL)isImageWithMIMEType:(NSString *)mimeType;
+
 @end

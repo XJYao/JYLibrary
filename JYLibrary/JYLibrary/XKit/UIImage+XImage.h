@@ -71,6 +71,8 @@
 
 + (UIImage *)thumbnailForImage:(UIImage *)asset maxPixelSize:(NSUInteger)size;
 
++ (UIImage *)thumbnailImageFromData:(NSData *)data imageSize:(int)imageSize;
+
 + (UIImage *)compressImage:(UIImage *)sourceImage pixels:(long long)destPixels;
 
 /**

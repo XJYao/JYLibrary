@@ -448,4 +448,46 @@ static void releaseAssetCallback(void *info) {
     return [self mergeImages:images];
 }
 
++ (UIImage *)thumbnailImageFromData:(NSData *)data imageSize:(int)imageSize {
+    if ([XTool isObjectNull:data]) {
+        return nil;
+    }
+    
+    CGImageSourceRef imageSource = CGImageSourceCreateWithData((__bridge const void * _Nullable)data, nil);
+    if (!imageSource) {
+        return nil;
+    }
+    
+    //创建缩略图等比缩放大小，会根据长宽值比较大的作为imageSize进行缩放
+    CFNumberRef thumbnailSize = CFNumberCreate(NULL, kCFNumberIntType, &imageSize);
+    
+    CFStringRef imageKeys[3];
+    CFTypeRef imageValues[3];
+    
+    imageKeys[0] = kCGImageSourceCreateThumbnailWithTransform;
+    imageValues[0] = (CFTypeRef)kCFBooleanTrue;
+    
+    imageKeys[1] = kCGImageSourceCreateThumbnailFromImageIfAbsent;
+    imageValues[1] = (CFTypeRef)kCFBooleanTrue;
+    //缩放键值对
+    imageKeys[2] = kCGImageSourceThumbnailMaxPixelSize;
+    imageValues[2] = (CFTypeRef)thumbnailSize;
+    
+    CFDictionaryRef imageOptions = CFDictionaryCreate(NULL, (const void **) imageKeys,
+                                                      (const void **) imageValues, 3,
+                                                      &kCFTypeDictionaryKeyCallBacks,
+                                                      &kCFTypeDictionaryValueCallBacks);
+    //获取缩略图
+    CGImageRef thumbnailImage = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, imageOptions);
+    CFRelease(imageOptions);
+    CFRelease(thumbnailSize);
+    CFRelease(imageSource);
+    
+    if (!thumbnailImage) {
+        return nil;
+    }
+    
+    return [UIImage imageWithCGImage:thumbnailImage];
+}
+
 @end
