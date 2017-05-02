@@ -219,6 +219,11 @@
     if ([XTool isStringEmpty:srcPath] || [XTool isStringEmpty:dstPath]) {
         return NO;
     }
+    if (![self isFileExist:srcPath]) {
+        return NO;
+    }
+    
+    [self createDirectory:dstPath];
     
     if ([self isFileExist:dstPath]) {
         [self removeFile:dstPath];
