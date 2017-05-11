@@ -64,6 +64,7 @@
 #import "UIViewController+XBackButtonHandler.h"
 #import "UIDevice+XDevice.h"
 #import "UIView+XDataBindingView.h"
+#import "UIActionSheet+XActionSheet.h"
 
 #import "XImageView.h"
 #import "XScrollView.h"

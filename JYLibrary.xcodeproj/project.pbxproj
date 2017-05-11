@@ -19,6 +19,7 @@
 		564966391D531436008030E3 /* NSData+XAES.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 564966301D5311FB008030E3 /* NSData+XAES.h */; };
 		564AB4521D5412B500162F6B /* XGradientProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 564AB4511D5412B500162F6B /* XGradientProgress.m */; };
 		564AB4531D5412CC00162F6B /* XGradientProgress.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 564AB4501D5412B500162F6B /* XGradientProgress.h */; };
+		564AC4F81EC43472000A4076 /* UIActionSheet+XActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 564AC4F71EC43472000A4076 /* UIActionSheet+XActionSheet.m */; };
 		5664A90C1DC2D25F009BFE9F /* XKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 5664A90B1DC2D25F009BFE9F /* XKeyboard.m */; };
 		5664A90D1DC2D274009BFE9F /* XKeyboard.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5664A90A1DC2D25F009BFE9F /* XKeyboard.h */; };
 		568204E81DD150AF00EF52B3 /* XIndexView.m in Sources */ = {isa = PBXBuildFile; fileRef = 568204E71DD150AF00EF52B3 /* XIndexView.m */; };
@@ -307,6 +308,8 @@
 		564966311D5311FB008030E3 /* NSData+XAES.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+XAES.m"; sourceTree = "<group>"; };
 		564AB4501D5412B500162F6B /* XGradientProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XGradientProgress.h; sourceTree = "<group>"; };
 		564AB4511D5412B500162F6B /* XGradientProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XGradientProgress.m; sourceTree = "<group>"; };
+		564AC4F61EC43472000A4076 /* UIActionSheet+XActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActionSheet+XActionSheet.h"; sourceTree = "<group>"; };
+		564AC4F71EC43472000A4076 /* UIActionSheet+XActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActionSheet+XActionSheet.m"; sourceTree = "<group>"; };
 		5664A90A1DC2D25F009BFE9F /* XKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKeyboard.h; sourceTree = "<group>"; };
 		5664A90B1DC2D25F009BFE9F /* XKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKeyboard.m; sourceTree = "<group>"; };
 		568204E61DD150AF00EF52B3 /* XIndexView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XIndexView.h; sourceTree = "<group>"; };
@@ -703,6 +706,8 @@
 				5687AB571E52E7500036E50B /* UIView+XDataBindingView.m */,
 				5604EF771E55458200D08F45 /* XEaseInOutImageView.h */,
 				5604EF781E55458200D08F45 /* XEaseInOutImageView.m */,
+				564AC4F61EC43472000A4076 /* UIActionSheet+XActionSheet.h */,
+				564AC4F71EC43472000A4076 /* UIActionSheet+XActionSheet.m */,
 			);
 			path = XKit;
 			sourceTree = "<group>";
@@ -932,6 +937,7 @@
 				56CBF2E61D4C574A0081886E /* XAlertContainer.m in Sources */,
 				56CBF2F61D4C574A0081886E /* UIImageView+XWebImageView.m in Sources */,
 				56CBF2C21D4C574A0081886E /* UIColor+XColor.m in Sources */,
+				564AC4F81EC43472000A4076 /* UIActionSheet+XActionSheet.m in Sources */,
 				56CBF2EC1D4C574A0081886E /* XGalleryCell.m in Sources */,
 				5664A90C1DC2D25F009BFE9F /* XKeyboard.m in Sources */,
 				56CBF2DE1D4C574A0081886E /* XImageCode.m in Sources */,
