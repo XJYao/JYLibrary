@@ -11,6 +11,7 @@
 #import "XTool.h"
 #import "NSArray+XArray.h"
 
+
 @implementation XContactGroup
 
 /**
@@ -23,11 +24,11 @@
         }
         return;
     }
-    
+
     CFRetain(addressBook);
     CFArrayRef groups = ABAddressBookCopyArrayOfAllGroups(addressBook);
     CFRelease(addressBook);
-    
+
     if (block) {
         block(YES, groups);
     } else {
@@ -48,7 +49,7 @@
             }
             return;
         }
-        
+
         [self getAllGroups:addressBook completion:^(BOOL granted2, CFArrayRef groups) {
             if (addressBook) {
                 CFRelease(addressBook);
@@ -61,24 +62,23 @@
 }
 
 + (void)getAllGroupsName:(ABAddressBookRef)addressBook completion:(void (^)(BOOL, NSArray<NSString *> *))block {
-    
     if (!addressBook) {
         if (block) {
             block(NO, nil);
         }
         return;
     }
-    
+
     CFRetain(addressBook);
-    
+
     [self getAllGroups:addressBook completion:^(BOOL granted, CFArrayRef groups) {
         CFRelease(addressBook);
-        
+
         CFIndex groupsCount = 0;
         if (groups) {
             groupsCount = CFArrayGetCount(groups);
         }
-        
+
         if (groupsCount == 0) {
             if (groups) {
                 CFRelease(groups);
@@ -88,34 +88,34 @@
             }
             return;
         }
-        
+
         NSMutableArray *groupsName = [[NSMutableArray alloc] init];
-        for (CFIndex groupIndex = 0; groupIndex < groupsCount; groupIndex ++) {
+        for (CFIndex groupIndex = 0; groupIndex < groupsCount; groupIndex++) {
             ABRecordRef group = CFArrayGetValueAtIndex(groups, groupIndex);
-            
+
             if (!group) {
                 continue;
             }
-            
+
             CFTypeRef groupNameRef = ABRecordCopyValue(group, kABGroupNameProperty);
-            
+
             NSString *groupName = (__bridge NSString *)groupNameRef;
-            
+
             if ([XTool isStringEmpty:groupName]) {
                 groupName = @"";
             }
-            
+
             [groupsName x_addObject:groupName];
-            
+
             if (groupNameRef) {
                 CFRelease(groupNameRef);
             }
         }
-        
+
         if (groups) {
             CFRelease(groups);
         }
-        
+
         if (block) {
             block(granted, groupsName);
         }
@@ -133,7 +133,7 @@
             }
             return;
         }
-        
+
         [self getAllGroupsName:addressBook completion:^(BOOL granted2, NSArray<NSString *> *groups) {
             if (addressBook) {
                 CFRelease(addressBook);
@@ -152,7 +152,7 @@
     if (!group) {
         return NULL;
     }
-    
+
     CFArrayRef membersFromGroup = ABGroupCopyArrayOfAllMembers(group);
     CFRelease(membersFromGroup);
     return membersFromGroup;
@@ -165,9 +165,9 @@
     if (!group || !person) {
         return NO;
     }
-    
+
     bool memberAdded = ABGroupAddMember(group, person, NULL);
-    
+
     return memberAdded ? YES : NO;
 }
 
@@ -178,7 +178,7 @@
     if (!group || !person) {
         return NO;
     }
-    
+
     return ABGroupRemoveMember(group, person, NULL) ? YES : NO;
 }
 

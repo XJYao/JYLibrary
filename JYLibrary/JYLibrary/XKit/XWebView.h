@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface XWebView : UIWebView
 
 - (void)webView:(UIWebView *)sender runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(id)frame;

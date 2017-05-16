@@ -10,12 +10,13 @@
 
 @class XGroupTableModel;
 
+
 @interface XGroupTableCell : XTableViewCell
 
 #pragma mark property
 
 @property (nonatomic, weak) id delegate;
-@property (nonatomic, strong) XGroupTableModel *  currentGroupTableModel;
+@property (nonatomic, strong) XGroupTableModel *currentGroupTableModel;
 
 #pragma mark method
 

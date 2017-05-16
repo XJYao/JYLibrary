@@ -16,17 +16,16 @@
 const UIWindowLevel UIWindowLevelXAlertContainerBackground = 1998.0; // below the alert window, default.
 
 
-
-
-
 #pragma mark - XAlertContainerBackgroundWindow
+
 
 @interface XAlertContainerBackgroundWindow : UIWindow
 
 @property (nonatomic, assign) XAlertContainerBackgroundStyle style;
-@property (nonatomic, strong) UIColor   *containerBackgroundColor;
+@property (nonatomic, strong) UIColor *containerBackgroundColor;
 
 @end
+
 
 @implementation XAlertContainerBackgroundWindow
 
@@ -52,12 +51,12 @@ const UIWindowLevel UIWindowLevelXAlertContainerBackground = 1998.0; // below th
         case XAlertContainerBackgroundStyleGradient: {
             CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
             CGGradientRef gradient = NULL;
-            
+
             size_t locationsCount = 2;
             CGFloat locations[2] = {0.0f, 1.0f};
 
             BOOL useDefaultColors = YES;
-            
+
             if (_containerBackgroundColor) {
                 NSArray *colors = [UIColor getRGBFromColor:_containerBackgroundColor];
                 if (![XTool isArrayEmpty:colors]) {
@@ -69,17 +68,17 @@ const UIWindowLevel UIWindowLevelXAlertContainerBackground = 1998.0; // below th
                     }
                 }
             }
-            
+
             if (useDefaultColors || !gradient) {
                 CGFloat defaultColors[8] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.75f};
                 gradient = CGGradientCreateWithColorComponents(colorSpace, defaultColors, locations, locationsCount);
             }
 
             CGColorSpaceRelease(colorSpace);
-            
+
             CGPoint center = CGPointMake(self.bounds.size.width / 2, self.bounds.size.height / 2);
-            CGFloat radius = MIN(self.bounds.size.width, self.bounds.size.height) ;
-            CGContextDrawRadialGradient (context, gradient, center, 0, center, radius, kCGGradientDrawsAfterEndLocation);
+            CGFloat radius = MIN(self.bounds.size.width, self.bounds.size.height);
+            CGContextDrawRadialGradient(context, gradient, center, 0, center, radius, kCGGradientDrawsAfterEndLocation);
             CGGradientRelease(gradient);
             break;
         }
@@ -98,17 +97,15 @@ const UIWindowLevel UIWindowLevelXAlertContainerBackground = 1998.0; // below th
 @end
 
 
-
-
-
-
 #pragma mark - XAlertContainerController
+
 
 @interface XAlertContainerController : UIViewController
 
 @property (nonatomic, strong) UIView *alertView;
 
 @end
+
 
 @implementation XAlertContainerController
 
@@ -124,21 +121,20 @@ const UIWindowLevel UIWindowLevelXAlertContainerBackground = 1998.0; // below th
 @end
 
 
-
-
-
 #pragma mark - XAlertContainer
 
-static XAlertContainerBackgroundWindow  * backgroundWindow;
+static XAlertContainerBackgroundWindow *backgroundWindow;
 
-@implementation XAlertContainer {
-    UITapGestureRecognizer  *   alertTapGesture;
-    XTimer  *   _timer;
 
-    UIView  *   customView;
+@implementation XAlertContainer
+{
+    UITapGestureRecognizer *alertTapGesture;
+    XTimer *_timer;
+
+    UIView *customView;
 }
 
-#pragma mark ---------- Public ----------
+#pragma mark---------- Public ----------
 
 - (instancetype)initWithCustomView:(UIView *)view {
     self = [super init];
@@ -156,14 +152,14 @@ static XAlertContainerBackgroundWindow  * backgroundWindow;
                      }];
 
     [XAnimation animationEaseInEaseOut:customView duration:0.5];
-    
+
     if (_enableAutoHide) {
         __weak __typeof(self) weakSelf = self;
-        
+
         _timer = [XTimer startTimerMSecWithBeginTime:0 endTime:_timeout perTime:1000 begin:nil progress:nil finished:^{
-            
+
             [weakSelf hide];
-            
+
         } stop:nil];
     }
 }
@@ -180,26 +176,26 @@ static XAlertContainerBackgroundWindow  * backgroundWindow;
     [customView removeFromSuperview];
 
     [self removeBackgroundWindow];
-    
-    if(_delegate && [_delegate respondsToSelector:@selector(xAlertContainerWasHidden:)]) {
+
+    if (_delegate && [_delegate respondsToSelector:@selector(xAlertContainerWasHidden:)]) {
         [_delegate xAlertContainerWasHidden:self];
     }
-    
+
     if (_enableAutoHide) {
-        if(_delegate && [_delegate respondsToSelector:@selector(xAlertContainerWasAutoHidden:)]) {
+        if (_delegate && [_delegate respondsToSelector:@selector(xAlertContainerWasAutoHidden:)]) {
             [_delegate xAlertContainerWasAutoHidden:self];
         }
     }
 }
 
-#pragma mark ---------- Private ----------
+#pragma mark---------- Private ----------
 
 - (void)initialize:(UIView *)view {
     _enableAutoHide = NO;
     _enableTapGestureHide = NO;
-    
+
     _timeout = 2000;
-    
+
     customView = view;
 
     [self removeBackgroundWindow];
@@ -208,7 +204,7 @@ static XAlertContainerBackgroundWindow  * backgroundWindow;
     [containerViewController.view setBackgroundColor:[UIColor clearColor]];
     [containerViewController.view addSubview:customView];
     [containerViewController setAlertView:customView];
-    
+
     backgroundWindow = [[XAlertContainerBackgroundWindow alloc] initWithFrame:[UIScreen mainScreen].bounds style:XAlertContainerBackgroundStyleGradient];
     [backgroundWindow setAlpha:0];
     [backgroundWindow setRootViewController:containerViewController];
@@ -217,11 +213,11 @@ static XAlertContainerBackgroundWindow  * backgroundWindow;
 - (void)removeBackgroundWindow {
     if (backgroundWindow) {
         [backgroundWindow setAlpha:0];
-        
+
         for (UIView *view in backgroundWindow.subviews) {
             [view removeFromSuperview];
         }
-        
+
         [backgroundWindow setRootViewController:nil];
         [backgroundWindow removeFromSuperview];
         backgroundWindow = nil;
@@ -246,7 +242,7 @@ static XAlertContainerBackgroundWindow  * backgroundWindow;
 
 - (void)setEnableTapGestureHide:(BOOL)enableTapGestureHide {
     _enableTapGestureHide = enableTapGestureHide;
-    
+
     if (_enableTapGestureHide) {
         alertTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hide)];
         [backgroundWindow.rootViewController.view addGestureRecognizer:alertTapGesture];

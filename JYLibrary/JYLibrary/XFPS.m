@@ -9,18 +9,21 @@
 #import "XFPS.h"
 #import <CoreText/CoreText.h>
 
-@interface XFPS () {
+
+@interface XFPS ()
+{
     CADisplayLink *displayLink;
     NSUInteger count;
     NSTimeInterval lastTime;
     UIFont *font;
     UIFont *subFont;
     UIColor *whiteColor;
-    
+
     BOOL isStop;
 }
 
 @end
+
 
 @implementation XFPS
 
@@ -28,13 +31,13 @@
     self = [super initWithFrame:frame];
     if (self) {
         isStop = YES;
-        
+
         [self setBackgroundColor:[UIColor colorWithWhite:0.000 alpha:0.700]];
         [self.layer setCornerRadius:5];
         [self setClipsToBounds:YES];
         [self setTextAlignment:NSTextAlignmentCenter];
         [self setUserInteractionEnabled:NO];
-        
+
         font = [UIFont fontWithName:@"Menlo" size:14];
         if (font) {
             subFont = [UIFont fontWithName:@"Menlo" size:4];
@@ -42,9 +45,9 @@
             font = [UIFont fontWithName:@"Courier" size:14];
             subFont = [UIFont fontWithName:@"Courier" size:4];
         }
-        
+
         whiteColor = [UIColor whiteColor];
-        
+
         displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(tick:)];
     }
     return self;
@@ -73,22 +76,22 @@
         lastTime = link.timestamp;
         return;
     }
-    
+
     count++;
     NSTimeInterval delta = link.timestamp - lastTime;
     if (delta < 1) return;
     lastTime = link.timestamp;
     float fps = count / delta;
     count = 0;
-    
+
     CGFloat progress = fps / 60.0;
     UIColor *color = [UIColor colorWithHue:0.27 * (progress - 0.2) saturation:1 brightness:0.9 alpha:1];
-    
-    NSString *text = [NSString stringWithFormat:@"%d FPS",(int)round(fps)];
-    
+
+    NSString *text = [NSString stringWithFormat:@"%d FPS", (int)round(fps)];
+
     NSRange foregroundColorRange = NSMakeRange(0, text.length - 3);
     NSRange foregroundWhiteColorRange = NSMakeRange(text.length - 3, 3);
-    
+
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text];
     [attributedString addAttribute:(__bridge NSString *)kCTForegroundColorAttributeName value:(id)color.CGColor range:foregroundColorRange];
     [attributedString addAttribute:NSForegroundColorAttributeName value:color range:foregroundColorRange];
@@ -96,7 +99,7 @@
     [attributedString addAttribute:NSForegroundColorAttributeName value:whiteColor range:foregroundWhiteColorRange];
     [attributedString addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, text.length)];
     [attributedString addAttribute:NSFontAttributeName value:subFont range:NSMakeRange(text.length - 4, 1)];
-    
+
     [self setAttributedText:attributedString];
 }
 

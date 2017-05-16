@@ -9,16 +9,17 @@
 #import <Foundation/Foundation.h>
 #import <AddressBook/AddressBook.h>
 
+
 @interface XContactGroup : NSObject
 
 /**
  获取联系人分组
  */
-+ (void)getAllGroups:(ABAddressBookRef)addressBook completion:(void (^)(BOOL granted, CFArrayRef groups))block;//记得释放addressBook和groups
++ (void)getAllGroups:(ABAddressBookRef)addressBook completion:(void (^)(BOOL granted, CFArrayRef groups))block; //记得释放addressBook和groups
 
-+ (void)getAllGroups:(void (^)(BOOL granted, CFArrayRef groups))block;//记得释放groups
++ (void)getAllGroups:(void (^)(BOOL granted, CFArrayRef groups))block; //记得释放groups
 
-+ (void)getAllGroupsName:(ABAddressBookRef)addressBook completion:(void (^)(BOOL granted, NSArray<NSString *> *groups))block;//记得释放addressBook
++ (void)getAllGroupsName:(ABAddressBookRef)addressBook completion:(void (^)(BOOL granted, NSArray<NSString *> *groups))block; //记得释放addressBook
 
 + (void)getAllGroupsName:(void (^)(BOOL granted, NSArray<NSString *> *groups))block;
 

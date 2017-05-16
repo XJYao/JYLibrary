@@ -8,6 +8,7 @@
 
 #import "XLabel.h"
 
+
 @implementation XLabel
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -26,7 +27,7 @@
 
 - (CGRect)textRectForBounds:(CGRect)bounds limitedToNumberOfLines:(NSInteger)numberOfLines {
     CGRect textRect = [super textRectForBounds:bounds limitedToNumberOfLines:numberOfLines];
-    switch(_textVerticalAlignment) {
+    switch (_textVerticalAlignment) {
         case TextVerticalAlignmentTop:
             textRect.origin.y = bounds.origin.y + _textVerticalOffset;
             break;
@@ -44,7 +45,7 @@
 }
 
 - (void)drawTextInRect:(CGRect)rect {
-    CGRect actualRect=[self textRectForBounds:rect limitedToNumberOfLines:self.numberOfLines];
+    CGRect actualRect = [self textRectForBounds:rect limitedToNumberOfLines:self.numberOfLines];
     [super drawTextInRect:actualRect];
 }
 

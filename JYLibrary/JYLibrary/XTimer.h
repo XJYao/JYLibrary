@@ -8,17 +8,18 @@
 
 #import <Foundation/Foundation.h>
 
-typedef dispatch_source_t   XGCDTimer;
+typedef dispatch_source_t XGCDTimer;
 
-typedef void (^TimerBeginBlock)     (void);
-typedef void (^TimerProgressBlock)  (NSInteger timerProgress);
-typedef void (^TimerFinishedBlock)  (void);
-typedef void (^TimerStopBlock)      (NSInteger timerProgress);
+typedef void (^TimerBeginBlock)(void);
+typedef void (^TimerProgressBlock)(NSInteger timerProgress);
+typedef void (^TimerFinishedBlock)(void);
+typedef void (^TimerStopBlock)(NSInteger timerProgress);
 
 typedef NS_ENUM(NSInteger, XTimeType) {
-    XTimeTypeMSec   =   NSEC_PER_MSEC,
-    XTimeTypeSec    =   NSEC_PER_SEC
+    XTimeTypeMSec = NSEC_PER_MSEC,
+    XTimeTypeSec = NSEC_PER_SEC
 };
+
 
 @interface XTimer : NSObject
 

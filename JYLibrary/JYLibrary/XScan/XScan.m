@@ -14,56 +14,54 @@
 
 typedef void (^XScanCompletedBlock)(NSString *);
 
-@interface XScan () <AVCaptureMetadataOutputObjectsDelegate> {
+
+@interface XScan () <AVCaptureMetadataOutputObjectsDelegate>
+{
     AVCaptureMetadataOutput *output;
     AVCaptureSession *session;
     AVCaptureVideoPreviewLayer *layer;
-    
+
     XScanCompletedBlock scanCompletedBlock;
 }
 
 @end
 
+
 @implementation XScan
 
 - (instancetype)initWithView:(UIView *)view accessCompletion:(void (^)(XScanAuthorizationStatus))block {
     self = [super init];
-    
-    if (self) {
 
+    if (self) {
         if ([XIOSVersion isIOS7OrGreater]) {
             NSString *mediaType = AVMediaTypeVideo;
-            
+
             [XDeviceAuthorization cameraAuthorizationStatus:^(XDeviceAuthorizationStatus authorizationStatus) {
-                
+
                 if (authorizationStatus == XDeviceAuthorizationStatusNotDetermined) {
-                    
                     if (block) {
                         block(XScanAuthorizationStatusNotDetermined);
                     }
-                    
+
                 } else if (authorizationStatus == XDeviceAuthorizationStatusRestricted) {
-                    
                     if (block) {
                         block(XScanAuthorizationStatusRestricted);
                     }
-                    
+
                 } else if (authorizationStatus == XDeviceAuthorizationStatusDenied) {
-                    
                     if (block) {
                         block(XScanAuthorizationStatusDenied);
                     }
-                    
+
                 } else if (authorizationStatus == XDeviceAuthorizationStatusAuthorized) {
-                    
                     AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:mediaType];
-                    
+
                     AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:device error:NULL];
-                    
+
                     output = [[AVCaptureMetadataOutput alloc] init];
                     [output setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
-                    
-                    session = [[AVCaptureSession alloc]init];
+
+                    session = [[AVCaptureSession alloc] init];
                     [session setSessionPreset:AVCaptureSessionPresetHigh];
                     if ([session canAddInput:input]) {
                         [session addInput:input];
@@ -72,31 +70,31 @@ typedef void (^XScanCompletedBlock)(NSString *);
                         [session addOutput:output];
                     }
                     [output setMetadataObjectTypes:@[
-                                                     AVMetadataObjectTypeQRCode,
-                                                     AVMetadataObjectTypeEAN13Code,
-                                                     AVMetadataObjectTypeEAN8Code,
-                                                     AVMetadataObjectTypeCode128Code
-                                                     ]];
-                    
+                        AVMetadataObjectTypeQRCode,
+                        AVMetadataObjectTypeEAN13Code,
+                        AVMetadataObjectTypeEAN8Code,
+                        AVMetadataObjectTypeCode128Code
+                    ]];
+
                     layer = [AVCaptureVideoPreviewLayer layerWithSession:session];
                     [layer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
                     [view.layer insertSublayer:layer atIndex:0];
-                    
+
                     [self setFrame:CGRectMake(0, 0, view.frame.size.width, view.frame.size.height)];
-                    
+
                     if (block) {
                         block(XScanAuthorizationStatusAuthorized);
                     }
                 }
             }];
-            
+
         } else {
             if (block) {
                 block(XScanAuthorizationStatusDenied);
             }
         }
     }
-    
+
     return self;
 }
 
@@ -116,7 +114,7 @@ typedef void (^XScanCompletedBlock)(NSString *);
 
 - (void)start:(XScanCompletedBlock)block {
     scanCompletedBlock = block;
-    
+
     if ([XIOSVersion isIOS7OrGreater]) {
         if (!session.isRunning) {
             [session startRunning];

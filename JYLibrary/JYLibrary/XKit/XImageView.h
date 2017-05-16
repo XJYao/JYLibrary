@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface XImageView : UIImageView
 
 @property (nonatomic, strong) UIImage *normalImage;

@@ -8,9 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface XJsonParser : NSObject
 
-typedef void(^JsonParserCompletionBlock)(id parseResult, NSError *error);
+typedef void (^JsonParserCompletionBlock)(id parseResult, NSError *error);
 
 /**
  解析NSData形式的json

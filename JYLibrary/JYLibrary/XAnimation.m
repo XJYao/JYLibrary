@@ -10,6 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "NSArray+XArray.h"
 
+
 @implementation XAnimation
 
 + (void)animationEaseInEaseOut:(UIView *)outView duration:(CFTimeInterval)duration {
@@ -46,7 +47,7 @@
     animation.repeatCount = repeatCount;
     animation.removedOnCompletion = NO;
     animation.delegate = target;
-    
+
     return animation;
 }
 

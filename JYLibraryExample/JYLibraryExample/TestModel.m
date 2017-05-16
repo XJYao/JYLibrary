@@ -8,15 +8,16 @@
 
 #import "TestModel.h"
 
+
 @implementation TestModel
 
 - (NSDictionary *)XModelParserModelPropertyNameMapper {
-    return @{@"cUInt" : @"democUInt"};
+    return @{ @"cUInt" : @"democUInt" };
 }
 
 - (NSDictionary *)XModelParserModelPropertyContainerClassMapper {
-    return @{@"subTestModelArr" : @"SubTestModel",
-             @"mutableSet" : @"SubTestModel"};
+    return @{ @"subTestModelArr" : @"SubTestModel",
+              @"mutableSet" : @"SubTestModel" };
 }
 
 - (BOOL)XModelParserModelPropertyCustomTransform:(NSString *)propertyName {
@@ -29,8 +30,8 @@
 
 @end
 
-@implementation SubTestModel
 
+@implementation SubTestModel
 
 
 @end

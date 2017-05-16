@@ -19,44 +19,44 @@ XEncodingType getEncodingType(const char *typeEncoding) {
     if (length <= 0) {
         return XEncodingTypeUnknown;
     }
-    
+
     XEncodingType qualifier = XEncodingTypeUnknown;
     bool prefix = true;
     while (prefix) {
         switch (*type) {
             case XTypeCodeConst: {
                 qualifier |= XEncodingTypeConst;
-                type ++;
+                type++;
             } break;
-                
+
             case XTypeCodeIn: {
                 qualifier |= XEncodingTypeIn;
-                type ++;
+                type++;
             } break;
-                
+
             case XTypeCodeInout: {
                 qualifier |= XEncodingTypeInout;
-                type ++;
+                type++;
             } break;
-                
+
             case XTypeCodeOut: {
                 qualifier |= XEncodingTypeOut;
-                type ++;
+                type++;
             } break;
-                
+
             case XTypeCodeBycopy: {
                 qualifier |= XEncodingTypeBycopy;
-                type ++;
+                type++;
             } break;
-                
+
             case XTypeCodeByref: {
                 qualifier |= XEncodingTypeByref;
-                type ++;
+                type++;
             } break;
-                
+
             case XTypeCodeOneway: {
                 qualifier |= XEncodingTypeOneway;
-                type ++;
+                type++;
             } break;
 
             default: {
@@ -64,36 +64,59 @@ XEncodingType getEncodingType(const char *typeEncoding) {
             } break;
         }
     }
-    
+
     length = strlen(type);
     if (length <= 0) {
         return XEncodingTypeUnknown | qualifier;
     }
-    
+
     switch (*type) {
-        case XTypeCodeChar:         return XEncodingTypeChar | qualifier;
-        case XTypeCodeInt:          return XEncodingTypeInt | qualifier;
-        case XTypeCodeShort:        return XEncodingTypeShort | qualifier;
-        case XTypeCodeLong:         return XEncodingTypeLong | qualifier;
-        case XTypeCodeLongLong:     return XEncodingTypeLongLong | qualifier;
-        case XTypeCodeUChar:        return XEncodingTypeUChar | qualifier;
-        case XTypeCodeUInt:         return XEncodingTypeUInt | qualifier;
-        case XTypeCodeUShort:       return XEncodingTypeUShort | qualifier;
-        case XTypeCodeULong:        return XEncodingTypeULong | qualifier;
-        case XTypeCodeULongLong:    return XEncodingTypeULongLong | qualifier;
-        case XTypeCodeFloat:        return XEncodingTypeFloat | qualifier;
-        case XTypeCodeDouble:       return XEncodingTypeDouble | qualifier;
-        case XTypeCodeLongDouble:   return XEncodingTypeLongDouble | qualifier;
-        case XTypeCodeBool:         return XEncodingTypeBool | qualifier;
-        case XTypeCodeVoid:         return XEncodingTypeVoid | qualifier;
-        case XTypeCodeString:       return XEncodingTypeString | qualifier;
-        case XTypeCodeClass:        return XEncodingTypeClass | qualifier;
-        case XTypeCodeSEL:          return XEncodingTypeSEL | qualifier;
-        case XTypeCodeBit:          return XEncodingTypeBit | qualifier;
-        case XTypeCodePointer:      return XEncodingTypePointer | qualifier;
-        case XTypeCodeArrayBegin:   return XEncodingTypeArray | qualifier;
-        case XTypeCodeStructBegin:  return XEncodingTypeStruct | qualifier;
-        case XTypeCodeUnionBegin:   return XEncodingTypeUnion | qualifier;
+        case XTypeCodeChar:
+            return XEncodingTypeChar | qualifier;
+        case XTypeCodeInt:
+            return XEncodingTypeInt | qualifier;
+        case XTypeCodeShort:
+            return XEncodingTypeShort | qualifier;
+        case XTypeCodeLong:
+            return XEncodingTypeLong | qualifier;
+        case XTypeCodeLongLong:
+            return XEncodingTypeLongLong | qualifier;
+        case XTypeCodeUChar:
+            return XEncodingTypeUChar | qualifier;
+        case XTypeCodeUInt:
+            return XEncodingTypeUInt | qualifier;
+        case XTypeCodeUShort:
+            return XEncodingTypeUShort | qualifier;
+        case XTypeCodeULong:
+            return XEncodingTypeULong | qualifier;
+        case XTypeCodeULongLong:
+            return XEncodingTypeULongLong | qualifier;
+        case XTypeCodeFloat:
+            return XEncodingTypeFloat | qualifier;
+        case XTypeCodeDouble:
+            return XEncodingTypeDouble | qualifier;
+        case XTypeCodeLongDouble:
+            return XEncodingTypeLongDouble | qualifier;
+        case XTypeCodeBool:
+            return XEncodingTypeBool | qualifier;
+        case XTypeCodeVoid:
+            return XEncodingTypeVoid | qualifier;
+        case XTypeCodeString:
+            return XEncodingTypeString | qualifier;
+        case XTypeCodeClass:
+            return XEncodingTypeClass | qualifier;
+        case XTypeCodeSEL:
+            return XEncodingTypeSEL | qualifier;
+        case XTypeCodeBit:
+            return XEncodingTypeBit | qualifier;
+        case XTypeCodePointer:
+            return XEncodingTypePointer | qualifier;
+        case XTypeCodeArrayBegin:
+            return XEncodingTypeArray | qualifier;
+        case XTypeCodeStructBegin:
+            return XEncodingTypeStruct | qualifier;
+        case XTypeCodeUnionBegin:
+            return XEncodingTypeUnion | qualifier;
         case XTypeCodeObject: {
             if (length == 2 && *(type + 1) == XTypeCodeUnknown) {
                 return XEncodingTypeBlock | qualifier;
@@ -101,9 +124,11 @@ XEncodingType getEncodingType(const char *typeEncoding) {
                 return XEncodingTypeObject | qualifier;
             }
         }
-        default:    return XEncodingTypeUnknown | qualifier;
+        default:
+            return XEncodingTypeUnknown | qualifier;
     }
 }
+
 
 @implementation XIvarInfo
 
@@ -111,30 +136,31 @@ XEncodingType getEncodingType(const char *typeEncoding) {
     if (!ivar) {
         return nil;
     }
-    
+
     self = [super init];
     if (!self) {
         return nil;
     }
-    
+
     _ivar = ivar;
-    
+
     const char *name = ivar_getName(ivar);
     if (name) {
         _name = [NSString stringWithUTF8String:name];
     }
     _offset = ivar_getOffset(ivar);
-    
+
     const char *typeEncoding = ivar_getTypeEncoding(ivar);
     if (typeEncoding) {
         _typeEncoding = [NSString stringWithUTF8String:typeEncoding];
         _type = getEncodingType(typeEncoding);
     }
-    
+
     return self;
 }
 
 @end
+
 
 @implementation XMethodInfo
 
@@ -142,37 +168,37 @@ XEncodingType getEncodingType(const char *typeEncoding) {
     if (!method) {
         return nil;
     }
-    
+
     self = [super init];
     if (!self) {
         return nil;
     }
-    
+
     _method = method;
     _sel = method_getName(method);
     _imp = method_getImplementation(method);
-    
+
     const char *name = sel_getName(_sel);
     if (name) {
         _name = [NSString stringWithUTF8String:name];
     }
-    
+
     const char *typeEncoding = method_getTypeEncoding(method);
     if (typeEncoding) {
         _typeEncoding = [NSString stringWithUTF8String:typeEncoding];
     }
-    
+
     char *returnType = method_copyReturnType(method);
     if (returnType) {
         _returnTypeEncoding = [NSString stringWithUTF8String:returnType];
         free(returnType);
     }
-    
+
     _numberOfArguments = method_getNumberOfArguments(method);
     if (_numberOfArguments > 0) {
         NSMutableArray *argumentTypeEncodings = [[NSMutableArray alloc] initWithCapacity:_numberOfArguments];
-        
-        for (unsigned int index = 0; index < _numberOfArguments; index ++) {
+
+        for (unsigned int index = 0; index < _numberOfArguments; index++) {
             char *argumentType = method_copyArgumentType(method, index);
             NSString *argumentTypeEncoding = argumentType ? [NSString stringWithUTF8String:argumentType] : @"";
             [argumentTypeEncodings x_addObject:argumentTypeEncoding];
@@ -180,14 +206,15 @@ XEncodingType getEncodingType(const char *typeEncoding) {
                 free(argumentType);
             }
         }
-        
+
         _argumentTypeEncodings = argumentTypeEncodings;
     }
-    
+
     return self;
 }
 
 @end
+
 
 @implementation XPropertyInfo
 
@@ -195,31 +222,30 @@ XEncodingType getEncodingType(const char *typeEncoding) {
     if (!property) {
         return nil;
     }
-    
+
     self = [super init];
     if (!self) {
         return nil;
     }
-    
+
     _property = property;
     const char *name = property_getName(property);
     if (name) {
         _name = [NSString stringWithUTF8String:name];
     }
-    
+
     _attributes = property_getAttributes(property);
-    
+
     XEncodingType type = XEncodingTypeUnknown;
-    
+
     unsigned int attributesCount = 0;
-    
+
     objc_property_attribute_t *attributes = property_copyAttributeList(property, &attributesCount);
     if (attributes && attributesCount > 0) {
-        for (unsigned int i = 0; i < attributesCount; i ++) {
+        for (unsigned int i = 0; i < attributesCount; i++) {
             const char *attributeName = attributes[i].name;
             switch (attributeName[0]) {
                 case XTypeCodeType: {
-                    
                     if (attributes[i].value) {
                         const char *attributeValue = attributes[i].value;
                         _typeEncoding = [NSString stringWithUTF8String:attributeValue];
@@ -234,42 +260,41 @@ XEncodingType getEncodingType(const char *typeEncoding) {
                             }
                         }
                     }
-                    
+
                 } break;
-                    
+
                 case XTypeCodeVariable: {
-                    
                     const char *attributeValue = attributes[i].value;
                     if (attributeValue) {
                         _ivarName = [NSString stringWithUTF8String:attributeValue];
                     }
-                    
+
                 } break;
-                    
+
                 case XTypeCodeReadonly: {
                     type |= XEncodingTypeReadonly;
                 } break;
-                    
+
                 case XTypeCodeCopy: {
                     type |= XEncodingTypeCopy;
                 } break;
-                    
+
                 case XTypeCodeRetain: {
                     type |= XEncodingTypeRetain;
                 } break;
-                    
+
                 case XTypeCodeWeak: {
                     type |= XEncodingTypeWeak;
                 } break;
-                    
+
                 case XTypeCodeNonatomic: {
                     type |= XEncodingTypeNonatomic;
                 } break;
-                    
+
                 case XTypeCodeDynamic: {
                     type |= XEncodingTypeDynamic;
                 } break;
-                    
+
                 case XTypeCodeCustomGetter: {
                     type |= XEncodingTypeCustomGetter;
                     const char *attributeValue = attributes[i].value;
@@ -277,7 +302,7 @@ XEncodingType getEncodingType(const char *typeEncoding) {
                         _getter = NSSelectorFromString([NSString stringWithUTF8String:attributeValue]);
                     }
                 } break;
-                    
+
                 case XTypeCodeCustomSetter: {
                     type |= XEncodingTypeCustomSetter;
                     const char *attributeValue = attributes[i].value;
@@ -285,7 +310,7 @@ XEncodingType getEncodingType(const char *typeEncoding) {
                         _setter = NSSelectorFromString([NSString stringWithUTF8String:attributeValue]);
                     }
                 } break;
-                    
+
                 default:
                     break;
             }
@@ -295,7 +320,7 @@ XEncodingType getEncodingType(const char *typeEncoding) {
         free(attributes);
         attributes = NULL;
     }
-    
+
     _type = type;
     if (_name.length) {
         if (!_getter) {
@@ -305,11 +330,12 @@ XEncodingType getEncodingType(const char *typeEncoding) {
             _setter = NSSelectorFromString([NSString stringWithFormat:@"set%@%@:", [_name substringToIndex:1].uppercaseString, [_name substringFromIndex:1]]);
         }
     }
-    
+
     return self;
 }
 
 @end
+
 
 @implementation XProtocolInfo
 
@@ -317,80 +343,81 @@ XEncodingType getEncodingType(const char *typeEncoding) {
     if (!protocol) {
         return nil;
     }
-    
+
     self = [super init];
     if (!self) {
         return nil;
     }
-    
+
     _protocol = protocol;
-    
+
     const char *name = protocol_getName(protocol);
     if (name) {
         _name = [NSString stringWithUTF8String:name];
     }
-    
+
     unsigned int propertyCount = 0;
     objc_property_t *propertyList = protocol_copyPropertyList(protocol, &propertyCount);
     if (propertyList && propertyCount > 0) {
         NSMutableArray *properties = [[NSMutableArray alloc] initWithCapacity:propertyCount];
-        
-        for (NSInteger i = 0; i < propertyCount; i ++) {
+
+        for (NSInteger i = 0; i < propertyCount; i++) {
             objc_property_t property = propertyList[i];
             XPropertyInfo *propertyInfo = [[XPropertyInfo alloc] initWithProperty:property];
             if (propertyInfo) {
                 [properties x_addObject:propertyInfo];
             }
         }
-        
+
         _propertyInfos = properties;
     }
     if (propertyList) {
         free(propertyList);
     }
-    
+
     unsigned int protocolCount = 0;
-    Protocol * __unsafe_unretained *protocolList = protocol_copyProtocolList(protocol, &protocolCount);
+    Protocol *__unsafe_unretained *protocolList = protocol_copyProtocolList(protocol, &protocolCount);
     if (protocolList && protocolCount > 0) {
         NSMutableArray *protocols = [[NSMutableArray alloc] initWithCapacity:protocolCount];
-        
-        for (NSInteger i = 0; i < protocolCount; i ++) {
+
+        for (NSInteger i = 0; i < protocolCount; i++) {
             Protocol *aProtocol = protocolList[i];
             XProtocolInfo *protocolInfo = [[XProtocolInfo alloc] initWithProtocol:aProtocol];
             if (protocolInfo) {
                 [protocols x_addObject:protocolInfo];
             }
         }
-        
+
         _protocolInfos = protocols;
     }
     if (protocolList) {
         free(protocolList);
     }
-    
+
     return self;
 }
 
 @end
 
+
 @implementation XClassInfo
 
 - (instancetype)initWithClass:(Class)cls {
     _isMeta = NO;
-    
+
     if (!cls || cls == Nil) {
         return nil;
     }
-    
+
     self = [super init];
     if (!self) {
         return nil;
     }
-    
+
     _cls = cls;
     _superClass = class_getSuperclass(cls);
     _isMeta = class_isMetaClass(cls);
-    
+
     if (_isMeta) {
         _metaClass = cls;
         _name = NSStringFromClass(cls);
@@ -399,90 +426,90 @@ XEncodingType getEncodingType(const char *typeEncoding) {
         _metaClass = objc_getMetaClass(name);
         _name = [NSString stringWithUTF8String:name];
     }
-    
+
     _version = class_getVersion(cls);
     _instanceSize = class_getInstanceSize(cls);
-    
+
     //method
     unsigned int methodsCount = 0;
     Method *methods = class_copyMethodList(cls, &methodsCount);
-    
+
     if (methods && methodsCount > 0) {
         NSMutableDictionary *methodInfos = [[NSMutableDictionary alloc] initWithCapacity:methodsCount];
-        
-        for (int i = 0; i < methodsCount; i ++) {
+
+        for (int i = 0; i < methodsCount; i++) {
             XMethodInfo *methodInfo = [[XMethodInfo alloc] initWithMethod:methods[i]];
             if (methodInfo && methodInfo.name) {
                 [methodInfos x_setObject:methodInfo forKey:methodInfo.name];
             }
         }
-        
+
         _methodInfos = methodInfos;
     }
     if (methods) {
         free(methods);
     }
-    
+
     //property
     unsigned int propertiesCount = 0;
     objc_property_t *properties = class_copyPropertyList(cls, &propertiesCount);
-    
+
     if (properties && propertiesCount > 0) {
         NSMutableDictionary *propertyInfos = [[NSMutableDictionary alloc] initWithCapacity:propertiesCount];
-        
-        for (int i = 0; i < propertiesCount; i ++) {
+
+        for (int i = 0; i < propertiesCount; i++) {
             XPropertyInfo *propertyInfo = [[XPropertyInfo alloc] initWithProperty:properties[i]];
             if (propertyInfo && propertyInfo.name) {
                 [propertyInfos x_setObject:propertyInfo forKey:propertyInfo.name];
             }
         }
-        
+
         _propertyInfos = propertyInfos;
     }
     if (properties) {
         free(properties);
     }
-    
+
     //ivar
     unsigned int ivarsCount = 0;
     Ivar *ivars = class_copyIvarList(cls, &ivarsCount);
-    
+
     if (ivars && ivarsCount > 0) {
         NSMutableDictionary *ivarInfos = [[NSMutableDictionary alloc] initWithCapacity:ivarsCount];
-        
-        for (int i = 0; i < ivarsCount; i ++) {
+
+        for (int i = 0; i < ivarsCount; i++) {
             XIvarInfo *ivarInfo = [[XIvarInfo alloc] initWithIvar:ivars[i]];
             if (ivarInfo && ivarInfo.name) {
                 [ivarInfos x_setObject:ivarInfo forKey:ivarInfo.name];
             }
         }
-        
+
         _ivarInfos = ivarInfos;
     }
     if (ivars) {
         free(ivars);
     }
-    
+
     //protocols
     unsigned int protocolsCount = 0;
-    Protocol * __unsafe_unretained *protocols = class_copyProtocolList(cls, &protocolsCount);
-    
+    Protocol *__unsafe_unretained *protocols = class_copyProtocolList(cls, &protocolsCount);
+
     if (protocols && protocolsCount > 0) {
         NSMutableDictionary *protocolInfos = [[NSMutableDictionary alloc] initWithCapacity:protocolsCount];
-        
-        for (int i = 0; i < protocolsCount; i ++) {
+
+        for (int i = 0; i < protocolsCount; i++) {
             XProtocolInfo *protocolInfo = [[XProtocolInfo alloc] initWithProtocol:protocols[i]];
             if (protocolInfo && protocolInfo.name) {
                 [protocolInfos x_setObject:protocolInfo forKey:protocolInfo.name];
             }
         }
-        
+
         _protocolInfos = protocolInfos;
     }
     if (protocols) {
         free(protocols);
     }
-    
+
     if (!_methodInfos) {
         _methodInfos = @{};
     }
@@ -495,28 +522,29 @@ XEncodingType getEncodingType(const char *typeEncoding) {
     if (!_protocolInfos) {
         _protocolInfos = @{};
     }
-    
+
     _superClassInfo = [[XClassInfo alloc] initWithClass:_superClass];
-    
+
     return self;
 }
 
 @end
 
+
 @implementation XObjectInfo
 
 - (instancetype)initWithObject:(id)object {
     _isClass = NO;
-    
+
     if (!object) {
         return nil;
     }
-    
+
     self = [super init];
     if (!self) {
         return nil;
     }
-    
+
     _object = object;
     _isClass = object_isClass(object);
     if (_isClass) {
@@ -525,7 +553,7 @@ XEncodingType getEncodingType(const char *typeEncoding) {
         _cls = object_getClass(object);
     }
     _classInfo = [[XClassInfo alloc] initWithClass:_cls];
-    
+
     return self;
 }
 

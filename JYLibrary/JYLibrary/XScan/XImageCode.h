@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+
 @interface XImageCode : NSObject
 
 + (NSString *)readStringFromImage:(UIImage *)image;

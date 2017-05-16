@@ -15,12 +15,15 @@
 #import "NSArray+XArray.h"
 #import "NSDictionary+XDictionary.h"
 
-@interface XNotification() {
+
+@interface XNotification ()
+{
     NSMutableDictionary *observersDictionary;
     NSMutableDictionary *observersKVODictionary;
 }
 
 @end
+
 
 @implementation XNotification
 
@@ -50,9 +53,9 @@
     if (!observer || [XTool isStringEmpty:aName]) {
         return;
     }
-    
+
     NSMutableArray *observers = [[NSMutableArray alloc] init];
-    
+
     if (![XTool isDictionaryEmpty:observersDictionary] && [observersDictionary.allKeys containsObject:aName]) {
         id obj = [observersDictionary objectForKey:aName];
         if (obj && [obj isKindOfClass:[NSArray class]]) {
@@ -63,9 +66,9 @@
             [observers addObjectsFromArray:currentObservers];
         }
     }
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:observer selector:aSelector name:aName object:anObject];
-    
+
     [observers x_addObject:observer];
     [observersDictionary x_setObject:observers forKey:aName];
 }
@@ -92,7 +95,7 @@
     if ([XTool isDictionaryEmpty:observersDictionary]) {
         return;
     }
-    
+
     for (NSString *aName in observersDictionary.allKeys) {
         id obj = [observersDictionary objectForKey:aName];
         if (obj && [obj isKindOfClass:[NSArray class]]) {
@@ -103,7 +106,7 @@
             }
         }
     }
-    
+
     [observersDictionary removeAllObjects];
 }
 
@@ -113,7 +116,7 @@
     if (!observer || !anObject || [XTool isStringEmpty:keyPath]) {
         return;
     }
-    
+
     NSMutableArray *observers = [[NSMutableArray alloc] init];
 
     if (![XTool isDictionaryEmpty:observersKVODictionary] && [observersKVODictionary.allKeys containsObject:keyPath]) {
@@ -133,9 +136,9 @@
             [observers addObjectsFromArray:currentObservers];
         }
     }
-    
+
     [anObject addObserver:observer forKeyPath:keyPath options:options context:context];
-    
+
     NSMutableDictionary *observerDic = [[NSMutableDictionary alloc] init];
     [observerDic x_setObject:observer forKey:@"observer"];
     [observerDic x_setObject:anObject forKey:@"object"];
@@ -186,7 +189,7 @@
     if ([XTool isDictionaryEmpty:observersKVODictionary]) {
         return;
     }
-    
+
     for (NSString *keyPath in observersKVODictionary.allKeys) {
         id obj = [observersKVODictionary objectForKey:keyPath];
         if (obj && [obj isKindOfClass:[NSArray class]]) {
@@ -196,13 +199,13 @@
                     NSDictionary *paramDic = (NSDictionary *)param;
                     NSObject *tempObserver = [paramDic objectForKey:@"observer"];
                     NSObject *tempObj = [paramDic objectForKey:@"object"];
-                    
+
                     [tempObj removeObserver:tempObserver forKeyPath:keyPath];
                 }
             }
         }
     }
-    
+
     [observersKVODictionary removeAllObjects];
 }
 
@@ -245,19 +248,20 @@
 + (void)registerRemoteNotification {
     if ([XIOSVersion isIOS10OrGreater]) {
         UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
-        [center requestAuthorizationWithOptions:(UNAuthorizationOptionAlert | UNAuthorizationOptionBadge | UNAuthorizationOptionSound) completionHandler:^(BOOL granted, NSError * _Nullable error) {
-            
+        [center requestAuthorizationWithOptions:(UNAuthorizationOptionAlert | UNAuthorizationOptionBadge | UNAuthorizationOptionSound) completionHandler:^(BOOL granted, NSError *_Nullable error){
+
         }];
-        
+
         [[UIApplication sharedApplication] registerForRemoteNotifications];
     } else if ([XIOSVersion isIOS8OrGreater]) {
         [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:
-                                                                             (UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
-        
+                                                                                                            (UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge)
+                                                                                                              categories:nil]];
+
         [[UIApplication sharedApplication] registerForRemoteNotifications];
     } else {
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
-         (UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert)];
+                                               (UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert)];
     }
 }
 
@@ -265,16 +269,15 @@
     //ios8后，需要添加这个注册，才能得到授权
     if ([XIOSVersion isIOS8OrGreater] &&
         [[UIApplication sharedApplication] currentUserNotificationSettings].types == UIUserNotificationTypeNone) {
-        
-        UIUserNotificationType type =  UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound;
+        UIUserNotificationType type = UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound;
         UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:type categories:nil];
         [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
     }
 }
 
 + (void)alertLocalNotification:(NSString *)alertBody alertAction:(NSString *)alertAction userInfo:(NSDictionary *)userInfo interval:(double)interval {
-    UILocalNotification *notification= [[UILocalNotification alloc] init];
-    NSDate * pushDate = [NSDate dateWithTimeIntervalSinceNow:interval];
+    UILocalNotification *notification = [[UILocalNotification alloc] init];
+    NSDate *pushDate = [NSDate dateWithTimeIntervalSinceNow:interval];
     [notification setFireDate:pushDate];
     [notification setRepeatInterval:0];
     [notification setTimeZone:[NSTimeZone defaultTimeZone]];
@@ -284,9 +287,9 @@
     [notification setAlertBody:alertBody];
     [notification setAlertAction:alertAction];
     [notification setUserInfo:userInfo];
-    
+
     [[UIApplication sharedApplication] scheduleLocalNotification:notification];
-    
+
     //声音提醒
     AudioServicesPlaySystemSound(1007);
 }

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface UIImage (XGif)
 
 + (UIImage *)animatedGIFNamed:(NSString *)name;

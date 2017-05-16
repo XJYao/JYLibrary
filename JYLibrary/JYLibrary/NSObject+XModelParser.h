@@ -14,18 +14,16 @@
 /**
  属性名映射
  */
-- (NSDictionary
-   <NSString *,//属性名
-   NSString *>//映射名
-   *)XModelParserModelPropertyNameMapper;
+- (NSDictionary<NSString *, //属性名
+                NSString *> //映射名
+       *)XModelParserModelPropertyNameMapper;
 
 /**
  数组、集合里的元素类名映射
  */
-- (NSDictionary
-   <NSString *,//属性名
-   NSString *>//元素类名
-   *)XModelParserModelPropertyContainerClassMapper;
+- (NSDictionary<NSString *, //属性名
+                NSString *> //元素类名
+       *)XModelParserModelPropertyContainerClassMapper;
 
 /**
  自定义转换属性
@@ -36,10 +34,9 @@
 /**
  默认值
  */
-- (NSDictionary
-   <NSString *,//属性名
-   id>//默认值
-*)XModelParserModelPropertyDefaultValue;
+- (NSDictionary<NSString *, //属性名
+                id>         //默认值
+       *)XModelParserModelPropertyDefaultValue;
 
 /**
  不参与转换成字典的属性名
@@ -52,6 +49,7 @@
 - (NSArray<NSString *> *)XModelParserModelPropertyNamesForJudgeTheValueIsEqual;
 
 @end
+
 
 @interface NSObject (XModelParser)
 

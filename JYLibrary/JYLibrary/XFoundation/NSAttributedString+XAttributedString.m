@@ -9,6 +9,7 @@
 #import "NSAttributedString+XAttributedString.h"
 #import "XTool.h"
 
+
 @implementation NSAttributedString (XAttributedString)
 
 + (NSString *)htmlWithAttributedString:(NSAttributedString *)attributedString {
@@ -18,9 +19,9 @@
     NSError *error = nil;
     NSData *data = [attributedString dataFromRange:NSMakeRange(0, attributedString.length)
                                 documentAttributes:@{
-                                                     NSDocumentTypeDocumentAttribute : NSHTMLTextDocumentType,
-                                                     NSCharacterEncodingDocumentAttribute : [NSNumber numberWithInt:NSUTF8StringEncoding]
-                                                     }
+                                    NSDocumentTypeDocumentAttribute : NSHTMLTextDocumentType,
+                                    NSCharacterEncodingDocumentAttribute : [NSNumber numberWithInt:NSUTF8StringEncoding]
+                                }
                                              error:&error];
     if (![XTool isObjectNull:error]) {
         return nil;
@@ -34,16 +35,16 @@
     if ([XTool isStringEmpty:html]) {
         return nil;
     }
-    
+
     NSError *error = nil;
 
     NSAttributedString *attributedString =
-    [[NSAttributedString alloc] initWithData:[html dataUsingEncoding:NSUnicodeStringEncoding]
-                                     options:@{
-                                               NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType
-                                               }
-                          documentAttributes:nil
-                                       error:&error];
+        [[NSAttributedString alloc] initWithData:[html dataUsingEncoding:NSUnicodeStringEncoding]
+                                         options:@{
+                                             NSDocumentTypeDocumentAttribute : NSHTMLTextDocumentType
+                                         }
+                              documentAttributes:nil
+                                           error:&error];
     if (![XTool isObjectNull:error]) {
         return nil;
     }

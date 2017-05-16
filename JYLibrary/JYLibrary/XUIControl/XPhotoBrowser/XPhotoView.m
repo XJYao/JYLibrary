@@ -11,17 +11,20 @@
 #import "XTool.h"
 #import "XThread.h"
 
-@interface XPhotoView() <UIScrollViewDelegate> {
-    UIScrollView    *   imageScrollView;
-    UIImageView     *   imageView;
+
+@interface XPhotoView () <UIScrollViewDelegate>
+{
+    UIScrollView *imageScrollView;
+    UIImageView *imageView;
     UIActivityIndicatorView *loading;
-    
+
     XPhotoViewBeginLoadBlock beginLoadBlock;
     XPhotoViewLoadProgressBlock loadProgressBlock;
     XPhotoViewLoadCompletionBlock loadCompletionBlock;
 }
 
 @end
+
 
 @implementation XPhotoView
 
@@ -30,7 +33,7 @@
     if (self) {
         [self setBackgroundColor:[UIColor clearColor]];
         [self.contentView setBackgroundColor:[UIColor clearColor]];
-        
+
         _placeholderImage = nil;
         _maximumZoomScale = 2.0;
         _minimumZoomScale = 1.0;
@@ -41,18 +44,18 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    
+
     if (CGSizeEqualToSize(self.frame.size, CGSizeZero) ||
         CGSizeEqualToSize(self.contentView.frame.size, CGSizeZero)) {
         return;
     }
-    
+
     [self updateFrame];
 }
 
 - (void)addUI {
     [self releaseAll];
-    
+
     imageScrollView = [[UIScrollView alloc] init];
     [imageScrollView setBackgroundColor:[UIColor clearColor]];
     [imageScrollView setShowsHorizontalScrollIndicator:NO];
@@ -66,11 +69,11 @@
     [imageScrollView setMaximumZoomScale:_maximumZoomScale];
     [imageScrollView setMinimumZoomScale:_minimumZoomScale];
     [self.contentView addSubview:imageScrollView];
-    
+
     imageView = [[UIImageView alloc] init];
     [imageView setUserInteractionEnabled:YES];
     [imageScrollView addSubview:imageView];
-    
+
     loading = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
     [loading setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhite];
     [self.contentView addSubview:loading];
@@ -104,11 +107,11 @@
     }
 
     [self addUI];
-    
+
     if (_showLoading) {
         [loading startAnimating];
     }
-    
+
     x_dispatch_async_default(^{
         UIImage *image = nil;
         if (![XTool isStringEmpty:path]) {
@@ -121,11 +124,11 @@
                 [imageView setImage:image];
             }
             [self updateFrame];
-            
+
             if (_showLoading) {
                 [loading stopAnimating];
             }
-            
+
             if (loadCompletionBlock) {
                 loadCompletionBlock();
             }
@@ -137,16 +140,16 @@
     if (beginLoadBlock) {
         beginLoadBlock();
     }
-    
+
     [self addUI];
-    
+
     if ([XTool isObjectNull:image]) {
         [imageView setImage:_placeholderImage];
     } else {
         [imageView setImage:image];
     }
     [self updateFrame];
-    
+
     if (loadCompletionBlock) {
         loadCompletionBlock();
     }
@@ -154,7 +157,7 @@
 
 - (void)loadImageForUrl:(NSString *)url placeHolderImage:(UIImage *)placeHolderImage {
     _placeholderImage = placeHolderImage;
-    
+
     [self loadImageForUrl:url];
 }
 
@@ -164,31 +167,31 @@
     }
 
     [self addUI];
-    
+
     if (_showLoading) {
         [loading startAnimating];
     }
-    
+
     [imageView x_setImageWithURLString:url placeholderImage:_placeholderImage progress:^(long long completedCount, long long totalCount) {
-        
+
         if (loadProgressBlock) {
             loadProgressBlock(completedCount * 1.0 / totalCount);
         }
-        
+
     } completion:^(BOOL success, UIImage *image, NSError *error) {
-        
+
         x_dispatch_main_async(^{
             [self updateFrame];
-            
+
             if (_showLoading) {
                 [loading stopAnimating];
             }
-            
+
             if (loadCompletionBlock) {
                 loadCompletionBlock();
             }
         });
-        
+
     }];
 }
 
@@ -198,7 +201,7 @@
         [imageView removeFromSuperview];
         imageView = nil;
     }
-    
+
     if (imageScrollView) {
         for (UIView *subView in imageScrollView.subviews) {
             [subView removeFromSuperview];
@@ -206,12 +209,12 @@
         [imageScrollView removeFromSuperview];
         imageScrollView = nil;
     }
-    
+
     if (loading) {
         [loading removeFromSuperview];
         loading = nil;
     }
-    
+
     for (UIView *subView in self.contentView.subviews) {
         [subView removeFromSuperview];
     }
@@ -222,11 +225,11 @@
     if (!CGRectEqualToRect(self.contentView.frame, contentViewFrame)) {
         [self.contentView setFrame:contentViewFrame];
     }
-    
+
     if (loading) {
         [loading setCenter:self.contentView.center];
     }
-    
+
     [self updateScrollViewFrame];
     [self updateImageViewFrame];
 }
@@ -235,12 +238,12 @@
     if ([XTool isObjectNull:imageScrollView]) {
         return;
     }
-    
+
     CGFloat scrollViewWidth = self.contentView.frame.size.width;
     CGFloat scrollViewHeight = self.contentView.frame.size.height;
     CGFloat scrollViewX = 0;
     CGFloat scrollViewY = 0;
-    
+
     CGRect imageScrollViewFrame = CGRectMake(scrollViewX, scrollViewY, scrollViewWidth, scrollViewHeight);
     if (!CGRectEqualToRect(imageScrollView.frame, imageScrollViewFrame)) {
         [imageScrollView setFrame:imageScrollViewFrame];
@@ -253,13 +256,13 @@
     if ([XTool isObjectNull:imageView]) {
         return;
     }
-    
+
     x_dispatch_async_default(^{
         CGFloat imageViewWidth = 0;
         CGFloat imageViewHeight = 0;
         CGFloat imageViewX = 0;
         CGFloat imageViewY = 0;
-        
+
         CGFloat imageWidth = 0;
         CGFloat imageHeight = 0;
         if (imageView && imageView.image) {
@@ -274,11 +277,11 @@
         } else {
             CGFloat scrollViewWidth = imageScrollView.frame.size.width;
             CGFloat scrollViewHeight = imageScrollView.frame.size.height;
-            
-            CGFloat widthScale = imageWidth*1.0/scrollViewWidth;
-            CGFloat HeightScale = imageHeight*1.0/scrollViewHeight;
+
+            CGFloat widthScale = imageWidth * 1.0 / scrollViewWidth;
+            CGFloat HeightScale = imageHeight * 1.0 / scrollViewHeight;
             CGFloat imageSizeScale = imageWidth * 1.0 / imageHeight;
-            
+
             if (widthScale <= 1.0 && HeightScale <= 1.0) {
                 imageViewWidth = imageWidth;
                 imageViewHeight = imageHeight;
@@ -298,10 +301,9 @@
                 }
             }
         }
-        
+
         CGRect imageViewFrame = CGRectMake(imageViewX, imageViewY, imageViewWidth, imageViewHeight);
         if (!CGRectEqualToRect(imageView.frame, imageViewFrame)) {
-            
             x_dispatch_main_async(^{
                 [imageView setFrame:imageViewFrame];
             });
@@ -314,20 +316,20 @@
         CGFloat imageViewX = 0;
         CGFloat imageViewY = 0;
         if (imageView.frame.size.width < scrollView.frame.size.width) {
-            imageViewX = (scrollView.frame.size.width - imageView.frame.size.width)*1.0/2;
+            imageViewX = (scrollView.frame.size.width - imageView.frame.size.width) * 1.0 / 2;
         } else {
             imageViewX = 0;
         }
         if (imageView.frame.size.height < scrollView.frame.size.height) {
-            imageViewY = (scrollView.frame.size.height - imageView.frame.size.height)*1.0/2;
+            imageViewY = (scrollView.frame.size.height - imageView.frame.size.height) * 1.0 / 2;
         } else {
             imageViewY = 0;
         }
-        
+
         CGRect imageViewFrame = imageView.frame;
         imageViewFrame.origin.x = imageViewX;
         imageViewFrame.origin.y = imageViewY;
-        
+
         if (!CGRectEqualToRect(imageView.frame, imageViewFrame)) {
             x_dispatch_main_async(^{
                 [imageView setFrame:imageViewFrame];

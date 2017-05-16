@@ -11,13 +11,15 @@
 #import "UILabel+XLabel.h"
 #import "XMacro.h"
 
-#define maxLeftTextLength   2
-#define leftControlTag      1
-#define rightControlTag     2
+#define maxLeftTextLength 2
+#define leftControlTag 1
+#define rightControlTag 2
 
-@interface XTitleView() {
+
+@interface XTitleView ()
+{
     UIImageView *backgroundImageView;
-    
+
     UIControl *leftControl;
     UIControl *rightControl;
     UIImageView *leftImageView;
@@ -29,6 +31,7 @@
 
 @end
 
+
 @implementation XTitleView
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -39,7 +42,7 @@
         [self addLeftControl];
         [self addRightControl];
         [self addTitleLabel];
-        
+
         if (!CGRectEqualToRect(frame, CGRectZero)) {
             [self updateFrame];
         }
@@ -57,19 +60,19 @@
 
     _leftButtonFont = [UIFont fontWithName:@"Helvetica-Bold" size:14];
     _leftButtonNormalColor = [UIColor whiteColor];
-    _leftButtonHighlightedColor = [UIColor colorWithRed:170.0/255 green:170.0/255 blue:170.0/255 alpha:1];
+    _leftButtonHighlightedColor = [UIColor colorWithRed:170.0 / 255 green:170.0 / 255 blue:170.0 / 255 alpha:1];
     _leftButtonNormalImage = nil;
     _leftButtonHighlightedImage = nil;
-    
+
     _rightButtonFont = [UIFont fontWithName:@"Helvetica-Bold" size:14];
     _rightButtonNormalColor = [UIColor whiteColor];
-    _rightButtonHighlightedColor = [UIColor colorWithRed:170.0/255 green:170.0/255 blue:170.0/255 alpha:1];
+    _rightButtonHighlightedColor = [UIColor colorWithRed:170.0 / 255 green:170.0 / 255 blue:170.0 / 255 alpha:1];
     _rightButtonNormalImage = nil;
     _rightButtonHighlightedImage = nil;
-    
+
     _titleFont = [UIFont fontWithName:@"Helvetica-Bold" size:18];
     _titleColor = [UIColor whiteColor];
-    
+
     _backgroundImage = nil;
 }
 
@@ -88,12 +91,12 @@
     [leftControl addTarget:self action:@selector(controlTouchToNormal:) forControlEvents:UIControlEventTouchCancel | UIControlEventTouchDragExit | UIControlEventTouchDragOutside | UIControlEventTouchUpOutside];
     [leftControl addTarget:self action:@selector(controlTouchToEvent:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:leftControl];
-    
+
     leftImageView = [[UIImageView alloc] init];
     [leftImageView setBackgroundColor:[UIColor clearColor]];
     [leftImageView setImage:_leftButtonNormalImage];
     [leftControl addSubview:leftImageView];
-    
+
     leftLabel = [[UILabel alloc] init];
     [leftLabel setBackgroundColor:[UIColor clearColor]];
     [leftLabel setTextAlignment:NSTextAlignmentCenter];
@@ -111,11 +114,11 @@
     [rightControl addTarget:self action:@selector(controlTouchToNormal:) forControlEvents:UIControlEventTouchCancel | UIControlEventTouchDragExit | UIControlEventTouchDragOutside | UIControlEventTouchUpOutside];
     [rightControl addTarget:self action:@selector(controlTouchToEvent:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:rightControl];
-    
+
     rightImageView = [[UIImageView alloc] init];
     [rightImageView setBackgroundColor:[UIColor clearColor]];
     [rightControl addSubview:rightImageView];
-    
+
     rightLabel = [[UILabel alloc] init];
     [rightLabel setBackgroundColor:[UIColor clearColor]];
     [rightLabel setTextAlignment:NSTextAlignmentCenter];
@@ -152,17 +155,17 @@
     CGFloat leftControlHeight = 0;
     CGFloat leftControlX = 0;
     CGFloat leftControlY = statusBarOriginY;
-    
+
     CGFloat leftImageViewWidth = 0;
     CGFloat leftImageViewHeight = 0;
     CGFloat leftImageViewX = 0;
     CGFloat leftImageViewY = 0;
-    
+
     CGFloat leftLabelWidth = 0;
     CGFloat leftLabelHeight = 0;
     CGFloat leftLabelX = 0;
     CGFloat leftLabelY = 0;
-    
+
     CGFloat offsetBetweenImageAndText = 5.0f;
     leftControlHeight = self.frame.size.height - statusBarOriginY;
     if (leftImageView.image) {
@@ -181,7 +184,7 @@
     }
     leftLabelY = (leftControlHeight - leftLabelHeight) / 2.0;
     leftControlWidth = leftLabelX + leftLabelWidth;
-    
+
     [leftControl setFrame:CGRectMake(leftControlX, leftControlY, leftControlWidth, leftControlHeight)];
     [leftImageView setFrame:CGRectMake(leftImageViewX, leftImageViewY, leftImageViewWidth, leftImageViewHeight)];
     [leftLabel setFrame:CGRectMake(leftLabelX, leftLabelY, leftLabelWidth, leftLabelHeight)];
@@ -189,22 +192,22 @@
 
 - (void)updateRightControlFrame {
     CGFloat offset = 10.0f;
-    
+
     CGFloat rightControlWidth = 0;
     CGFloat rightControlHeight = self.frame.size.height - statusBarOriginY;
     CGFloat rightControlX = 0;
     CGFloat rightControlY = statusBarOriginY;
-    
+
     CGFloat rightImageViewWidth = 0;
     CGFloat rightImageViewHeight = 0;
     CGFloat rightImageViewX = offset;
     CGFloat rightImageViewY = 0;
-    
+
     CGFloat rightLabelWidth = 0;
     CGFloat rightLabelHeight = 0;
     CGFloat rightLabelX = offset;
     CGFloat rightLabelY = 0;
-    
+
     if (!rightImageView.hidden) {
         if (rightImageView.image) {
             rightImageViewWidth = rightImageView.image.size.width / 2.0;
@@ -226,7 +229,7 @@
         rightControlWidth = rightLabelWidth + offset * 2;
     }
     rightControlX = self.frame.size.width - rightControlWidth;
-    
+
     [rightControl setFrame:CGRectMake(rightControlX, rightControlY, rightControlWidth, rightControlHeight)];
     [rightImageView setFrame:CGRectMake(rightImageViewX, rightImageViewY, rightImageViewWidth, rightImageViewHeight)];
     [rightLabel setFrame:CGRectMake(rightLabelX, rightLabelY, rightLabelWidth, rightLabelHeight)];
@@ -236,9 +239,9 @@
     CGFloat offsetBetweenLeftControlAndTitleLabel = 20.0f;
     CGFloat titleLabelX = 0;
     CGFloat titleLabelY = statusBarOriginY;
-    CGFloat titleLabelWidth =0;
+    CGFloat titleLabelWidth = 0;
     CGFloat titleLabelHeight = self.frame.size.height - statusBarOriginY;
-    
+
     if (!leftControl.hidden) {
         titleLabelX = leftControl.frame.size.width + offsetBetweenLeftControlAndTitleLabel;
         titleLabelWidth = (self.frame.size.width / 2.0 - titleLabelX) * 2;
@@ -544,12 +547,12 @@
     UIControl *control = (UIControl *)sender;
     if (control.tag == leftControlTag) {
         [self setLeftControlIsNormal:YES];
-        if(_delegate && [_delegate respondsToSelector:@selector(clickTitleViewLeftButton)]) {
+        if (_delegate && [_delegate respondsToSelector:@selector(clickTitleViewLeftButton)]) {
             [_delegate clickTitleViewLeftButton];
         }
     } else if (control.tag == rightControlTag) {
         [self setRightControlIsNormal:YES];
-        if(_delegate && [_delegate respondsToSelector:@selector(clickTitleViewRightButton)]) {
+        if (_delegate && [_delegate respondsToSelector:@selector(clickTitleViewRightButton)]) {
             [_delegate clickTitleViewRightButton];
         }
     }

@@ -22,11 +22,13 @@
 
 @end
 
+
 @interface XCustomUIWebView : UIWebView
 
-@property (nonatomic, weak) id <XCustomUIWebViewDelegate> custom_delegate;
+@property (nonatomic, weak) id<XCustomUIWebViewDelegate> custom_delegate;
 
 @end
+
 
 @implementation XCustomUIWebView
 
@@ -39,7 +41,7 @@
 - (BOOL)webView:(id)webView runJavaScriptConfirmPanelWithMessage:(NSString *)message initiatedByFrame:(id)frame {
     __block BOOL waitResult = YES;
     __block BOOL confirmResult = NO;
-    
+
     if (self.custom_delegate && [self.custom_delegate respondsToSelector:@selector(webView:runJavaScriptConfirmPanelWithMessage:completionHandler:)]) {
         [self.custom_delegate webView:webView runJavaScriptConfirmPanelWithMessage:message completionHandler:^(BOOL result) {
             confirmResult = result;
@@ -48,31 +50,31 @@
     } else {
         waitResult = NO;
     }
-    
+
     while (waitResult) {
         [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.01f]];
     }
-    
+
     return confirmResult;
 }
 
 - (NSString *)webView:(id)webView runJavaScriptTextInputPanelWithPrompt:(NSString *)prompt defaultText:(NSString *)defaultText initiatedByFrame:(id)frame {
     __block BOOL waitResult = YES;
     __block NSString *resultString = nil;
-    
+
     if (self.custom_delegate && [self.custom_delegate respondsToSelector:@selector(webView:runJavaScriptTextInputPanelWithPrompt:defaultText:completionHandler:)]) {
-        [self.custom_delegate webView:webView runJavaScriptTextInputPanelWithPrompt:prompt defaultText:defaultText completionHandler:^(NSString * result) {
+        [self.custom_delegate webView:webView runJavaScriptTextInputPanelWithPrompt:prompt defaultText:defaultText completionHandler:^(NSString *result) {
             resultString = result;
             waitResult = NO;
         }];
     } else {
         waitResult = NO;
     }
-    
+
     while (waitResult) {
         [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.01f]];
     }
-    
+
     return resultString;
 }
 
@@ -81,15 +83,18 @@
 
 #pragma mark - XWebManager
 
-@interface XWebManager () <UIWebViewDelegate, XCustomUIWebViewDelegate, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler> {
+
+@interface XWebManager () <UIWebViewDelegate, XCustomUIWebViewDelegate, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler>
+{
     //before iOS8
-    CADisplayLink * disPlayLink;    //用于iOS8以下进度累加
+    CADisplayLink *disPlayLink;     //用于iOS8以下进度累加
     double progressForIOS7OrBefore; //iOS8以下加载进度
-    
+
     BOOL useUIWebView;
 }
 
 @end
+
 
 @implementation XWebManager
 
@@ -164,7 +169,7 @@
 - (void)evaluateJavaScript:(NSString *)javaScriptString completionHandler:(void (^)(id, NSError *))completionHandler {
     if ([self isUseWKWebView]) {
         WKWebView *webView = (WKWebView *)_webView;
-        [webView evaluateJavaScript:javaScriptString completionHandler:^(id result, NSError * error) {
+        [webView evaluateJavaScript:javaScriptString completionHandler:^(id result, NSError *error) {
             if (pthread_main_np() == 0) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     completionHandler(result, error);
@@ -198,22 +203,25 @@
     if ([XIOSVersion isIOS9OrGreater]) {
         NSDate *dateFrom = [NSDate dateWithTimeIntervalSince1970:0];
         [[WKWebsiteDataStore defaultDataStore] removeDataOfTypes:[NSSet setWithObjects:
-                                                                  WKWebsiteDataTypeDiskCache,
-                                                                  WKWebsiteDataTypeMemoryCache,
-                                                                  WKWebsiteDataTypeOfflineWebApplicationCache,
-                                                                  WKWebsiteDataTypeSessionStorage,
-                                                                  WKWebsiteDataTypeLocalStorage,
-                                                                  WKWebsiteDataTypeWebSQLDatabases,
-                                                                  WKWebsiteDataTypeIndexedDBDatabases,
-                                                                  nil] modifiedSince:dateFrom completionHandler:^{}];
+                                                                            WKWebsiteDataTypeDiskCache,
+                                                                            WKWebsiteDataTypeMemoryCache,
+                                                                            WKWebsiteDataTypeOfflineWebApplicationCache,
+                                                                            WKWebsiteDataTypeSessionStorage,
+                                                                            WKWebsiteDataTypeLocalStorage,
+                                                                            WKWebsiteDataTypeWebSQLDatabases,
+                                                                            WKWebsiteDataTypeIndexedDBDatabases,
+                                                                            nil]
+                                                   modifiedSince:dateFrom
+                                               completionHandler:^{
+                                               }];
     }
-    
+
     NSString *libraryDirectory = [XFileManager getLibraryDirectory];
     NSString *bundleId = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"];
-    
+
     NSString *webkitFolderInLib = [NSString stringWithFormat:@"%@/WebKit", libraryDirectory];
     NSString *webKitFolderInCaches = [NSString stringWithFormat:@"%@/Caches/%@/WebKit", libraryDirectory, bundleId];
-    
+
     NSError *error = nil;
     [[NSFileManager defaultManager] removeItemAtPath:webKitFolderInCaches error:&error];
     error = nil;
@@ -221,7 +229,7 @@
     error = nil;
     NSString *webKitFolderInCachesfs = [NSString stringWithFormat:@"%@/Caches/%@/fsCachedData", libraryDirectory, bundleId];
     [[NSFileManager defaultManager] removeItemAtPath:webKitFolderInCachesfs error:&error];
-    
+
     [[NSURLCache sharedURLCache] removeAllCachedResponses];
     [[NSURLCache sharedURLCache] setDiskCapacity:0];
 }
@@ -230,15 +238,18 @@
     if ([XIOSVersion isIOS9OrGreater]) {
         NSDate *dateFrom = [NSDate dateWithTimeIntervalSince1970:0];
         [[WKWebsiteDataStore defaultDataStore] removeDataOfTypes:[NSSet setWithObjects:
-                                                                  WKWebsiteDataTypeCookies,
-                                                                  nil] modifiedSince:dateFrom completionHandler:^{}];
+                                                                            WKWebsiteDataTypeCookies,
+                                                                            nil]
+                                                   modifiedSince:dateFrom
+                                               completionHandler:^{
+                                               }];
     }
-    
+
     NSHTTPCookieStorage *storage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
     for (NSHTTPCookie *cookie in storage.cookies) {
         [storage deleteCookie:cookie];
     }
-    
+
     NSString *libraryDirectory = [XFileManager getLibraryDirectory];
     NSString *cookiesFolderPath = [libraryDirectory stringByAppendingString:@"/Cookies"];
     NSError *error;
@@ -327,23 +338,21 @@
 
 - (instancetype)initWithFrame:(CGRect)frame configuration:(WKWebViewConfiguration *)configuration useUIWebView:(BOOL)use {
     self = [super init];
-    
+
     if (self) {
         progressForIOS7OrBefore = 0;
         useUIWebView = use;
-        
+
         if ([self isUseWKWebView]) {
-            
             _webView = [self createWKWebView:frame configuration:configuration];
-            
+
             [self registerKVOForWKWebView];
-            
+
         } else {
-            
             _webView = [self createUIWebView:frame];
         }
     }
-    
+
     return self;
 }
 
@@ -361,7 +370,7 @@
     [webView setDelegate:self];
     [webView setCustom_delegate:self];
     [webView setScalesPageToFit:YES];
-    
+
     return webView;
 }
 
@@ -374,22 +383,22 @@
     }
     [webView setUIDelegate:self];
     [webView setNavigationDelegate:self];
-    
+
     return webView;
 }
 
 //iOS8及以上KVO监听WKWebView的属性
 - (void)registerKVOForWKWebView {
-    NSArray *keyPaths = @[@"estimatedProgress", @"title"];
-    
+    NSArray *keyPaths = @[ @"estimatedProgress", @"title" ];
+
     for (NSString *path in keyPaths) {
         [((WKWebView *)_webView) addObserver:self forKeyPath:path options:NSKeyValueObservingOptionNew context:NULL];
     }
 }
 
 - (void)removeKVOForWKWebView {
-    NSArray *keyPaths = @[@"estimatedProgress", @"title"];
-    
+    NSArray *keyPaths = @[ @"estimatedProgress", @"title" ];
+
     for (NSString *path in keyPaths) {
         [((WKWebView *)_webView) removeObserver:self forKeyPath:path];
     }
@@ -404,7 +413,7 @@
 - (void)beginGettingProgressForIOS7OrBefore {
     progressForIOS7OrBefore = 0;
     [self updateProgress:progressForIOS7OrBefore];
-    
+
     if (disPlayLink) {
         [disPlayLink setPaused:NO];
         return;
@@ -415,7 +424,7 @@
 
 - (void)stopGettingProgressForIOS7OrBefore {
     [disPlayLink setPaused:YES];
-    
+
     progressForIOS7OrBefore = 1;
     [self updateProgress:progressForIOS7OrBefore];
 }
@@ -424,7 +433,7 @@
     if (progressForIOS7OrBefore >= 0.8) {
         return;
     }
-    
+
     progressForIOS7OrBefore += 0.005;
     [self updateProgress:progressForIOS7OrBefore];
 }
@@ -432,9 +441,8 @@
 #pragma mark - UIWebViewDelegate
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
-    
     NSLog(@"%@", NSStringFromSelector(_cmd));
-    
+
     BOOL allow = YES;
     if (_delegate && [_delegate respondsToSelector:@selector(webManager:allowLoadURL:)]) {
         allow = [_delegate webManager:self allowLoadURL:request.URL];
@@ -443,39 +451,36 @@
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView {
-    
     NSLog(@"%@", NSStringFromSelector(_cmd));
-    
+
     if (_delegate && [_delegate respondsToSelector:@selector(webManagerDidStartLoad:)]) {
         [_delegate webManagerDidStartLoad:self];
     }
-    
+
     [self beginGettingProgressForIOS7OrBefore];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
-    
     NSLog(@"%@", NSStringFromSelector(_cmd));
-    
+
     if (_delegate && [_delegate respondsToSelector:@selector(webManagerDidFinishLoad:)]) {
         [_delegate webManagerDidFinishLoad:self];
     }
-    
+
     if (_delegate && [_delegate respondsToSelector:@selector(webManager:title:)]) {
         [_delegate webManager:self title:self.title];
     }
-    
+
     [self stopGettingProgressForIOS7OrBefore];
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    
     NSLog(@"%@", NSStringFromSelector(_cmd));
-    
+
     if (_delegate && [_delegate respondsToSelector:@selector(webManager:didFailLoadWithError:)]) {
         [_delegate webManager:self didFailLoadWithError:error];
     }
-    
+
     [self stopGettingProgressForIOS7OrBefore];
 }
 
@@ -483,7 +488,7 @@
 
 - (void)webView:(id)webView runJavaScriptAlertPanelWithMessage:(NSString *)message {
     NSLog(@"%@", NSStringFromSelector(_cmd));
-    
+
     if (_delegate && [_delegate respondsToSelector:@selector(webManager:alertWithMessage:)]) {
         [_delegate webManager:self alertWithMessage:message];
     }
@@ -491,7 +496,7 @@
 
 - (void)webView:(id)webView runJavaScriptConfirmPanelWithMessage:(NSString *)message completionHandler:(void (^)(BOOL))completionHandler {
     NSLog(@"%@", NSStringFromSelector(_cmd));
-    
+
     if (_delegate && [_delegate respondsToSelector:@selector(webManager:confirmWithMessage:completionHandler:)]) {
         [_delegate webManager:self confirmWithMessage:message completionHandler:completionHandler];
     } else {
@@ -503,7 +508,7 @@
 
 - (void)webView:(id)webView runJavaScriptTextInputPanelWithPrompt:(NSString *)prompt defaultText:(NSString *)defaultText completionHandler:(void (^)(NSString *))completionHandler {
     NSLog(@"%@", NSStringFromSelector(_cmd));
-    
+
     if (_delegate && [_delegate respondsToSelector:@selector(webManager:textInputWithPrompt:defaultText:completionHandler:)]) {
         [_delegate webManager:self textInputWithPrompt:prompt defaultText:defaultText completionHandler:completionHandler];
     } else {
@@ -516,95 +521,86 @@
 #pragma mark - WKNavigationDelegate
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
-    
     NSLog(@"%@", NSStringFromSelector(_cmd));
-    
+
     BOOL allow = YES;
     if (_delegate && [_delegate respondsToSelector:@selector(webManager:allowLoadURL:)]) {
         allow = [_delegate webManager:self allowLoadURL:navigationAction.request.URL];
     }
-    
+
     if (decisionHandler) {
         decisionHandler(allow ? WKNavigationActionPolicyAllow : WKNavigationActionPolicyCancel);
     }
 }
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler {
-    
     NSLog(@"%@", NSStringFromSelector(_cmd));
-    
+
     BOOL allow = YES;
     if (_delegate && [_delegate respondsToSelector:@selector(webManager:allowNavigateAfterResponse:)]) {
         allow = [_delegate webManager:self allowNavigateAfterResponse:navigationResponse.response.URL];
     }
-    
+
     if (decisionHandler) {
         decisionHandler(allow ? WKNavigationResponsePolicyAllow : WKNavigationResponsePolicyCancel);
     }
 }
 
 - (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(null_unspecified WKNavigation *)navigation {
-    
     NSLog(@"%@", NSStringFromSelector(_cmd));
-    
+
     if (_delegate && [_delegate respondsToSelector:@selector(webManagerDidStartLoad:)]) {
         [_delegate webManagerDidStartLoad:self];
     }
 }
 
 - (void)webView:(WKWebView *)webView didReceiveServerRedirectForProvisionalNavigation:(null_unspecified WKNavigation *)navigation {
-    
     NSLog(@"%@", NSStringFromSelector(_cmd));
-    
+
     if (_delegate && [_delegate respondsToSelector:@selector(webManagerDidReceiveServerRedirectForProvisionalNavigation:)]) {
         [_delegate webManagerDidReceiveServerRedirectForProvisionalNavigation:self];
     }
 }
 
 - (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(null_unspecified WKNavigation *)navigation withError:(NSError *)error {
-    
     NSLog(@"%@", NSStringFromSelector(_cmd));
-    
+
     if (_delegate && [_delegate respondsToSelector:@selector(webManager:didFailLoadWithError:)]) {
         [_delegate webManager:self didFailLoadWithError:error];
     }
 }
 
 - (void)webView:(WKWebView *)webView didCommitNavigation:(null_unspecified WKNavigation *)navigation {
-    
     NSLog(@"%@", NSStringFromSelector(_cmd));
-    
+
     if (_delegate && [_delegate respondsToSelector:@selector(webManagerContentStartsArriving:)]) {
         [_delegate webManagerContentStartsArriving:self];
     }
 }
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(null_unspecified WKNavigation *)navigation {
-    
     NSLog(@"%@", NSStringFromSelector(_cmd));
-    
+
     if (_delegate && [_delegate respondsToSelector:@selector(webManagerDidFinishLoad:)]) {
         [_delegate webManagerDidFinishLoad:self];
     }
 }
 
 - (void)webView:(WKWebView *)webView didFailNavigation:(null_unspecified WKNavigation *)navigation withError:(NSError *)error {
-    
     NSLog(@"%@", NSStringFromSelector(_cmd));
-    
+
     if (_delegate && [_delegate respondsToSelector:@selector(webManager:didFailLoadContentWithError:)]) {
         [_delegate webManager:self didFailLoadContentWithError:error];
     }
 }
 
-- (void)webView:(WKWebView *)webView didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential * _Nullable credential))completionHandler {
-    
+- (void)webView:(WKWebView *)webView didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *_Nullable credential))completionHandler {
     NSLog(@"%@", NSStringFromSelector(_cmd));
-    
+
     if (completionHandler) {
         if (_delegate && [_delegate respondsToSelector:@selector(webManager:didReceiveAuthenticationChallenge:completionHandler:)]) {
-            [_delegate webManager:self didReceiveAuthenticationChallenge:challenge completionHandler:^(NSURLSessionAuthChallengeDisposition userDisposition, NSURLCredential * _Nonnull userCredential) {
-                
+            [_delegate webManager:self didReceiveAuthenticationChallenge:challenge completionHandler:^(NSURLSessionAuthChallengeDisposition userDisposition, NSURLCredential *_Nonnull userCredential) {
+
                 if (userCredential) {
                     completionHandler(userDisposition, userCredential);
                 } else {
@@ -619,10 +615,10 @@
     }
 }
 
-- (void)webViewWebContentProcessDidTerminate:(WKWebView *)webView {//ios9
-    
+- (void)webViewWebContentProcessDidTerminate:(WKWebView *)webView { //ios9
+
     NSLog(@"%@", NSStringFromSelector(_cmd));
-    
+
     if (_delegate && [_delegate respondsToSelector:@selector(webManagerWebContentProcessDidTerminate:)]) {
         [_delegate webManagerWebContentProcessDidTerminate:self];
     }
@@ -631,44 +627,41 @@
 #pragma mark - WKUIDelegate
 
 - (nullable WKWebView *)webView:(WKWebView *)webView createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration forNavigationAction:(WKNavigationAction *)navigationAction windowFeatures:(WKWindowFeatures *)windowFeatures {
-    
     NSLog(@"%@", NSStringFromSelector(_cmd));
-    
+
     XWebManager *newManager = [[XWebManager alloc] initWithFrame:_webView.frame configuration:configuration useUIWebView:useUIWebView];
-    
+
     if (_delegate && [_delegate respondsToSelector:@selector(webManager:newManager:URL:)]) {
         [_delegate webManager:self newManager:newManager URL:navigationAction.request.URL];
     }
-    
+
     return (WKWebView *)(newManager.webView);
 }
 
-- (void)webViewDidClose:(WKWebView *)webView {//ios9
-    
+- (void)webViewDidClose:(WKWebView *)webView { //ios9
+
     NSLog(@"%@", NSStringFromSelector(_cmd));
-    
+
     if (_delegate && [_delegate respondsToSelector:@selector(webManagerDidClose:)]) {
         [_delegate webManagerDidClose:self];
     }
 }
 
 - (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler {
-    
     NSLog(@"%@", NSStringFromSelector(_cmd));
-    
+
     if (_delegate && [_delegate respondsToSelector:@selector(webManager:alertWithMessage:)]) {
         [_delegate webManager:self alertWithMessage:message];
     }
-    
+
     if (completionHandler) {
         completionHandler();
     }
 }
 
 - (void)webView:(WKWebView *)webView runJavaScriptConfirmPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(BOOL result))completionHandler {
-    
     NSLog(@"%@", NSStringFromSelector(_cmd));
-    
+
     if (_delegate && [_delegate respondsToSelector:@selector(webManager:confirmWithMessage:completionHandler:)]) {
         [_delegate webManager:self confirmWithMessage:message completionHandler:completionHandler];
     } else {
@@ -678,10 +671,9 @@
     }
 }
 
-- (void)webView:(WKWebView *)webView runJavaScriptTextInputPanelWithPrompt:(NSString *)prompt defaultText:(nullable NSString *)defaultText initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(NSString * __nullable result))completionHandler {
-    
+- (void)webView:(WKWebView *)webView runJavaScriptTextInputPanelWithPrompt:(NSString *)prompt defaultText:(nullable NSString *)defaultText initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(NSString *__nullable result))completionHandler {
     NSLog(@"%@", NSStringFromSelector(_cmd));
-    
+
     if (_delegate && [_delegate respondsToSelector:@selector(webManager:textInputWithPrompt:defaultText:completionHandler:)]) {
         [_delegate webManager:self textInputWithPrompt:prompt defaultText:defaultText completionHandler:completionHandler];
     } else {
@@ -695,7 +687,7 @@
 
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
     NSLog(@"%@", NSStringFromSelector(_cmd));
-    
+
     if (_delegate && [_delegate respondsToSelector:@selector(webManager:didReceiveScriptMessage:handlerName:)]) {
         [_delegate webManager:self didReceiveScriptMessage:message.body handlerName:message.name];
     }

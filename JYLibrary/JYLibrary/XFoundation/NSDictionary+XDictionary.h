@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface NSDictionary (XDictionary)
 
 + (NSData *)dataWithDictionary:(NSDictionary *)dict;
@@ -17,6 +18,7 @@
 - (NSData *)toData;
 
 @end
+
 
 @interface NSMutableDictionary (XMutableDictionary)
 

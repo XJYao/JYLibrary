@@ -8,16 +8,16 @@
 
 #import "XEaseInOutImageView.h"
 
+
 @implementation XEaseInOutImageView
 
 - (void)setImage:(UIImage *)image {
-    
     CATransition *transition = [CATransition animation];
     [transition setType:kCATransitionFade];
     [transition setDuration:0.5f];
     [transition setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
     [self.layer addAnimation:transition forKey:nil];
-    
+
     [super setImage:image];
 }
 

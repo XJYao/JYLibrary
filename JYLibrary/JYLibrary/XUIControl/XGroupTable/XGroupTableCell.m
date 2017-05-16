@@ -8,6 +8,7 @@
 
 #import "XGroupTableCell.h"
 
+
 @implementation XGroupTableCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
@@ -15,7 +16,6 @@
 }
 
 + (CGFloat)getCellHeight:(id)model width:(CGFloat)width {
-    
     return 50;
 }
 

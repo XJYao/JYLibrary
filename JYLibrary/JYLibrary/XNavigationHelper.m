@@ -9,14 +9,15 @@
 #import "XNavigationHelper.h"
 #import "XIOSVersion.h"
 
+
 @implementation XNavigationHelper
 
 //防止viewController被导航栏挡住
 + (void)preventShelteredFromNavigationBarForViewController:(UIViewController *)viewController {
-    if([XIOSVersion isIOS7OrGreater]) {
-        [viewController setEdgesForExtendedLayout:UIRectEdgeNone];//UIRectEdgeLeft | UIRectEdgeRight | UIRectEdgeBottom];
-//        [viewController setExtendedLayoutIncludesOpaqueBars:NO];
-//        [viewController setModalPresentationCapturesStatusBarAppearance:NO];
+    if ([XIOSVersion isIOS7OrGreater]) {
+        [viewController setEdgesForExtendedLayout:UIRectEdgeNone]; //UIRectEdgeLeft | UIRectEdgeRight | UIRectEdgeBottom];
+                                                                   //        [viewController setExtendedLayoutIncludesOpaqueBars:NO];
+                                                                   //        [viewController setModalPresentationCapturesStatusBarAppearance:NO];
     }
 }
 
@@ -50,14 +51,14 @@
     if ([navigationController.viewControllers containsObject:viewController]) {
         return;
     }
-    
+
     [navigationController pushViewController:viewController animated:animated];
 }
 
 //小窗口从底部弹出
 + (void)presentViewControllerFormSheet:(UIViewController *)viewController onViewController:(UIViewController *)onViewController animated:(BOOL)animated completion:(void (^)(void))completion {
-    [viewController setModalTransitionStyle:UIModalTransitionStyleCoverVertical];//从底部弹出
-    [viewController setModalPresentationStyle:UIModalPresentationFormSheet];//小窗口
+    [viewController setModalTransitionStyle:UIModalTransitionStyleCoverVertical]; //从底部弹出
+    [viewController setModalPresentationStyle:UIModalPresentationFormSheet];      //小窗口
     [onViewController presentViewController:viewController animated:animated completion:completion];
 }
 

@@ -13,15 +13,18 @@
 #import "XFileManager.h"
 #import "NSArray+XArray.h"
 
-@interface XGallery() <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout> {
-    UILabel             *   pageNumberLabel;
-    UICollectionView    *   galleryCollectionView;
-    NSMutableArray      *   imagesArr;
 
-    NSInteger               currentPageIndex;
+@interface XGallery () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+{
+    UILabel *pageNumberLabel;
+    UICollectionView *galleryCollectionView;
+    NSMutableArray *imagesArr;
+
+    NSInteger currentPageIndex;
 }
 
 @end
+
 
 @implementation XGallery
 
@@ -48,7 +51,7 @@
 
 - (void)initialize {
     [self setBackgroundColor:[UIColor clearColor]];
-    
+
     _placeholderImageName = @"";
     _maximumZoomScale = 2.0;
     _minimumZoomScale = 1.0;
@@ -74,7 +77,7 @@
 - (void)addGalleryView {
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     [flowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
-    
+
     CGSize pageNumberLabelSize = [pageNumberLabel labelSize];
     CGFloat pageNumberLabelHeight = pageNumberLabelSize.height;
     galleryCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height - pageNumberLabelHeight) collectionViewLayout:flowLayout];
@@ -119,7 +122,7 @@
     CGFloat galleryCollectionViewHeight = self.frame.size.height - pageNumberLabel.frame.size.height;
     CGFloat galleryCollectionViewX = 0;
     CGFloat galleryCollectionViewY = 0;
-    
+
     [galleryCollectionView setFrame:CGRectMake(galleryCollectionViewX, galleryCollectionViewY, galleryCollectionViewWidth, galleryCollectionViewHeight)];
 }
 
@@ -133,9 +136,9 @@
         } else if (pageIndex < 0) {
             pageIndex = 0;
         }
-        index = pageIndex+1;
+        index = pageIndex + 1;
     }
-    
+
     NSString *text = [[NSString stringWithFormat:@"%d", (int)index] stringByAppendingString:@"/"];
     text = [text stringByAppendingString:[NSString stringWithFormat:@"%d", (int)imagesArr.count]];
     [pageNumberLabel setText:text];
@@ -161,7 +164,7 @@
         } else {
             NSInteger beginIndex = imagesArr.count - images.count;
             NSMutableArray *indexPathsArr = [[NSMutableArray alloc] init];
-            for (NSInteger item=beginIndex; item<imagesArr.count; item++) {
+            for (NSInteger item = beginIndex; item < imagesArr.count; item++) {
                 NSIndexPath *indexPath = [NSIndexPath indexPathForItem:item inSection:0];
                 [indexPathsArr x_addObject:indexPath];
             }
@@ -180,17 +183,17 @@
     if ([anObject isKindOfClass:[NSString class]]) {
         NSString *str = (NSString *)anObject;
         if (![XTool isStringEmpty:str]) {
-            [self addImages:@[str]];
+            [self addImages:@[ str ]];
         }
     } else if ([anObject isKindOfClass:[NSData class]]) {
         NSData *data = (NSData *)anObject;
         if (data) {
-            [self addImages:@[data]];
+            [self addImages:@[ data ]];
         }
     } else if ([anObject isKindOfClass:[UIImage class]]) {
         UIImage *image = (UIImage *)anObject;
         if (image) {
-            [self addImages:@[image]];
+            [self addImages:@[ image ]];
         }
     }
 }
@@ -206,7 +209,7 @@
         [imagesArr x_removeObjectAtIndex:index];
         [self setPageIndex:currentPageIndex];
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
-        [galleryCollectionView deleteItemsAtIndexPaths:@[indexPath]];
+        [galleryCollectionView deleteItemsAtIndexPaths:@[ indexPath ]];
         return YES;
     }
 }
@@ -230,7 +233,7 @@
     [galleryCollectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionRight animated:animated];
 }
 
-#pragma mark -- UICollectionViewDataSource
+#pragma mark-- UICollectionViewDataSource
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     NSInteger sectionCount = 0;
@@ -242,11 +245,11 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     NSInteger itemCountForSection = 0;
-    
+
     if (![XTool isArrayEmpty:imagesArr]) {
         itemCountForSection = imagesArr.count;
     }
-    
+
     return itemCountForSection;
 }
 
@@ -261,23 +264,23 @@
         if ([unKnownObject isKindOfClass:[NSString class]]) {
             NSString *imagePath = (NSString *)unKnownObject;
             if ([imagePath rangeOfString:@"http://"].location == NSNotFound) {
-                if ([imagePath rangeOfString:@"/"].location == NSNotFound) {//不是地址,是文件名
-                    if ([imagePath rangeOfString:@"."].location != NSNotFound) {//带后缀
+                if ([imagePath rangeOfString:@"/"].location == NSNotFound) {     //不是地址,是文件名
+                    if ([imagePath rangeOfString:@"."].location != NSNotFound) { //带后缀
                         NSString *type = [XFileManager getSufixForName:imagePath];
-                        if ([type isEqualToString:@"gif"]) {//gif
+                        if ([type isEqualToString:@"gif"]) { //gif
                             NSString *name = [XFileManager getFileNameWithoutSufixForName:imagePath];
                             [cell addGifForName:name];
-                        } else {//图片
+                        } else { //图片
                             [cell addImageForName:imagePath];
                         }
-                    } else {//不带后缀
+                    } else { //不带后缀
                         [cell addImageForName:imagePath];
                     }
-                } else {//是地址
+                } else { //是地址
                     NSString *type = [XFileManager getSufixForPath:imagePath];
-                    if ([type isEqualToString:@"gif"]) {//gif
+                    if ([type isEqualToString:@"gif"]) { //gif
                         [cell addGifForPath:imagePath];
-                    } else {//图片
+                    } else { //图片
                         [cell addImageForPath:imagePath];
                     }
                 }
@@ -295,9 +298,9 @@
     return cell;
 }
 
-#pragma mark --UICollectionViewDelegateFlowLayout
+#pragma mark--UICollectionViewDelegateFlowLayout
 
--  (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat width = collectionView.frame.size.width;
     CGFloat height = collectionView.frame.size.height;
     CGSize size = CGSizeMake(width, height);
@@ -331,7 +334,7 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     CGFloat galleryScrollViewWidth = scrollView.frame.size.width;
     NSInteger offsetX = scrollView.contentOffset.x;
-    currentPageIndex = offsetX/galleryScrollViewWidth;
+    currentPageIndex = offsetX / galleryScrollViewWidth;
     [self setPageIndex:currentPageIndex];
 }
 

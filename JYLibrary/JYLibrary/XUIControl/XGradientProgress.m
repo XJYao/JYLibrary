@@ -8,8 +8,8 @@
 
 #import "XGradientProgress.h"
 
-@implementation XGradientProgress
 
+@implementation XGradientProgress
 
 
 @end

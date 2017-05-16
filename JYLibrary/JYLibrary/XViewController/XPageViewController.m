@@ -11,15 +11,18 @@
 #import "XScrollView.h"
 #import "NSArray+XArray.h"
 
-@interface XPageViewController () <UIScrollViewDelegate> {
+
+@interface XPageViewController () <UIScrollViewDelegate>
+{
     XScrollView *pageScrollView;
 }
 
 @end
 
+
 @implementation XPageViewController
 
-#pragma mark ---------- Public ----------
+#pragma mark---------- Public ----------
 
 - (instancetype)init {
     self = [super init];
@@ -46,25 +49,25 @@
     if (!pageScrollView) {
         return;
     }
-    
+
     CGRect scrollViewFrame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     if (!CGRectEqualToRect(pageScrollView.frame, scrollViewFrame)) {
         [pageScrollView setFrame:scrollViewFrame];
     }
-    
+
     CGSize contentSize = CGSizeMake(pageScrollView.frame.size.width * pageScrollView.subviews.count, pageScrollView.frame.size.height);
     if (!CGSizeEqualToSize(pageScrollView.contentSize, contentSize)) {
         [pageScrollView setContentSize:contentSize];
     }
-    
+
     if ([XTool isArrayEmpty:self.childViewControllers]) {
         return;
     }
-    
+
     for (UIViewController *childViewController in self.childViewControllers) {
         if (childViewController.view.superview) {
             NSInteger index = [self.childViewControllers indexOfObject:childViewController];
-            
+
             CGRect childViewFrame = CGRectMake(pageScrollView.frame.size.width * index, 0, pageScrollView.frame.size.width, pageScrollView.frame.size.height);
             if (!CGRectEqualToRect(childViewController.view.frame, childViewFrame)) {
                 [childViewController.view setFrame:childViewFrame];
@@ -83,17 +86,17 @@
     if (!viewController) {
         return;
     }
-    
+
     if (!_viewControllers) {
         _viewControllers = [[NSMutableArray alloc] init];
     }
     [_viewControllers x_addObject:viewController];
-    
+
     if (!pageScrollView) {
         return;
     }
     [self addChildViewController:viewController atIndex:_viewControllers.count - 1];
-    
+
     [self updateFrame];
 }
 
@@ -101,11 +104,11 @@
     if (!viewController) {
         return;
     }
-    
+
     if (!_viewControllers) {
         _viewControllers = [[NSMutableArray alloc] init];
     }
-    
+
     if (atIndex == NSNotFound || atIndex < 0 || atIndex > _viewControllers.count) {
         return;
     }
@@ -115,9 +118,9 @@
     if (!pageScrollView) {
         return;
     }
-    
+
     [self addChildViewControllers];
-    
+
     [self updateFrame];
 }
 
@@ -125,12 +128,12 @@
     if (!viewController) {
         return;
     }
-    
+
     NSInteger atIndex = NSNotFound;
     if (![XTool isArrayEmpty:self.childViewControllers]) {
         atIndex = [self.childViewControllers indexOfObject:viewController];
     }
-    
+
     if (atIndex == NSNotFound || atIndex < 0) {
         return;
     }
@@ -139,17 +142,17 @@
     [viewController.view removeFromSuperview];
     [viewController removeFromParentViewController];
     [_viewControllers removeObject:viewController];
-    
+
     [self updateFrame];
-    
+
     if (_currentPageIndex != NSNotFound && _currentPageIndex >= 0) {
         if (_currentPageIndex == atIndex) {
             if (_currentPageIndex == _viewControllers.count) {
-                _currentPageIndex --;
+                _currentPageIndex--;
             }
             [self scrollToPageAtIndex:_currentPageIndex];
         } else if (_currentPageIndex > atIndex) {
-            _currentPageIndex --;
+            _currentPageIndex--;
             [self scrollToPageAtIndex:_currentPageIndex];
         }
     }
@@ -159,11 +162,11 @@
     if (atIndex == NSNotFound || atIndex < 0) {
         return;
     }
-    
+
     if (atIndex >= self.childViewControllers.count) {
         return;
     }
-    
+
     UIViewController *childViewController = [self.childViewControllers x_objectAtIndex:atIndex];
     [self removeViewController:childViewController];
 }
@@ -189,21 +192,21 @@
     } else {
         _viewControllers = [[NSMutableArray alloc] init];
     }
-    
+
     if (![XTool isArrayEmpty:viewControllers]) {
         [_viewControllers addObjectsFromArray:viewControllers];
     }
-    
+
     if (!pageScrollView) {
         return;
     }
-    
+
     [self addChildViewControllers];
-    
+
     [self updateFrame];
 }
 
-#pragma mark ---------- life cycle ----------
+#pragma mark---------- life cycle ----------
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -245,11 +248,11 @@
 }
 
 //Do not delete next two method! if you do that, childViewController will run viewWillAppear before it appear on the screen.
-- (BOOL)shouldAutomaticallyForwardAppearanceMethods {//iOS6+
+- (BOOL)shouldAutomaticallyForwardAppearanceMethods { //iOS6+
     return NO;
 }
 
-#pragma mark ---------- Private ----------
+#pragma mark---------- Private ----------
 
 - (void)initialize {
     [self.view setBackgroundColor:[UIColor clearColor]];
@@ -275,13 +278,13 @@
         [childViewController.view removeFromSuperview];
         [childViewController removeFromParentViewController];
     }
-    
+
     for (UIView *subView in pageScrollView.subviews) {
         [subView removeFromSuperview];
     }
-    
+
     if (![XTool isArrayEmpty:_viewControllers]) {
-        for (NSInteger i = 0; i< _viewControllers.count; i ++) {
+        for (NSInteger i = 0; i < _viewControllers.count; i++) {
             UIViewController *childViewController = [_viewControllers x_objectAtIndex:i];
             [self addChildViewController:childViewController atIndex:i];
         }
@@ -290,32 +293,31 @@
 
 - (void)addChildViewController:(UIViewController *)childViewController atIndex:(NSInteger)atIndex {
     [self addChildViewController:childViewController];
-    
+
     if (!childViewController.view.superview) {
-        
         CGRect childViewFrame = CGRectMake(pageScrollView.frame.size.width * atIndex, 0, pageScrollView.frame.size.width, pageScrollView.frame.size.height);
         if (!CGRectEqualToRect(childViewController.view.frame, childViewFrame)) {
             [childViewController.view setFrame:childViewFrame];
         }
-        
+
         [pageScrollView addSubview:childViewController.view];
         [childViewController didMoveToParentViewController:self];
     }
 }
 
-- (void)childViewControllerBeginAppearance:(BOOL)isAppearing animated:(BOOL)animated  {
+- (void)childViewControllerBeginAppearance:(BOOL)isAppearing animated:(BOOL)animated {
     if ([XTool isArrayEmpty:self.childViewControllers]) {
         return;
     }
-    
+
     if (_currentPageIndex == NSNotFound || _currentPageIndex < 0) {
         return;
     }
-    
+
     if (_currentPageIndex >= self.childViewControllers.count) {
         return;
     }
-    
+
     UIViewController *childViewController = [self.childViewControllers x_objectAtIndex:_currentPageIndex];
     if (childViewController.view.superview != nil) {
         [childViewController beginAppearanceTransition:isAppearing animated:animated];
@@ -326,15 +328,15 @@
     if ([XTool isArrayEmpty:self.childViewControllers]) {
         return;
     }
-    
+
     if (_currentPageIndex == NSNotFound || _currentPageIndex < 0) {
         return;
     }
-    
+
     if (_currentPageIndex >= self.childViewControllers.count) {
         return;
     }
-    
+
     UIViewController *childViewController = [self.childViewControllers x_objectAtIndex:_currentPageIndex];
     if (childViewController.view.superview) {
         [childViewController endAppearanceTransition];
@@ -345,11 +347,11 @@
     if (atIndex == NSNotFound) {
         return;
     }
-    
+
     if (!pageScrollView) {
         return;
     }
-    
+
     CGPoint contentOffset = pageScrollView.contentOffset;
     if (contentOffset.x != pageScrollView.frame.size.width * atIndex) {
         contentOffset.x = pageScrollView.frame.size.width * atIndex;
@@ -361,26 +363,26 @@
     if (atIndex == NSNotFound || atIndex < 0) {
         return;
     }
-    
+
     if (_currentPageIndex == NSNotFound || _currentPageIndex < 0) {
         return;
     }
-    
+
     if (_currentPageIndex == atIndex) {
         return;
     }
-    
+
     if ([XTool isArrayEmpty:self.childViewControllers]) {
         return;
     }
-    
+
     if (atIndex >= self.childViewControllers.count || _currentPageIndex >= self.childViewControllers.count) {
         return;
     }
-    
+
     UIViewController *oldViewController = [self.childViewControllers x_objectAtIndex:_currentPageIndex];
     UIViewController *newViewController = [self.childViewControllers x_objectAtIndex:atIndex];
-    
+
     [oldViewController viewWillDisappear:YES];
     [newViewController viewWillAppear:YES];
     [oldViewController viewDidDisappear:YES];
@@ -390,16 +392,15 @@
 #pragma mark UIScrollViewDelegate methods
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if(_delegate && [_delegate respondsToSelector:@selector(xPageScrollViewDidScroll:)]) {
+    if (_delegate && [_delegate respondsToSelector:@selector(xPageScrollViewDidScroll:)]) {
         [_delegate xPageScrollViewDidScroll:scrollView];
     }
-    
-    if(_delegate && [_delegate respondsToSelector:@selector(xPageScrollView:scrollToPageIndex:)]) {
-        
+
+    if (_delegate && [_delegate respondsToSelector:@selector(xPageScrollView:scrollToPageIndex:)]) {
         CGFloat offsetX = scrollView.contentOffset.x;
 
         NSInteger atIndex = 0;
-        
+
         if (offsetX < 0) {
             atIndex = 0;
         } else if (offsetX > scrollView.frame.size.width * _viewControllers.count) {
@@ -413,49 +414,49 @@
 }
 
 - (void)scrollViewDidZoom:(UIScrollView *)scrollView {
-    if(_delegate && [_delegate respondsToSelector:@selector(xPageScrollViewDidZoom:)]) {
+    if (_delegate && [_delegate respondsToSelector:@selector(xPageScrollViewDidZoom:)]) {
         [_delegate xPageScrollViewDidZoom:scrollView];
     }
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    if(_delegate && [_delegate respondsToSelector:@selector(xPageScrollViewWillBeginDragging:)]) {
+    if (_delegate && [_delegate respondsToSelector:@selector(xPageScrollViewWillBeginDragging:)]) {
         [_delegate xPageScrollViewWillBeginDragging:scrollView];
     }
 }
 
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
-    if(_delegate && [_delegate respondsToSelector:@selector(xPageScrollViewWillEndDragging:withVelocity:targetContentOffset:)]) {
+    if (_delegate && [_delegate respondsToSelector:@selector(xPageScrollViewWillEndDragging:withVelocity:targetContentOffset:)]) {
         [_delegate xPageScrollViewWillEndDragging:scrollView withVelocity:velocity targetContentOffset:targetContentOffset];
     }
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    if(_delegate && [_delegate respondsToSelector:@selector(xPageScrollViewDidEndDragging:willDecelerate:)]) {
+    if (_delegate && [_delegate respondsToSelector:@selector(xPageScrollViewDidEndDragging:willDecelerate:)]) {
         [_delegate xPageScrollViewDidEndDragging:scrollView willDecelerate:decelerate];
     }
 }
 
 - (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
-    if(_delegate && [_delegate respondsToSelector:@selector(xPageScrollViewWillBeginDecelerating:)]) {
+    if (_delegate && [_delegate respondsToSelector:@selector(xPageScrollViewWillBeginDecelerating:)]) {
         [_delegate xPageScrollViewWillBeginDecelerating:scrollView];
     }
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    if(_delegate && [_delegate respondsToSelector:@selector(xPageScrollViewDidEndDecelerating:)]) {
+    if (_delegate && [_delegate respondsToSelector:@selector(xPageScrollViewDidEndDecelerating:)]) {
         [_delegate xPageScrollViewDidEndDecelerating:scrollView];
     }
 }
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
-    if(_delegate && [_delegate respondsToSelector:@selector(xPageScrollViewDidEndScrollingAnimation:)]) {
+    if (_delegate && [_delegate respondsToSelector:@selector(xPageScrollViewDidEndScrollingAnimation:)]) {
         [_delegate xPageScrollViewDidEndScrollingAnimation:scrollView];
     }
 }
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
-    if(_delegate && [_delegate respondsToSelector:@selector(xViewForZoomingInScrollView:)]) {
+    if (_delegate && [_delegate respondsToSelector:@selector(xViewForZoomingInScrollView:)]) {
         return [_delegate xViewForZoomingInScrollView:scrollView];
     } else {
         return nil;
@@ -463,19 +464,19 @@
 }
 
 - (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view {
-    if(_delegate && [_delegate respondsToSelector:@selector(xPageScrollViewWillBeginZooming:withView:)]) {
+    if (_delegate && [_delegate respondsToSelector:@selector(xPageScrollViewWillBeginZooming:withView:)]) {
         [_delegate xPageScrollViewWillBeginZooming:scrollView withView:view];
     }
 }
 
 - (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale {
-    if(_delegate && [_delegate respondsToSelector:@selector(xPageScrollViewDidEndZooming:withView:atScale:)]) {
+    if (_delegate && [_delegate respondsToSelector:@selector(xPageScrollViewDidEndZooming:withView:atScale:)]) {
         [_delegate xPageScrollViewDidEndZooming:scrollView withView:view atScale:scale];
     }
 }
 
 - (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView {
-    if(_delegate && [_delegate respondsToSelector:@selector(xPageScrollViewShouldScrollToTop:)]) {
+    if (_delegate && [_delegate respondsToSelector:@selector(xPageScrollViewShouldScrollToTop:)]) {
         return [_delegate xPageScrollViewShouldScrollToTop:scrollView];
     } else {
         return NO;
@@ -483,7 +484,7 @@
 }
 
 - (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView {
-    if(_delegate && [_delegate respondsToSelector:@selector(xPageScrollViewDidScrollToTop:)]) {
+    if (_delegate && [_delegate respondsToSelector:@selector(xPageScrollViewDidScrollToTop:)]) {
         [_delegate xPageScrollViewDidScrollToTop:scrollView];
     }
 }

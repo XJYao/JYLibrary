@@ -9,11 +9,12 @@
 #import <Foundation/Foundation.h>
 #import <AddressBook/AddressBook.h>
 
+
 @interface XContactAccess : NSObject
 
 /**
  获取权限
  */
-+ (void)addressBookRequestAccess:(void (^)(BOOL granted, ABAddressBookRef addressBook))block;//记得释放addressBook
++ (void)addressBookRequestAccess:(void (^)(BOOL granted, ABAddressBookRef addressBook))block; //记得释放addressBook
 
 @end

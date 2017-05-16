@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface UIImageView (XImageView)
 
 - (void)x_setTintColor:(UIColor *)tintColor;

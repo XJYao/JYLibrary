@@ -11,6 +11,7 @@
 
 @class XPerson;
 
+
 @interface XContactPerson : NSObject
 
 /**

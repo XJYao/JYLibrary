@@ -9,6 +9,7 @@
 #import "UITableView+XTableView.h"
 #import "XIOSVersion.h"
 
+
 @implementation UITableView (XTableView)
 
 - (void)setNoDelaysContentTouches {
@@ -34,7 +35,7 @@
         if ([self respondsToSelector:@selector(setLayoutMargins:)]) {
             [self setLayoutMargins:UIEdgeInsetsZero];
         }
-        if([self respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]){
+        if ([self respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]) {
             [self setPreservesSuperviewLayoutMargins:NO];
         }
     }
@@ -49,7 +50,7 @@
         if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
             [cell setLayoutMargins:edgeInsets];
         }
-        if([cell respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]){
+        if ([cell respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]) {
             [cell setPreservesSuperviewLayoutMargins:NO];
         }
     }

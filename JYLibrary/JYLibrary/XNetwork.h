@@ -8,12 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface XNetwork : NSObject
 
 /**
  解析域名
  */
-+ (struct hostent*)getHostByAddress:(NSString *)address;
++ (struct hostent *)getHostByAddress:(NSString *)address;
 
 /**
  根据域名解析出ip地址

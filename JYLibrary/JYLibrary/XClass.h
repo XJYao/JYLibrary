@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface XClass : NSObject
 
 Class NSObjectClass();

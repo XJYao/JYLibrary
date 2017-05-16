@@ -10,20 +10,21 @@
 #import "XTool.h"
 #import "NSDictionary+XDictionary.h"
 
+
 @implementation XPerson
 
 @synthesize Name;
 
 - (instancetype)init {
     self = [super init];
-    
+
     if (self) {
         _RecordID = 0;
         [self Phone];
         [self Email];
         [self Address];
     }
-    
+
     return self;
 }
 
@@ -45,69 +46,66 @@
 - (NSMutableDictionary *)Phone {
     if (!_Phone) {
         _Phone = [[NSMutableDictionary alloc] init];
-        
+
         NSMutableArray *labels = [[NSMutableArray alloc] initWithObjects:
-                                  xPersonPhoneLabelHome,
-                                  xPersonPhoneLabelWork,
-                                  xPersonPhoneLabelOther,
-                                  xPersonPhoneLabelMobile,
-                                  xPersonPhoneLabelIPhone,
-                                  xPersonPhoneLabelMain,
-                                  xPersonPhoneLabelHomeFAX,
-                                  xPersonPhoneLabelWorkFAX,
-                                  xPersonPhoneLabelOtherFAX,
-                                  xPersonPhoneLabelPager,
-                                  nil
-                                  ];
-        
+                                                             xPersonPhoneLabelHome,
+                                                             xPersonPhoneLabelWork,
+                                                             xPersonPhoneLabelOther,
+                                                             xPersonPhoneLabelMobile,
+                                                             xPersonPhoneLabelIPhone,
+                                                             xPersonPhoneLabelMain,
+                                                             xPersonPhoneLabelHomeFAX,
+                                                             xPersonPhoneLabelWorkFAX,
+                                                             xPersonPhoneLabelOtherFAX,
+                                                             xPersonPhoneLabelPager,
+                                                             nil];
+
         [_Phone x_setObject:labels forKey:xPersonLabelsKey];
         for (NSString *label in labels) {
             [_Phone x_setObject:[[NSMutableArray alloc] init] forKey:label];
         }
     }
-    
+
     return _Phone;
 }
 
 - (NSMutableDictionary *)Email {
     if (!_Email) {
         _Email = [[NSMutableDictionary alloc] init];
-        
+
         NSMutableArray *labels = [[NSMutableArray alloc] initWithObjects:
-                                  xPersonEmailLabelHome,
-                                  xPersonEmailLabelWork,
-                                  xPersonEmailLabelOther,
-                                  xPersonEmailLabelICloud,
-                                  nil
-                                  ];
-        
+                                                             xPersonEmailLabelHome,
+                                                             xPersonEmailLabelWork,
+                                                             xPersonEmailLabelOther,
+                                                             xPersonEmailLabelICloud,
+                                                             nil];
+
         [_Email x_setObject:labels forKey:xPersonLabelsKey];
         for (NSString *label in labels) {
             [_Email x_setObject:[[NSMutableArray alloc] init] forKey:label];
         }
     }
-    
+
     return _Email;
 }
 
 - (NSMutableDictionary *)Address {
     if (!_Address) {
         _Address = [[NSMutableDictionary alloc] init];
-        
-        
+
+
         NSMutableArray *labels = [[NSMutableArray alloc] initWithObjects:
-                                  xPersonAddressLabelHome,
-                                  xPersonAddressLabelWork,
-                                  xPersonAddressLabelOther,
-                                  nil
-                                  ];
-        
+                                                             xPersonAddressLabelHome,
+                                                             xPersonAddressLabelWork,
+                                                             xPersonAddressLabelOther,
+                                                             nil];
+
         [_Address x_setObject:labels forKey:xPersonLabelsKey];
         for (NSString *label in labels) {
             [_Address x_setObject:[[NSMutableArray alloc] init] forKey:label];
         }
     }
-    
+
     return _Address;
 }
 
@@ -151,7 +149,6 @@
         _Notes = [decoder decodeObjectForKey:@"Notes"];
         _CreationDate = [decoder decodeObjectForKey:@"CreationDate"];
         _ModificationDate = [decoder decodeObjectForKey:@"ModificationDate"];
-        
     }
     return self;
 }

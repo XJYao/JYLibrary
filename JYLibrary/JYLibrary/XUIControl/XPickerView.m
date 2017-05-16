@@ -12,16 +12,19 @@
 #import "UIImage+XImage.h"
 #import "NSArray+XArray.h"
 
-@interface XPickerView () <UIPickerViewDataSource, UIPickerViewDelegate> {
+
+@interface XPickerView () <UIPickerViewDataSource, UIPickerViewDelegate>
+{
     UIPickerView *picker;
     UIButton *cancelPickerButton;
     UIButton *selectPickerButton;
     NSMutableArray *pickerTitlesArray;
-    
+
     XPickerViewBlock selectPickerBlock;
 }
 
 @end
+
 
 @implementation XPickerView
 
@@ -29,31 +32,31 @@
 
 - (instancetype)initWithTitles:(NSArray *)titles onView:(UIView *)view {
     self = [self init];
-    
+
     if (self) {
         [view addSubview:self];
-        
+
         CGFloat pickerViewHeight = [self getPickerViewHeight];
         CGFloat pickerViewY = view.frame.size.height - pickerViewHeight;
         [self setFrameWithX:0 y:pickerViewY width:view.frame.size.width];
 
         [self reloadData:titles];
     }
-    
+
     return self;
 }
 
 - (void)setFrameWithX:(CGFloat)x y:(CGFloat)y width:(CGFloat)width {
     CGFloat totalHeight = [self getPickerViewHeight];
     [super setFrame:CGRectMake(x, y, width, totalHeight)];
-    
+
     CGFloat offsetX = 10;
     CGFloat buttonWidth = 50;
     CGFloat buttonHeight = 30;
-    
+
     [cancelPickerButton setFrame:CGRectMake(offsetX, 10, buttonWidth, buttonHeight)];
     [selectPickerButton setFrame:CGRectMake(width - buttonWidth - offsetX, 10, buttonWidth, buttonHeight)];
-    
+
     CGRect pickerFrame = picker.frame;
     pickerFrame.origin.x = 0;
     pickerFrame.origin.y = 0;
@@ -76,7 +79,7 @@
         [self setHidden:NO];
         return;
     }
-    
+
     [XAnimation animationFromBottomToTop:self duration:0.3f executingBlock:^{
         [self setHidden:NO];
     }];
@@ -87,7 +90,7 @@
         [self setHidden:YES];
         return;
     }
-    
+
     [XAnimation animationFromTopToBottom:self duration:0.3f executingBlock:^{
         [self setHidden:YES];
     }];
@@ -116,14 +119,14 @@
 - (void)initialize {
     [self setBackgroundColor:[UIColor whiteColor]];
     pickerTitlesArray = [[NSMutableArray alloc] init];
-    
+
     _cancelButtonTitle = @"取消";
     _selectButtonTitle = @"确定";
 }
 
 - (void)drawRect:(CGRect)rect {
-     CGContextRef context = UIGraphicsGetCurrentContext();
-    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+
     CGContextSetRGBStrokeColor(context, 0.0, 0.0, 0.0, 1.0);
     CGContextSetLineWidth(context, 2.0);
     CGContextMoveToPoint(context, 0, 0);
@@ -152,7 +155,7 @@
     [cancelPickerButton.layer setCornerRadius:5.0];
     [cancelPickerButton addTarget:self action:@selector(cancelPicker) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:cancelPickerButton];
-    
+
     selectPickerButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [selectPickerButton setBackgroundColor:[UIColor whiteColor]];
     [selectPickerButton setBackgroundImage:[UIImage imageWithColor:[UIColor lightGrayColor]] forState:UIControlStateHighlighted];
@@ -168,13 +171,13 @@
 
 - (void)setCancelButtonTitle:(NSString *)cancelButtonTitle {
     _cancelButtonTitle = cancelButtonTitle;
-    
+
     [cancelPickerButton setTitle:_cancelButtonTitle forState:UIControlStateNormal];
 }
 
 - (void)setSelectButtonTitle:(NSString *)selectButtonTitle {
     _selectButtonTitle = selectButtonTitle;
-    
+
     [selectPickerButton setTitle:_selectButtonTitle forState:UIControlStateNormal];
 }
 
@@ -189,7 +192,7 @@
 #pragma mark TouchEvent Method
 
 - (void)cancelPicker {
-    if(_delegate && [_delegate respondsToSelector:@selector(cancelPicker:)]) {
+    if (_delegate && [_delegate respondsToSelector:@selector(cancelPicker:)]) {
         [_delegate cancelPicker:self];
     }
 }
@@ -197,17 +200,17 @@
 - (void)selectPicker {
     NSString *selectedTitle = @"";
     NSInteger atIndex = NSNotFound;
-    
+
     if (![XTool isArrayEmpty:pickerTitlesArray]) {
         atIndex = [picker selectedRowInComponent:0];
         selectedTitle = [pickerTitlesArray x_objectAtIndex:atIndex];
     }
-    
+
     if (selectPickerBlock) {
         selectPickerBlock(self, selectedTitle, atIndex);
     }
-    
-    if(_delegate && [_delegate respondsToSelector:@selector(selectPicker:withTitle:atIndex:)]) {
+
+    if (_delegate && [_delegate respondsToSelector:@selector(selectPicker:withTitle:atIndex:)]) {
         [_delegate selectPicker:self withTitle:selectedTitle atIndex:atIndex];
     }
 }

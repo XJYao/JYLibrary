@@ -8,17 +8,20 @@
 
 #import "XTask.h"
 
-@interface XTask () {
+
+@interface XTask ()
+{
     XTaskCompletionBlock taskCompletionBlock;
 }
 
 @end
 
+
 @implementation XTask
 
 - (instancetype)init {
     self = [super init];
-    
+
     if (self) {
         _cancel = NO;
         _parameter = nil;
@@ -26,14 +29,13 @@
         _delayMSec = 0;
         _delayUSec = 0;
     }
-    
+
     return self;
 }
 
 - (void)dispatch_async:(dispatch_queue_t)queue block:(dispatch_block_t)block completion:(XTaskCompletionBlock)completionBlock {
-    
     taskCompletionBlock = completionBlock;
-    
+
     int64_t delay = 0;
     if (_delaySec > 0) {
         delay = (int64_t)(_delaySec * NSEC_PER_SEC);
@@ -42,7 +44,7 @@
     } else if (_delayUSec > 0) {
         delay = (int64_t)(_delayUSec * NSEC_PER_USEC);
     }
-    
+
     if (delay > 0) {
         dispatch_time_t delay_time = dispatch_time(DISPATCH_TIME_NOW, delay);
         dispatch_after(delay_time, queue, ^{
@@ -52,7 +54,7 @@
             if (taskCompletionBlock) {
                 taskCompletionBlock();
             }
-            
+
             if (block) {
                 block();
             }
@@ -65,7 +67,7 @@
             if (taskCompletionBlock) {
                 taskCompletionBlock();
             }
-            
+
             if (block) {
                 block();
             }

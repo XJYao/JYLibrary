@@ -12,6 +12,7 @@
 #import "UIImage+XImage.h"
 #import <objc/runtime.h>
 
+
 @implementation UIImageView (XWebImageView)
 
 #pragma mark - Public
@@ -21,13 +22,11 @@
 }
 
 - (void)x_setImageWithURLString:(NSString *)URLString placeholderImageName:(NSString *)placeholderImageName progress:(XWebImageProgressBlock)progress completion:(XWebImageCompletionBlock)block {
-    
     UIImage *placeholderImage = [UIImage initImageWithContentsOfName:placeholderImageName];
     [self x_setImageWithURLString:URLString placeholderImage:placeholderImage progress:progress completion:block];
 }
 
 - (void)x_setImageWithURLString:(NSString *)URLString placeholderImagePath:(NSString *)placeholderImagePath progress:(XWebImageProgressBlock)progress completion:(XWebImageCompletionBlock)block {
-    
     UIImage *placeholderImage = [[UIImage alloc] initWithContentsOfFile:placeholderImagePath];
     [self x_setImageWithURLString:URLString placeholderImage:placeholderImage progress:progress completion:block];
 }
@@ -51,17 +50,16 @@
 }
 
 - (void)x_setImageWithURL:(NSURL *)URL placeholderImage:(UIImage *)placeholderImage progress:(XWebImageProgressBlock)progress completion:(XWebImageCompletionBlock)block {
-    
     [self setImage:placeholderImage];
-    
+
     if (!self || !URL || [XTool isStringEmpty:URL.absoluteString]) {
         if (block) {
             block(NO, nil, nil);
         }
-        
+
         return;
     }
-    
+
     [self.imageManager downloadImageWithURL:URL progress:progress completion:^(BOOL success, UIImage *image, NSError *error) {
         if (success) {
             x_dispatch_main_async(^{

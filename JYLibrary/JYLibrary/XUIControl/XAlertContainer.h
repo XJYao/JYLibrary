@@ -24,11 +24,12 @@ typedef NS_ENUM(NSInteger, XAlertContainerBackgroundStyle) {
 
 @end
 
+
 @interface XAlertContainer : NSObject
 
-@property (nonatomic, weak) id <XAlertContainerDelegate> delegate;
+@property (nonatomic, weak) id<XAlertContainerDelegate> delegate;
 @property (nonatomic, assign) XAlertContainerBackgroundStyle style;
-@property (nonatomic, strong) UIColor   *containerBackgroundColor;
+@property (nonatomic, strong) UIColor *containerBackgroundColor;
 
 @property (nonatomic, assign) BOOL enableAutoHide;
 @property (nonatomic, assign) BOOL enableTapGestureHide;

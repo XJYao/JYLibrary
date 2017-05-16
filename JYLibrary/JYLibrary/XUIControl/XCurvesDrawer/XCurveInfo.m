@@ -11,11 +11,12 @@
 #import "XTool.h"
 #import "NSArray+XArray.h"
 
+
 @implementation XCurveInfo
 
 - (instancetype)init {
     self = [super init];
-    
+
     if (self) {
         _points = [NSMutableArray arrayWithCapacity:0];
         _color = nil;
@@ -25,7 +26,7 @@
         _createDate = nil;
         _modificationDate = nil;
     }
-    
+
     return self;
 }
 
@@ -55,7 +56,7 @@
         if (self.points.count != aCurve.points.count) {
             return NO;
         }
-        for (NSInteger i = 0; i < self.points.count; i ++) {
+        for (NSInteger i = 0; i < self.points.count; i++) {
             CGPoint selfPoint = [[self.points x_objectAtIndex:i] CGPointValue];
             CGPoint aCurvePoint = [[aCurve.points x_objectAtIndex:i] CGPointValue];
             if (selfPoint.x != aCurvePoint.x ||
@@ -67,16 +68,16 @@
     if (self.color != aCurve.color) {
         NSArray *selfColorInfo = [UIColor getRGBFromColor:self.color];
         NSArray *aCurveColorInfo = [UIColor getRGBFromColor:aCurve.color];
-        
+
         if ((selfColorInfo && !aCurveColorInfo) || (!selfColorInfo && aCurveColorInfo)) {
             return NO;
         }
-        
+
         if (selfColorInfo && aCurveColorInfo) {
             if (selfColorInfo.count != aCurveColorInfo.count) {
                 return NO;
             }
-            for (NSInteger i = 0; i < selfColorInfo.count; i ++) {
+            for (NSInteger i = 0; i < selfColorInfo.count; i++) {
                 CGFloat selfValue = [[selfColorInfo x_objectAtIndex:i] floatValue];
                 CGFloat toCurveValue = [[aCurveColorInfo x_objectAtIndex:i] floatValue];
                 if (selfValue != toCurveValue) {

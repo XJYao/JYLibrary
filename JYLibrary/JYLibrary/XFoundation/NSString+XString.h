@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface NSString (XString)
 
 - (NSArray<NSString *> *)subStringsPerLength:(NSUInteger)length;

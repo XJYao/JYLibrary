@@ -8,6 +8,7 @@
 
 #import "NSArray+XArray.h"
 
+
 @implementation NSArray (XArray)
 
 - (id)x_objectAtIndex:(NSUInteger)index {
@@ -24,11 +25,12 @@
 
 @end
 
+
 @implementation NSMutableArray (XMutableArray)
 
 - (void)x_addObject:(id)anObject {
 #ifdef DEBUG
-        [self addObject:anObject];
+    [self addObject:anObject];
 #else
     if (anObject) {
         [self addObject:anObject];
@@ -38,7 +40,7 @@
 
 - (void)x_removeObjectAtIndex:(NSInteger)index {
 #ifdef DEBUG
-        [self removeObjectAtIndex:index];
+    [self removeObjectAtIndex:index];
 #else
     if (self.count > 0 && index != NSNotFound && index >= 0 && index < self.count) {
         [self removeObjectAtIndex:index];
@@ -66,7 +68,7 @@
 
 - (void)x_replaceObjectAtIndex:(NSInteger)index withObject:(id)anObject {
 #ifdef DEBUG
-        [self replaceObjectAtIndex:index withObject:anObject];
+    [self replaceObjectAtIndex:index withObject:anObject];
 #else
     if (anObject) {
         if (self.count > 0 && index != NSNotFound && index >= 0 && index < self.count) {

@@ -8,9 +8,10 @@
 
 #import "XDeviceAuthorization.h"
 #import <AVFoundation/AVFoundation.h>
-#import<AssetsLibrary/AssetsLibrary.h>
+#import <AssetsLibrary/AssetsLibrary.h>
 #import <Photos/PHPhotoLibrary.h>
 #import "XIOSVersion.h"
+
 
 @implementation XDeviceAuthorization
 
@@ -18,15 +19,15 @@
     if (!block) {
         return;
     }
-    
+
     NSString *mediaType = AVMediaTypeVideo;
-    
+
     [AVCaptureDevice requestAccessForMediaType:mediaType completionHandler:^(BOOL granted) {
-        
+
         dispatch_async(dispatch_get_main_queue(), ^{
-            
+
             AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];
-            
+
             switch (authStatus) {
                 case AVAuthorizationStatusAuthorized: {
                     block(XDeviceAuthorizationStatusAuthorized);
@@ -48,7 +49,7 @@
 
 + (XDeviceAuthorizationStatus)photoAuthorizationStatus {
     XDeviceAuthorizationStatus authorizationStatus = XDeviceAuthorizationStatusDenied;
-    
+
     if ([XIOSVersion isIOS8OrGreater]) {
         PHAuthorizationStatus authStatus = [PHPhotoLibrary authorizationStatus];
         switch (authStatus) {
@@ -84,7 +85,7 @@
             } break;
         }
     }
-    
+
     return authorizationStatus;
 }
 

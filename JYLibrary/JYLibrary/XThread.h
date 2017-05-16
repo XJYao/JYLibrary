@@ -94,6 +94,7 @@ static inline void x_dispatch_async_excuting(dispatch_block_t block) {
     }
 }
 
+
 @interface XThread : NSObject
 
 typedef void (^WaitSignal)(void);

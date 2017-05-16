@@ -9,12 +9,13 @@
 #import <Foundation/Foundation.h>
 
 typedef NS_ENUM(NSInteger, XSocketResultType) {
-    XSocketResultTypeNoneInit = 0,          //未初始化
-    XSocketResultTypeSuccess,               //成功
-    XSocketResultTypeFailed,                //创建失败
-    XSocketResultTypeConnectServerFailed,   //连接服务器失败
-    XSocketResultTypeNoHost                 //服务器地址为空
+    XSocketResultTypeNoneInit = 0,        //未初始化
+    XSocketResultTypeSuccess,             //成功
+    XSocketResultTypeFailed,              //创建失败
+    XSocketResultTypeConnectServerFailed, //连接服务器失败
+    XSocketResultTypeNoHost               //服务器地址为空
 };
+
 
 @interface XSocket : NSObject
 

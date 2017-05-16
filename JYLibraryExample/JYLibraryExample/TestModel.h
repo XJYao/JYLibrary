@@ -11,6 +11,7 @@
 
 @class SubTestModel;
 
+
 @interface TestModel : NSObject
 
 @property (nonatomic, strong) id unknownObj;
@@ -50,6 +51,7 @@
 @property (nonatomic, copy, getter=getCustomName) NSString *home;
 
 @end
+
 
 @interface SubTestModel : NSObject
 

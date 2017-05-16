@@ -9,6 +9,7 @@
 #import "XJsonParser.h"
 #import "XTool.h"
 
+
 @implementation XJsonParser
 
 + (id)parseJsonWithData:(NSData *)jsonData error:(NSError **)error {
@@ -24,7 +25,7 @@
         error = nil;
         return nil;
     }
-    
+
     NSData *jsonData = [jsonStr dataUsingEncoding:encoding];
     return [self parseJsonWithData:jsonData error:error];
 }
@@ -34,7 +35,7 @@
         error = nil;
         return nil;
     }
-    
+
     return [NSJSONSerialization dataWithJSONObject:obj options:0 error:error];
 }
 
@@ -43,9 +44,9 @@
         error = nil;
         return nil;
     }
-    
+
     NSData *data = [self jsonDataWithObject:obj error:error];
-    
+
     if ([XTool isObjectNull:data]) {
         return nil;
     }

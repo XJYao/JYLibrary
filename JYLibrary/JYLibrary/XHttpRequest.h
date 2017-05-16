@@ -17,30 +17,31 @@
 
 @end
 
+
 @interface XHttpRequest : NSObject
 
 typedef NS_ENUM(NSInteger, XHttpStatusCode) {
-    XHttpStatusCodeOK                   = 200,
-    XHttpStatusCodeBadRequest           = 400,
-    XHttpStatusCodeNotFound             = 404,
-    XHttpStatusCodeConflict             = 409,
-    XHttpStatusCodeInternalServerError  = 500
+    XHttpStatusCodeOK = 200,
+    XHttpStatusCodeBadRequest = 400,
+    XHttpStatusCodeNotFound = 404,
+    XHttpStatusCodeConflict = 409,
+    XHttpStatusCodeInternalServerError = 500
 };
 
 typedef void (^XHttpRequestProgressBlock)(long long completedCount, long long totalCount);
 typedef void (^XHttpRequestFinishedBlock)(id responseObject, NSString *responseString, NSInteger statusCode, NSError *error);
 
-@property (nonatomic, copy, readonly)   NSString *  url;
+@property (nonatomic, copy, readonly) NSString *url;
 @property (nonatomic, assign, readonly) long long totalCount;
 
-@property (nonatomic, assign)           NSStringEncoding    requestStringEncoding;  //default is UTF-8
-@property (nonatomic, assign)           NSStringEncoding    responseStringEncoding; //default is UTF-8
-@property (nonatomic, assign)           NSTimeInterval      timeout;                //default is 60
-@property (nonatomic, assign)           BOOL                activityIndicatorEnable;//default is YES
-@property (nonatomic, assign)           BOOL                finishedOnMainThread;   //default is NO
-@property (nonatomic, assign)           NSURLRequestCachePolicy requestCachePolicy; //default is NSURLRequestUseProtocolCachePolicy
-@property (nonatomic, assign)           BOOL                useNSURLConnection;     //default is NO
-@property (nonatomic, strong)           NSMutableDictionary<NSString *, NSString *> *HTTPRequestHeaders;
+@property (nonatomic, assign) NSStringEncoding requestStringEncoding;     //default is UTF-8
+@property (nonatomic, assign) NSStringEncoding responseStringEncoding;    //default is UTF-8
+@property (nonatomic, assign) NSTimeInterval timeout;                     //default is 60
+@property (nonatomic, assign) BOOL activityIndicatorEnable;               //default is YES
+@property (nonatomic, assign) BOOL finishedOnMainThread;                  //default is NO
+@property (nonatomic, assign) NSURLRequestCachePolicy requestCachePolicy; //default is NSURLRequestUseProtocolCachePolicy
+@property (nonatomic, assign) BOOL useNSURLConnection;                    //default is NO
+@property (nonatomic, strong) NSMutableDictionary<NSString *, NSString *> *HTTPRequestHeaders;
 
 #pragma mark - GET
 

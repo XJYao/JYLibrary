@@ -11,27 +11,30 @@
 #import "NSDictionary+XDictionary.h"
 #import "NSArray+XArray.h"
 
-@interface XTaskQueue () {
+
+@interface XTaskQueue ()
+{
     NSMutableDictionary *taskDictionary;
 }
 
 @end
 
+
 @implementation XTaskQueue
 
 - (instancetype)init {
     self = [super init];
-    
+
     if (self) {
         taskDictionary = [[NSMutableDictionary alloc] init];
     }
-    
+
     return self;
 }
 
 - (void)addTask:(XTask *)task forKey:(NSString *)key {
     [taskDictionary x_setObject:task forKey:key];
-    
+
     [task completion:^{
         if ([self hasTaskForKey:key]) {
             [taskDictionary removeObjectForKey:key];
@@ -40,10 +43,10 @@
 }
 
 - (void)addTasks:(NSArray<XTask *> *)tasks forkeys:(NSArray<NSString *> *)keys {
-    for (NSInteger i = 0; i < tasks.count; i ++) {
+    for (NSInteger i = 0; i < tasks.count; i++) {
         XTask *task = [tasks x_objectAtIndex:i];
         NSString *key = [keys x_objectAtIndex:i];
-        
+
         [self addTask:task forKey:key];
     }
 }
@@ -73,7 +76,7 @@
     if (![taskDictionary.allKeys containsObject:key]) {
         return NO;
     }
-    
+
     return YES;
 }
 

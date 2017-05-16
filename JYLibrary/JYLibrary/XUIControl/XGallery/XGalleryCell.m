@@ -15,12 +15,15 @@
 
 NSString *const galleryCellIdentifier = @"galleryCell";
 
-@interface XGalleryCell() <UIScrollViewDelegate> {
-    UIScrollView    *   imageScrollView;
-    UIImageView     *   imageView;
+
+@interface XGalleryCell () <UIScrollViewDelegate>
+{
+    UIScrollView *imageScrollView;
+    UIImageView *imageView;
 }
 
 @end
+
 
 @implementation XGalleryCell
 
@@ -35,7 +38,7 @@ NSString *const galleryCellIdentifier = @"galleryCell";
 - (void)initialize {
     [self setBackgroundColor:[UIColor clearColor]];
     [self.contentView setBackgroundColor:[UIColor clearColor]];
-    
+
     _placeholderImageName = @"";
     _maximumZoomScale = 2.0;
     _minimumZoomScale = 1.0;
@@ -78,7 +81,7 @@ NSString *const galleryCellIdentifier = @"galleryCell";
     CGFloat imageViewHeight = 0;
     CGFloat imageViewX = 0;
     CGFloat imageViewY = 0;
-    
+
     CGFloat imageWidth = 0;
     CGFloat imageHeight = 0;
     if (imageView && imageView.image) {
@@ -93,11 +96,11 @@ NSString *const galleryCellIdentifier = @"galleryCell";
     } else {
         CGFloat scrollViewWidth = imageScrollView.frame.size.width;
         CGFloat scrollViewHeight = imageScrollView.frame.size.height;
-        
-        CGFloat widthScale = imageWidth*1.0/scrollViewWidth;
-        CGFloat HeightScale = imageHeight*1.0/scrollViewHeight;
+
+        CGFloat widthScale = imageWidth * 1.0 / scrollViewWidth;
+        CGFloat HeightScale = imageHeight * 1.0 / scrollViewHeight;
         CGFloat imageSizeScale = imageWidth * 1.0 / imageHeight;
-        
+
         if (widthScale <= 1.0 && HeightScale <= 1.0) {
             imageViewWidth = imageWidth;
             imageViewHeight = imageHeight;
@@ -144,14 +147,14 @@ NSString *const galleryCellIdentifier = @"galleryCell";
 
 - (void)addImageForName:(NSString *)imageName {
     [self addUI];
-    
+
     UIImage *image = nil;
     NSString *name = @"";
     NSString *type = @"";
     if (![XTool isStringEmpty:imageName]) {
         name = [XFileManager getFileNameWithoutSufixForName:imageName];
         type = [XFileManager getSufixForName:imageName];
-        
+
         if (![XTool isStringEmpty:name]) {
             if ([XTool isStringEmpty:type]) {
                 image = [UIImage initImageWithContentsOfName:name];
@@ -165,7 +168,7 @@ NSString *const galleryCellIdentifier = @"galleryCell";
 
 - (void)addImageForPath:(NSString *)imagePath {
     [self addUI];
-    
+
     UIImage *image = nil;
     if (![XTool isStringEmpty:imagePath]) {
         image = [[UIImage alloc] initWithContentsOfFile:imagePath];
@@ -175,27 +178,27 @@ NSString *const galleryCellIdentifier = @"galleryCell";
 
 - (void)addImageForUrl:(NSString *)imageUrl placeHolderImageName:(NSString *)placeHolderImageName {
     [self addUI];
-    
+
     UIActivityIndicatorView *loading = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
     [loading setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhite];
     [loading setCenter:self.contentView.center];
     [self.contentView addSubview:loading];
     [loading startAnimating];
-    
+
     __weak __typeof(self) weak_self = self;
     [imageView x_setImageWithURLString:imageUrl placeholderImageName:placeHolderImageName progress:nil completion:^(BOOL success, UIImage *image, NSError *error) {
-        
+
         dispatch_async(dispatch_get_main_queue(), ^{
             [loading stopAnimating];
             [weak_self updateImageViewFrame];
         });
-        
+
     }];
 }
 
 - (void)addImageForData:(NSData *)data {
     [self addUI];
-    
+
     UIImage *image = nil;
     if (data) {
         image = [UIImage imageWithData:data];
@@ -205,14 +208,14 @@ NSString *const galleryCellIdentifier = @"galleryCell";
 
 - (void)addGifForName:(NSString *)name {
     [self addUI];
-    
+
     UIImage *image = [UIImage animatedGIFNamed:name];
     [self addImage:image];
 }
 
 - (void)addGifForPath:(NSString *)gifPath {
     [self addUI];
-    
+
     NSString *gifName = [XFileManager getFileNameWithoutSufixForPath:gifPath];
     if ([XTool isStringEmpty:gifName]) {
         [self addImage:nil];
@@ -223,7 +226,7 @@ NSString *const galleryCellIdentifier = @"galleryCell";
 
 - (void)addGifForData:(NSData *)data {
     [self addUI];
-    
+
     UIImage *image = nil;
     if (data) {
         image = [UIImage animatedGIFWithData:data];
@@ -243,16 +246,16 @@ NSString *const galleryCellIdentifier = @"galleryCell";
     CGFloat imageViewX = 0;
     CGFloat imageViewY = 0;
     if (imageView.frame.size.width < scrollView.frame.size.width) {
-        imageViewX = (scrollView.frame.size.width - imageView.frame.size.width)*1.0/2;
+        imageViewX = (scrollView.frame.size.width - imageView.frame.size.width) * 1.0 / 2;
     } else {
         imageViewX = 0;
     }
     if (imageView.frame.size.height < scrollView.frame.size.height) {
-        imageViewY = (scrollView.frame.size.height - imageView.frame.size.height)*1.0/2;
+        imageViewY = (scrollView.frame.size.height - imageView.frame.size.height) * 1.0 / 2;
     } else {
         imageViewY = 0;
     }
-    
+
     CGRect imageViewFrame = imageView.frame;
     imageViewFrame.origin.x = imageViewX;
     imageViewFrame.origin.y = imageViewY;

@@ -8,12 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface XGallery : UIView
 
-@property (nonatomic, copy)     NSString    *   placeholderImageName;
-@property (nonatomic, assign)   CGFloat         maximumZoomScale;       //default is 2.0
-@property (nonatomic, assign)   CGFloat         minimumZoomScale;       //default is 1.0
-@property (nonatomic, strong)   UIFont      *   pageNumberFont;
+@property (nonatomic, copy) NSString *placeholderImageName;
+@property (nonatomic, assign) CGFloat maximumZoomScale; //default is 2.0
+@property (nonatomic, assign) CGFloat minimumZoomScale; //default is 1.0
+@property (nonatomic, strong) UIFont *pageNumberFont;
 
 /**
  初始化时就传入图片

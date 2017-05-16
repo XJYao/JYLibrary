@@ -11,6 +11,7 @@
 #import "XIOSVersion.h"
 #import "NSArray+XArray.h"
 
+
 @interface UIView ()
 
 @property (nonatomic, strong) id x_firstItem;
@@ -23,6 +24,7 @@
 @property (nonatomic, assign) CGFloat x_cons;
 
 @end
+
 
 @implementation UIView (XConstraint)
 
@@ -85,34 +87,34 @@
     return [self x_addAttribute:NSLayoutAttributeHeight];
 }
 
-- (XConstraintMaker *(^)(CGFloat))x_multiplier {
+- (XConstraintMaker * (^)(CGFloat))x_multiplier {
     __weak typeof(self) weak_self = self;
-    
+
     return ^id(CGFloat multi) {
         weak_self.x_multi = multi;
         return weak_self;
     };
 }
 
-- (XConstraintMaker *(^)(CGFloat))x_constant {
+- (XConstraintMaker * (^)(CGFloat))x_constant {
     __weak typeof(self) weak_self = self;
-    
+
     return ^id(CGFloat cons) {
         weak_self.x_cons = cons;
-        
+
         if (weak_self.x_secondItem) {
             [weak_self x_addConstraint];
         } else {
             [weak_self x_clear];
         }
-        
+
         return weak_self;
     };
 }
 
-- (XConstraintMaker *(^)(id))x_equalTo {
+- (XConstraintMaker * (^)(id))x_equalTo {
     __weak typeof(self) weak_self = self;
-    
+
     return ^id(id reference) {
         weak_self.x_relation = NSLayoutRelationEqual;
         [weak_self x_relationTo:reference];
@@ -120,9 +122,9 @@
     };
 }
 
-- (XConstraintMaker *(^)(id))x_lessThanOrEqualTo {
+- (XConstraintMaker * (^)(id))x_lessThanOrEqualTo {
     __weak typeof(self) weak_self = self;
-    
+
     return ^id(id reference) {
         weak_self.x_relation = NSLayoutRelationLessThanOrEqual;
         [weak_self x_relationTo:reference];
@@ -130,9 +132,9 @@
     };
 }
 
-- (XConstraintMaker *(^)(id))x_greaterThanOrEqualTo {
+- (XConstraintMaker * (^)(id))x_greaterThanOrEqualTo {
     __weak typeof(self) weak_self = self;
-    
+
     return ^id(id reference) {
         weak_self.x_relation = NSLayoutRelationGreaterThanOrEqual;
         [weak_self x_relationTo:reference];
@@ -140,9 +142,9 @@
     };
 }
 
-- (XConstraintMaker *(^)(id))x_update_equalTo {
+- (XConstraintMaker * (^)(id))x_update_equalTo {
     __weak typeof(self) weak_self = self;
-    
+
     return ^id(id reference) {
         NSMutableArray *firstAttris = [weak_self.x_firstAttributes mutableCopy];
         weak_self.x_remove();
@@ -151,9 +153,9 @@
     };
 }
 
-- (XConstraintMaker *(^)(id))x_update_lessThanOrEqualTo {
+- (XConstraintMaker * (^)(id))x_update_lessThanOrEqualTo {
     __weak typeof(self) weak_self = self;
-    
+
     return ^id(id reference) {
         NSMutableArray *firstAttris = [weak_self.x_firstAttributes mutableCopy];
         weak_self.x_remove();
@@ -162,9 +164,9 @@
     };
 }
 
-- (XConstraintMaker *(^)(id))x_update_greaterThanOrEqualTo {
+- (XConstraintMaker * (^)(id))x_update_greaterThanOrEqualTo {
     __weak typeof(self) weak_self = self;
-    
+
     return ^id(id reference) {
         NSMutableArray *firstAttris = [weak_self.x_firstAttributes mutableCopy];
         weak_self.x_remove();
@@ -173,15 +175,14 @@
     };
 }
 
-- (XConstraintMaker *(^)(void))x_remove {
+- (XConstraintMaker * (^)(void))x_remove {
     __weak typeof(self) weak_self = self;
-    
+
     return ^id(void) {
         weak_self.x_firstItem = weak_self;
-        
+
         for (NSLayoutConstraint *existConstraint in weak_self.superview.constraints) {
-            if (existConstraint.firstItem == weak_self.x_firstItem)
-            {
+            if (existConstraint.firstItem == weak_self.x_firstItem) {
                 id existFirstAttributeObject = @(existConstraint.firstAttribute);
                 if (existFirstAttributeObject) {
                     if ([weak_self.x_firstAttributes containsObject:existFirstAttributeObject]) {
@@ -190,16 +191,14 @@
                 }
             }
         }
-        
+
         id widthObject = @(NSLayoutAttributeWidth);
         id heightObject = @(NSLayoutAttributeHeight);
-        
+
         if ([weak_self.x_firstAttributes containsObject:widthObject] ||
             [weak_self.x_firstAttributes containsObject:heightObject]) {
-            
             for (NSLayoutConstraint *existConstraint in weak_self.constraints) {
                 if (existConstraint.firstItem == weak_self.x_firstItem) {
-                    
                     id existFirstAttributeObject = @(existConstraint.firstAttribute);
                     if (existFirstAttributeObject) {
                         if ([weak_self.x_firstAttributes containsObject:existFirstAttributeObject]) {
@@ -327,7 +326,7 @@ static const void *XConstraintConstantKey = &XConstraintConstantKey;
         self.x_multi = 0.0;
         self.x_cons = [reference floatValue];
     }
-    
+
     if (!self.x_secondItem) {
         [self x_addConstraint];
     }
@@ -338,18 +337,18 @@ static const void *XConstraintConstantKey = &XConstraintConstantKey;
         if (self.translatesAutoresizingMaskIntoConstraints) {
             [self setTranslatesAutoresizingMaskIntoConstraints:NO];
         }
-        
+
         self.x_firstItem = self;
-        
+
         BOOL isSecondNotAttribute = NO;
         if (!self.x_secondItem) {
             isSecondNotAttribute = YES;
         }
-        
-        for (NSInteger i = 0; i < self.x_firstAttributes.count; i ++) {
+
+        for (NSInteger i = 0; i < self.x_firstAttributes.count; i++) {
             NSLayoutAttribute firstAttribute = [[self.x_firstAttributes x_objectAtIndex:i] integerValue];
             NSLayoutAttribute secondAttribute = NSLayoutAttributeNotAnAttribute;
-            
+
             if (!isSecondNotAttribute) {
                 if (self.x_secondAttributes && self.x_secondAttributes.count > 0) {
                     if (i < self.x_secondAttributes.count) {
@@ -359,13 +358,15 @@ static const void *XConstraintConstantKey = &XConstraintConstantKey;
                     secondAttribute = firstAttribute;
                 }
             }
-            
+
             NSLayoutConstraint *constraint =
-            [NSLayoutConstraint constraintWithItem:self.x_firstItem attribute:firstAttribute
-                                         relatedBy:self.x_relation
-                                            toItem:self.x_secondItem attribute:secondAttribute
-                                        multiplier:self.x_multi constant:self.x_cons];
-            
+                [NSLayoutConstraint constraintWithItem:self.x_firstItem attribute:firstAttribute
+                                             relatedBy:self.x_relation
+                                                toItem:self.x_secondItem
+                                             attribute:secondAttribute
+                                            multiplier:self.x_multi
+                                              constant:self.x_cons];
+
             if ([XIOSVersion isIOS8OrGreater]) {
                 [constraint setActive:YES];
             } else {
@@ -373,7 +374,7 @@ static const void *XConstraintConstantKey = &XConstraintConstantKey;
             }
         }
     }
-    
+
     [self x_clear];
 }
 

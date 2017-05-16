@@ -8,6 +8,7 @@
 
 #import "UIView+XView.h"
 
+
 @implementation UIView (XView)
 
 - (void)x_setFrame:(CGRect)frame {
@@ -44,7 +45,7 @@
     if (!self.userInteractionEnabled) {
         [self setUserInteractionEnabled:YES];
     }
-    
+
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:target action:action];
     [self addGestureRecognizer:tapGesture];
 }

@@ -19,11 +19,12 @@
 
 @end
 
+
 @interface XPickerView : UIView
 
 typedef void (^XPickerViewBlock)(XPickerView *pickerView, NSString *title, NSInteger index);
 
-@property (nonatomic, weak) id <XPickerViewDelegate> delegate;
+@property (nonatomic, weak) id<XPickerViewDelegate> delegate;
 
 @property (nonatomic, copy) NSString *cancelButtonTitle;
 @property (nonatomic, copy) NSString *selectButtonTitle;

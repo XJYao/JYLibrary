@@ -16,6 +16,7 @@ typedef NS_ENUM(NSUInteger, XScanAuthorizationStatus) {
     XScanAuthorizationStatusAuthorized
 };
 
+
 @interface XScan : NSObject
 
 @property (nonatomic, assign) CGRect frame;

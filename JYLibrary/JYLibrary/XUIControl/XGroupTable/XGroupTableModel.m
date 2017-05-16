@@ -8,6 +8,7 @@
 
 #import "XGroupTableModel.h"
 
+
 @implementation XGroupTableModel
 
 - (instancetype)init {

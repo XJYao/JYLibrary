@@ -14,6 +14,7 @@ typedef NS_OPTIONS(NSUInteger, TextVerticalAlignment) {
     TextVerticalAlignmentBottom,
 };
 
+
 @interface XLabel : UILabel
 
 @property (nonatomic, assign) TextVerticalAlignment textVerticalAlignment;

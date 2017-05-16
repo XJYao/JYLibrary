@@ -19,12 +19,13 @@
 
 @end
 
+
 @interface XPhoto : NSObject
 
 typedef void (^XPhotoSelectedCompleteBlock)(XPhoto *x_Photo, UIImage *image, UIImagePickerControllerSourceType sourceType);
 typedef void (^XPhotoSelectedFailureBlock)(XPhoto *x_Photo);
 
-@property (nonatomic, weak) id <XPhotoDelegate> delegate;
+@property (nonatomic, weak) id<XPhotoDelegate> delegate;
 @property (nonatomic, assign) BOOL shouldSaveToAlbum;
 @property (nonatomic, assign) BOOL allowEdit;
 
@@ -37,4 +38,3 @@ typedef void (^XPhotoSelectedFailureBlock)(XPhoto *x_Photo);
           photoFailureSelectedBlock:(XPhotoSelectedFailureBlock)selectedFailureBlock;
 
 @end
-

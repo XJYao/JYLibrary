@@ -8,9 +8,11 @@
 
 #import "NSSet+XSet.h"
 
+
 @implementation NSSet (XSet)
 
 @end
+
 
 @implementation NSMutableSet (XMutableSet)
 
@@ -35,6 +37,7 @@
 }
 
 @end
+
 
 @implementation NSCountedSet (XCountedSet)
 

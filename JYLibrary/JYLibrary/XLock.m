@@ -8,11 +8,14 @@
 
 #import "XLock.h"
 
-@interface XLock () {
+
+@interface XLock ()
+{
     NSLock *lock;
 }
 
 @end
+
 
 @implementation XLock
 
@@ -30,11 +33,11 @@
 
 - (instancetype)init {
     self = [super init];
-    
+
     if (self) {
         lock = [[NSLock alloc] init];
     }
-    
+
     return self;
 }
 

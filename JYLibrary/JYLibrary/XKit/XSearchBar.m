@@ -9,6 +9,7 @@
 #import "XSearchBar.h"
 #import "XIOSVersion.h"
 
+
 @implementation XSearchBar
 
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender {
@@ -33,7 +34,7 @@
     }
 }
 
-- (void)delete:(id)sender {
+- (void) delete:(id)sender {
     //实现长按选择删除方法,如果不实现这方法,点击删除按钮会崩溃！
 }
 

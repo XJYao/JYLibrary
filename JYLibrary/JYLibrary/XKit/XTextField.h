@@ -15,15 +15,16 @@
 
 @end
 
+
 @interface XTextField : UITextField
 
-@property (nonatomic, assign)   NSInteger               maxLengthForInput;          //default is 0, unlimited
+@property (nonatomic, assign) NSInteger maxLengthForInput; //default is 0, unlimited
 
-@property (nonatomic, assign)   BOOL                    multiLinePlaceholderEnable;     //default is NO
-@property (nonatomic, copy)     NSString           *    multiLinePlaceholder;           //default is nil;
-@property (nonatomic, copy)     NSAttributedString *    multiLineAttributedPlaceholder; //default is nil;
-@property (nonatomic, strong)   UIFont             *    multiLinePlaceholderFont;       //default is nil;
-@property (nonatomic, strong)   UIColor            *    multiLinePlaceholderColor;      //default is nil;
-@property (nonatomic, assign)   NSTextAlignment         multiLinePlaceholderAlignment;  //default is NSLeftTextAlignment;
+@property (nonatomic, assign) BOOL multiLinePlaceholderEnable;                  //default is NO
+@property (nonatomic, copy) NSString *multiLinePlaceholder;                     //default is nil;
+@property (nonatomic, copy) NSAttributedString *multiLineAttributedPlaceholder; //default is nil;
+@property (nonatomic, strong) UIFont *multiLinePlaceholderFont;                 //default is nil;
+@property (nonatomic, strong) UIColor *multiLinePlaceholderColor;               //default is nil;
+@property (nonatomic, assign) NSTextAlignment multiLinePlaceholderAlignment;    //default is NSLeftTextAlignment;
 
 @end

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface XGradientProgress : UIView
 
 @end

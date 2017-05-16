@@ -15,6 +15,7 @@ typedef NS_ENUM(NSUInteger, XDeviceAuthorizationStatus) {
     XDeviceAuthorizationStatusAuthorized
 };
 
+
 @interface XDeviceAuthorization : NSObject
 
 + (void)cameraAuthorizationStatus:(void (^)(XDeviceAuthorizationStatus authorizationStatus))block;

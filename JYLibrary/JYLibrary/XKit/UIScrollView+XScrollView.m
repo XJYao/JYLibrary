@@ -12,16 +12,18 @@
 typedef void (^XScrollViewObserveContentSizeBlock)(CGSize contentSize);
 typedef void (^XScrollDirectionBlock)(XScrollDirection scrollDirection);
 
+
 @interface UIScrollView ()
 
-@property (nonatomic, assign) BOOL                  x_isContentSizeObserving;
+@property (nonatomic, assign) BOOL x_isContentSizeObserving;
 @property (nonatomic, assign) XScrollViewObserveContentSizeBlock x_observeContentSizeBlock;
 
-@property (nonatomic, assign) BOOL                  x_isContentOffsetObserving;
+@property (nonatomic, assign) BOOL x_isContentOffsetObserving;
 @property (nonatomic, assign) XScrollDirectionBlock x_scrollDirectionBlock;
-@property (nonatomic, assign) CGFloat               x_beginObserveScrollMinOffset;
+@property (nonatomic, assign) CGFloat x_beginObserveScrollMinOffset;
 
 @end
+
 
 @implementation UIScrollView (XScrollView)
 
@@ -116,7 +118,7 @@ static const void *XScrollViewBeginObserveScrollMinOffsetKey = &XScrollViewBegin
     if ([keyPath isEqualToString:@"contentOffset"]) {
         CGPoint oldContentOffset = [[change objectForKey:@"old"] CGPointValue];
         CGPoint newContentOffset = self.contentOffset;
-        
+
         XScrollDirection scrollDirection = XScrollDirectionStop;
 
         if (CGPointEqualToPoint(newContentOffset, oldContentOffset)) {
@@ -129,7 +131,7 @@ static const void *XScrollViewBeginObserveScrollMinOffsetKey = &XScrollViewBegin
             } else if (newContentOffset.x < oldContentOffset.x - self.x_beginObserveScrollMinOffset) {
                 scrollDirection = XScrollDirectionHorizontalLeft;
             }
-            
+
             if (newContentOffset.y == oldContentOffset.y) {
                 scrollDirection |= XScrollDirectionVerticalStop;
             } else if (newContentOffset.y > oldContentOffset.y + self.x_beginObserveScrollMinOffset) {
@@ -138,13 +140,13 @@ static const void *XScrollViewBeginObserveScrollMinOffsetKey = &XScrollViewBegin
                 scrollDirection |= XScrollDirectionVerticalTop;
             }
         }
-        
+
         if (self.x_scrollDirectionBlock) {
             self.x_scrollDirectionBlock(scrollDirection);
         }
-        
+
         id x_delegate = self.delegate;
-        if(x_delegate && [x_delegate respondsToSelector:@selector(x_scrollView:scrollDirection:)]) {
+        if (x_delegate && [x_delegate respondsToSelector:@selector(x_scrollView:scrollDirection:)]) {
             [x_delegate x_scrollView:self scrollDirection:scrollDirection];
         }
     } else if ([keyPath isEqualToString:@"contentSize"]) {
@@ -152,7 +154,7 @@ static const void *XScrollViewBeginObserveScrollMinOffsetKey = &XScrollViewBegin
             self.x_observeContentSizeBlock(self.contentSize);
         }
         id x_delegate = self.delegate;
-        if(x_delegate && [x_delegate respondsToSelector:@selector(x_scrollView:contentSize:)]) {
+        if (x_delegate && [x_delegate respondsToSelector:@selector(x_scrollView:contentSize:)]) {
             [x_delegate x_scrollView:self contentSize:self.contentSize];
         }
     }
@@ -162,16 +164,13 @@ static const void *XScrollViewBeginObserveScrollMinOffsetKey = &XScrollViewBegin
 
 //以下三个方法是解决侧滑手势和scrollview横向滚动冲突的问题
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-    
     if ([self panBack:gestureRecognizer]) {
         return YES;
     }
     return NO;
-    
 }
 
 - (BOOL)panBack:(UIGestureRecognizer *)gestureRecognizer {
-    
     if (gestureRecognizer == self.panGestureRecognizer) {
         UIPanGestureRecognizer *pan = (UIPanGestureRecognizer *)gestureRecognizer;
         CGPoint point = [pan translationInView:self];
@@ -184,16 +183,13 @@ static const void *XScrollViewBeginObserveScrollMinOffsetKey = &XScrollViewBegin
         }
     }
     return NO;
-    
 }
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
-    
     if ([self panBack:gestureRecognizer]) {
         return NO;
     }
     return YES;
-    
 }
 
 @end

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface NSString (XMD5Addition)
 
 - (NSString *)stringFromMD5;

@@ -9,14 +9,15 @@
 #import "XTableViewCell.h"
 #import "XIOSVersion.h"
 
+
 @implementation XTableViewCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    
+
     if (self) {
         if ([XIOSVersion isIOS7OrGreater] && ![XIOSVersion isIOS8OrGreater]) {
-            for (UIView *view in self.subviews){
+            for (UIView *view in self.subviews) {
                 if ([NSStringFromClass([view class]) isEqualToString:@"UITableViewCellScrollView"]) {
                     UIScrollView *sv = (UIScrollView *)view;
                     [sv setDelaysContentTouches:NO];
@@ -25,7 +26,7 @@
             }
         }
     }
-    
+
     return self;
 }
 
@@ -38,7 +39,7 @@
         if ([self respondsToSelector:@selector(setLayoutMargins:)]) {
             [self setLayoutMargins:edgeInsets];
         }
-        if([self respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]){
+        if ([self respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]) {
             [self setPreservesSuperviewLayoutMargins:NO];
         }
     }

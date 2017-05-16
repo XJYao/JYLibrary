@@ -11,24 +11,25 @@
 #import "XEncoding.h"
 #import "XIOSVersion.h"
 
+
 @implementation XPhone
 
 + (NSURL *)getTelUrl:(NSString *)phoneNumber {
-    NSString *cleanedString =[[phoneNumber componentsSeparatedByCharactersInSet:[[NSCharacterSet characterSetWithCharactersInString:@"0123456789-+()"] invertedSet]] componentsJoinedByString:@""];
+    NSString *cleanedString = [[phoneNumber componentsSeparatedByCharactersInSet:[[NSCharacterSet characterSetWithCharactersInString:@"0123456789-+()"] invertedSet]] componentsJoinedByString:@""];
     NSString *escapedPhoneNumber = [XEncoding encodeString:cleanedString encoding:NSUTF8StringEncoding];
     NSURL *telURL = [NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", escapedPhoneNumber]];
     return telURL;
 }
 
 + (NSURL *)getSmsUrl:(NSString *)phoneNumber {
-    NSString *cleanedString =[[phoneNumber componentsSeparatedByCharactersInSet:[[NSCharacterSet characterSetWithCharactersInString:@"0123456789-+()"] invertedSet]] componentsJoinedByString:@""];
+    NSString *cleanedString = [[phoneNumber componentsSeparatedByCharactersInSet:[[NSCharacterSet characterSetWithCharactersInString:@"0123456789-+()"] invertedSet]] componentsJoinedByString:@""];
     NSString *escapedPhoneNumber = [XEncoding encodeString:cleanedString encoding:NSUTF8StringEncoding];
     NSURL *smsURL = [NSURL URLWithString:[NSString stringWithFormat:@"sms://%@", escapedPhoneNumber]];
     return smsURL;
 }
 
 + (void)callTelephone:(NSString *)phoneNumber atSuper:(UIView *)superView {
-    UIWebView *callWebview = [[UIWebView alloc] init] ;
+    UIWebView *callWebview = [[UIWebView alloc] init];
     [superView addSubview:callWebview];
     NSURL *telURL = [self getTelUrl:phoneNumber];
     [callWebview loadRequest:[NSURLRequest requestWithURL:telURL]];
@@ -87,8 +88,8 @@
 
 + (void)openURL:(NSURL *)url {
     if ([XIOSVersion isIOS10OrGreater]) {
-        [[UIApplication sharedApplication] openURL:url options:nil completionHandler:^(BOOL success) {
-            
+        [[UIApplication sharedApplication] openURL:url options:nil completionHandler:^(BOOL success){
+
         }];
     } else {
         [[UIApplication sharedApplication] openURL:url];

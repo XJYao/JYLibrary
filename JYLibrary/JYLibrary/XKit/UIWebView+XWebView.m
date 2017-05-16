@@ -8,6 +8,7 @@
 
 #import "UIWebView+XWebView.h"
 
+
 @implementation UIWebView (XWebView)
 
 //修改网页的宽度与webView宽度一致
@@ -15,8 +16,8 @@
     if (!self) {
         return;
     }
-    
-    NSString *viewportJS = [NSString stringWithFormat:@"var viewportMeta = document.getElementsByName('viewport')[0];if(viewportMeta){viewportMeta.content='width=%f,minimum-scale=1,initial-scale=1.0';}",self.frame.size.width];
+
+    NSString *viewportJS = [NSString stringWithFormat:@"var viewportMeta = document.getElementsByName('viewport')[0];if(viewportMeta){viewportMeta.content='width=%f,minimum-scale=1,initial-scale=1.0';}", self.frame.size.width];
     [self stringByEvaluatingJavaScriptFromString:viewportJS];
 }
 

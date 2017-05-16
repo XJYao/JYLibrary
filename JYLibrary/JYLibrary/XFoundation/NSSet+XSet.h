@@ -8,9 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface NSSet (XSet)
 
 @end
+
 
 @interface NSMutableSet (XMutableSet)
 
@@ -19,6 +21,7 @@
 - (void)x_removeObject:(id)object;
 
 @end
+
 
 @interface NSCountedSet (XCountedSet)
 

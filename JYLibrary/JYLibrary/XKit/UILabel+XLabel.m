@@ -10,6 +10,7 @@
 #import "XTool.h"
 #import "XIOSVersion.h"
 
+
 @implementation UILabel (XLabel)
 
 - (CGSize)labelSize {
@@ -22,8 +23,8 @@
         labelSize = CGSizeZero;
     } else {
         if ([XIOSVersion isIOS7OrGreater]) {
-            NSDictionary * tdic = [NSDictionary dictionaryWithObjectsAndKeys:self.font, NSFontAttributeName,nil];
-            labelSize = [self.text boundingRectWithSize:maximumLabelSize options:NSStringDrawingUsesLineFragmentOrigin |NSStringDrawingUsesFontLeading attributes:tdic context:nil].size;
+            NSDictionary *tdic = [NSDictionary dictionaryWithObjectsAndKeys:self.font, NSFontAttributeName, nil];
+            labelSize = [self.text boundingRectWithSize:maximumLabelSize options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:tdic context:nil].size;
         } else {
             labelSize = [self.text sizeWithFont:self.font constrainedToSize:maximumLabelSize lineBreakMode:NSLineBreakByWordWrapping];
         }
@@ -57,7 +58,7 @@
 
 - (void)allowMultiLine {
     [self setNumberOfLines:0];
-    [self setLineBreakMode:NSLineBreakByWordWrapping|NSLineBreakByTruncatingTail];
+    [self setLineBreakMode:NSLineBreakByWordWrapping | NSLineBreakByTruncatingTail];
 }
 
 @end

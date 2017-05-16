@@ -9,9 +9,9 @@
 #import <UIKit/UIKit.h>
 
 typedef NS_ENUM(NSInteger, XTabBarUpdateStateWay) {
-    XTabBarUpdateStateWayDefault,    //setting when initialize or animation end
-    XTabBarUpdateStateWayByClick,    //setting when run selectButton click event
-    XTabBarUpdateStateWayByDragScroll//setting when run scrollViewWillBeginDragging
+    XTabBarUpdateStateWayDefault,     //setting when initialize or animation end
+    XTabBarUpdateStateWayByClick,     //setting when run selectButton click event
+    XTabBarUpdateStateWayByDragScroll //setting when run scrollViewWillBeginDragging
 };
 
 @protocol XTabBarDelegate <NSObject>
@@ -22,35 +22,36 @@ typedef NS_ENUM(NSInteger, XTabBarUpdateStateWay) {
 
 @end
 
+
 @interface XTabBar : UIView
 
 #pragma mark property
 
-@property (nonatomic, weak) id <XTabBarDelegate> delegate;    //default is nil.
+@property (nonatomic, weak) id<XTabBarDelegate> delegate; //default is nil.
 
-@property (nonatomic, assign) BOOL      bounces;                                    //default is YES
-@property (nonatomic, assign) BOOL      showsHorizontalScrollIndicator;             //default is NO
-@property (nonatomic, assign) NSInteger maxCountForTabsShown;                       //default is 3
-@property (nonatomic, assign) NSInteger currentSelectedIndex;                       //default is 0
-@property (nonatomic, assign) XTabBarUpdateStateWay currentTabBarUpdateStateWay;    //default is XTabBarUpdateStateWayDefault
+@property (nonatomic, assign) BOOL bounces;                                      //default is YES
+@property (nonatomic, assign) BOOL showsHorizontalScrollIndicator;               //default is NO
+@property (nonatomic, assign) NSInteger maxCountForTabsShown;                    //default is 3
+@property (nonatomic, assign) NSInteger currentSelectedIndex;                    //default is 0
+@property (nonatomic, assign) XTabBarUpdateStateWay currentTabBarUpdateStateWay; //default is XTabBarUpdateStateWayDefault
 
-@property (nonatomic, assign) CGFloat       separatorHeight;        //default is 2.0f
-@property (nonatomic, strong) UIColor   *   separatorColor;         //default is white
-@property (nonatomic, strong) UIFont    *   textNormalFont;         //default is systemFontOfSize 14
-@property (nonatomic, strong) UIFont    *   textSelectedFont;       //default is systemFontOfSize 14
-@property (nonatomic, strong) UIColor   *   textNormalColor;        //default is black
-@property (nonatomic, strong) UIColor   *   textSelectedColor;      //default is blue
-@property (nonatomic, strong) UIColor   *   tabLineColor;           //default is blue
-@property (nonatomic, strong) UIImage   *   tabLineImage;           //default is nil
-@property (nonatomic, assign) CGFloat       tabLineHeight;          //default is 1.5f
-@property (nonatomic, strong) UIColor   *   badgeBackgroundColor;   //default is red
-@property (nonatomic, strong) UIColor   *   badgeTextColor;         //default is white
+@property (nonatomic, assign) CGFloat separatorHeight;       //default is 2.0f
+@property (nonatomic, strong) UIColor *separatorColor;       //default is white
+@property (nonatomic, strong) UIFont *textNormalFont;        //default is systemFontOfSize 14
+@property (nonatomic, strong) UIFont *textSelectedFont;      //default is systemFontOfSize 14
+@property (nonatomic, strong) UIColor *textNormalColor;      //default is black
+@property (nonatomic, strong) UIColor *textSelectedColor;    //default is blue
+@property (nonatomic, strong) UIColor *tabLineColor;         //default is blue
+@property (nonatomic, strong) UIImage *tabLineImage;         //default is nil
+@property (nonatomic, assign) CGFloat tabLineHeight;         //default is 1.5f
+@property (nonatomic, strong) UIColor *badgeBackgroundColor; //default is red
+@property (nonatomic, strong) UIColor *badgeTextColor;       //default is white
 
-@property (nonatomic, assign)   BOOL    showTabLine;        //default is YES
-@property (nonatomic, assign)   BOOL    colorAnimated;      //default is YES
-@property (nonatomic, assign)   BOOL    fontAnimated;       //default is YES
+@property (nonatomic, assign) BOOL showTabLine;   //default is YES
+@property (nonatomic, assign) BOOL colorAnimated; //default is YES
+@property (nonatomic, assign) BOOL fontAnimated;  //default is YES
 
-@property (nonatomic, assign)   double  tabLineImageDuration;//default is 0.5
+@property (nonatomic, assign) double tabLineImageDuration; //default is 0.5
 
 #pragma mark method
 
@@ -90,4 +91,3 @@ typedef NS_ENUM(NSInteger, XTabBarUpdateStateWay) {
 - (NSString *)getBadgeTextAtIndex:(NSInteger)index;
 
 @end
-

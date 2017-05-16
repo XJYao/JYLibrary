@@ -23,8 +23,7 @@
 
 @implementation ViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
 
@@ -130,31 +129,27 @@
     //    NSLog(@"hja");
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - XWebManagerDelegate
 
-- (void)webManager:(XWebManager *)manager didFailLoadWithError:(NSError *)error
-{
+- (void)webManager:(XWebManager *)manager didFailLoadWithError:(NSError *)error {
     int i = 0;
 }
 
 /*! @abstract 捕捉到JavaScript执行alert
  */
-- (void)webManager:(XWebManager *)manager alertWithMessage:(NSString *)message
-{
+- (void)webManager:(XWebManager *)manager alertWithMessage:(NSString *)message {
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:message delegate:nil cancelButtonTitle:@"好" otherButtonTitles:nil, nil];
     [alertView show];
 }
 
 /*! @abstract 捕捉到JavaScript执行confirm
  */
-- (void)webManager:(XWebManager *)manager confirmWithMessage:(NSString *)message completionHandler:(nonnull void (^)(BOOL result))completionHandler
-{
+- (void)webManager:(XWebManager *)manager confirmWithMessage:(NSString *)message completionHandler:(nonnull void (^)(BOOL result))completionHandler {
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:message object:nil buttonTitles:@[ @"否", @"是" ] alertViewBlock:^(UIAlertView *alert, NSString *buttonTitle, NSInteger buttonIndex, id object) {
         if (completionHandler) {
             completionHandler(buttonIndex == 1);
@@ -165,8 +160,7 @@
 
 /*! @abstract 捕捉到JavaScript执行prompt
  */
-- (void)webManager:(XWebManager *)manager textInputWithPrompt:(NSString *)prompt defaultText:(NSString *)defaultText completionHandler:(void (^)(NSString *result))completionHandler
-{
+- (void)webManager:(XWebManager *)manager textInputWithPrompt:(NSString *)prompt defaultText:(NSString *)defaultText completionHandler:(void (^)(NSString *result))completionHandler {
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:prompt message:defaultText object:nil buttonTitles:@[ @"确定" ] alertViewBlock:^(UIAlertView *alert, NSString *buttonTitle, NSInteger buttonIndex, id object) {
         if (completionHandler) {
             completionHandler([alert textFieldAtIndex:0].text);
@@ -178,14 +172,12 @@
 
 /*! @abstract 捕捉到JavaScript调oc的消息
  */
-- (void)webManager:(XWebManager *)manager didReceiveScriptMessage:(nonnull id)message handlerName:(nonnull NSString *)name
-{
+- (void)webManager:(XWebManager *)manager didReceiveScriptMessage:(nonnull id)message handlerName:(nonnull NSString *)name {
     NSLog(@"%@", name);
     NSLog(@"%@", message);
 }
 
-- (void)webManager:(XWebManager *)manager newManager:(XWebManager *)newManager URL:(NSURL *)URL
-{
+- (void)webManager:(XWebManager *)manager newManager:(XWebManager *)newManager URL:(NSURL *)URL {
     NSLog(@"打开新窗口");
 }
 

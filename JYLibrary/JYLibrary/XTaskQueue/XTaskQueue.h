@@ -10,6 +10,7 @@
 
 @class XTask;
 
+
 @interface XTaskQueue : NSObject
 
 - (void)addTask:(XTask *)task forKey:(NSString *)key;

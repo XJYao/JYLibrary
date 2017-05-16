@@ -9,15 +9,16 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+
 @interface XCurveInfo : NSObject
 
 @property (nonatomic, strong) NSMutableArray<NSValue *> *points;
-@property (nonatomic, strong) UIColor * color;
-@property (nonatomic, assign) CGFloat   width;
-@property (nonatomic, assign) BOOL      allowModify;
-@property (nonatomic, copy)   NSString *user;
-@property (nonatomic, strong) NSDate *  createDate;
-@property (nonatomic, strong) NSDate *  modificationDate;
+@property (nonatomic, strong) UIColor *color;
+@property (nonatomic, assign) CGFloat width;
+@property (nonatomic, assign) BOOL allowModify;
+@property (nonatomic, copy) NSString *user;
+@property (nonatomic, strong) NSDate *createDate;
+@property (nonatomic, strong) NSDate *modificationDate;
 
 - (BOOL)isEqualTo:(XCurveInfo *)aCurve;
 

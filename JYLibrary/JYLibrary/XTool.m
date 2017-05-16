@@ -13,10 +13,11 @@
 #import "XMacro.h"
 #import "NSArray+XArray.h"
 
+
 @implementation XTool
 
 + (BOOL)isObjectNull:(id)obj {
-    if(!obj || obj == nil || obj == Nil || obj == NULL || [obj isEqual:[NSNull null]] || obj == (id)kCFNull) {
+    if (!obj || obj == nil || obj == Nil || obj == NULL || [obj isEqual:[NSNull null]] || obj == (id)kCFNull) {
         return YES;
     } else {
         return NO;
@@ -117,7 +118,7 @@
 
 + (BOOL)isValidateEmail:(NSString *)email {
     NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{1,10}";
-    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES%@",emailRegex];
+    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES%@", emailRegex];
     return [emailTest evaluateWithObject:email];
 }
 
@@ -128,38 +129,35 @@
      * 联通:130,131,132,152,155,156,185,186
      * 电信:133,1349,153,180,189
      */
-    NSString * MOBILE = @"^1(3[0-9]|5[0-35-9]|8[025-9])\\d{8}$";
+    NSString *MOBILE = @"^1(3[0-9]|5[0-35-9]|8[025-9])\\d{8}$";
     /**
      10         * 中国移动:China Mobile
      11         * 134[0-8],135,136,137,138,139,150,151,157,158,159,182,187,188
      12         */
-    NSString * CM = @"^1(34[0-8]|(3[5-9]|5[017-9]|8[278])\\d)\\d{7}$";
+    NSString *CM = @"^1(34[0-8]|(3[5-9]|5[017-9]|8[278])\\d)\\d{7}$";
     /**
      15         * 中国联通:China Unicom
      16         * 130,131,132,152,155,156,185,186
      17         */
-    NSString * CU = @"^1(3[0-2]|5[256]|8[56])\\d{8}$";
+    NSString *CU = @"^1(3[0-2]|5[256]|8[56])\\d{8}$";
     /**
      20         * 中国电信:China Telecom
      21         * 133,1349,153,180,189
      22         */
-    NSString * CT = @"^1((33|53|8[09])[0-9]|349)\\d{7}$";
+    NSString *CT = @"^1((33|53|8[09])[0-9]|349)\\d{7}$";
     /**
      25         * 大陆地区固话及小灵通
      26         * 区号:010,020,021,022,023,024,025,027,028,029
      27         * 号码:七位或八位
      28         */
     // NSString * PHS = @"^0(10|2[0-5789]|\\d{3})\\d{7,8}$";
-    
+
     NSPredicate *regextestmobile = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", MOBILE];
     NSPredicate *regextestcm = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CM];
     NSPredicate *regextestcu = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CU];
     NSPredicate *regextestct = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CT];
-    
-    if (([regextestmobile evaluateWithObject:mobileNum])
-        || ([regextestcm evaluateWithObject:mobileNum])
-        || ([regextestct evaluateWithObject:mobileNum])
-        || ([regextestcu evaluateWithObject:mobileNum])) {
+
+    if (([regextestmobile evaluateWithObject:mobileNum]) || ([regextestcm evaluateWithObject:mobileNum]) || ([regextestct evaluateWithObject:mobileNum]) || ([regextestcu evaluateWithObject:mobileNum])) {
         return YES;
     } else {
         return NO;
@@ -176,8 +174,8 @@
         labelSize = CGSizeZero;
     } else {
         if ([XIOSVersion isIOS7OrGreater]) {
-            NSDictionary * tdic = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName,nil];
-            labelSize = [text boundingRectWithSize:maximumSize options:NSStringDrawingUsesLineFragmentOrigin |NSStringDrawingUsesFontLeading attributes:tdic context:nil].size;
+            NSDictionary *tdic = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, nil];
+            labelSize = [text boundingRectWithSize:maximumSize options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:tdic context:nil].size;
         } else {
             labelSize = [text sizeWithFont:font constrainedToSize:maximumSize lineBreakMode:NSLineBreakByWordWrapping];
         }
@@ -188,7 +186,7 @@
 + (CGFloat)heightForText:(NSString *)text font:(UIFont *)font width:(CGFloat)width {
     CGSize maximumLabelSize = CGSizeMake(width, MAXFLOAT);
     CGSize labelSize = [self labelSize:text font:font maximumSize:maximumLabelSize];
-    
+
     return labelSize.height + 1;
 }
 
@@ -211,7 +209,7 @@
 }
 
 + (NSString *)charToString:(char *)c {
-    if(!c || strcmp(c, "") == 0) {
+    if (!c || strcmp(c, "") == 0) {
         return @"";
     } else {
         return [[NSString alloc] initWithUTF8String:c];
@@ -242,16 +240,16 @@
     CGFloat width = [UIScreen mainScreen].bounds.size.width;
     CGFloat height = [UIScreen mainScreen].bounds.size.height;
     CGFloat scale = [UIScreen mainScreen].scale;
-    
+
     CGFloat screenWidth = width * scale;
     CGFloat screenHeight = height * scale;
-    
+
     return CGSizeMake(screenWidth, screenHeight);
 }
 
 + (NSString *)getLaunchImageName {
     NSString *launchImageName = @"";
-    
+
     CGSize resolution = [self getResolution];
     if (resolution.width == 320 && resolution.height == 480) {
         launchImageName = @"Default@1x";
@@ -264,7 +262,7 @@
     } else {
         launchImageName = @"Default-736h@3x";
     }
-    
+
     return launchImageName;
 }
 
@@ -272,115 +270,114 @@
     if ([self isStringEmpty:textString]) {
         return nil;
     }
-    
+
     NSMutableArray *mutableObjects = [[NSMutableArray alloc] init];
-    
+
     x_getMutableParams(rangeValue, mutableObjects);
-    
+
     if ([self isArrayEmpty:mutableObjects]) {
         return nil;
     }
-    
+
     if (mutableObjects.count % 3 != 0) {
         return nil;
     }
-    
+
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:textString];
-    
+
     for (NSInteger i = 0; i < mutableObjects.count; i = i + 3) {
         NSRange range = [[mutableObjects x_objectAtIndex:i] rangeValue];
-        NSString *name = [mutableObjects x_objectAtIndex:i+1];
-        id value = [mutableObjects x_objectAtIndex:i+2];
-        
+        NSString *name = [mutableObjects x_objectAtIndex:i + 1];
+        id value = [mutableObjects x_objectAtIndex:i + 2];
+
         if (range.location == NSNotFound || range.length == 0) {
             break;
         }
-        
+
         if ([self isStringEmpty:name]) {
             break;
         }
-        
+
         if (!value) {
             break;
         }
-        
+
         [attributedString addAttribute:name value:value range:range];
     }
-    
+
     return attributedString;
 }
 
 + (NSAttributedString *)attributeStringWithString:(NSString *)textString attributeTextsAndAttributeNamesAndValues:(NSString *)attributeText, ... NS_REQUIRES_NIL_TERMINATION {
-    
     if ([self isStringEmpty:textString]) {
         return nil;
     }
-    
+
     NSMutableArray *mutableObjects = [[NSMutableArray alloc] init];
 
     x_getMutableParams(attributeText, mutableObjects);
-    
+
     if ([self isArrayEmpty:mutableObjects]) {
         return nil;
     }
-    
+
     if (mutableObjects.count % 3 != 0) {
         return nil;
     }
-    
+
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:textString];
-    
+
     for (NSInteger i = 0; i < mutableObjects.count; i = i + 3) {
         NSString *text = [mutableObjects x_objectAtIndex:i];
-        NSString *name = [mutableObjects x_objectAtIndex:i+1];
-        id value = [mutableObjects x_objectAtIndex:i+2];
-        
+        NSString *name = [mutableObjects x_objectAtIndex:i + 1];
+        id value = [mutableObjects x_objectAtIndex:i + 2];
+
         if ([self isStringEmpty:text]) {
             break;
         }
-        
+
         if ([self isStringEmpty:name]) {
             break;
         }
-        
+
         if (!value) {
             break;
         }
-        
+
         NSInteger beginIndex = [textString rangeOfString:text].location;
         if (beginIndex == NSNotFound) {
             break;
         }
         [attributedString addAttribute:name value:value range:NSMakeRange(beginIndex, text.length)];
     }
-    
+
     return attributedString;
 }
 
 + (NSString *)urlWithMainUrl:(NSString *)mainUrl relativeUrl:(NSString *)relativeUrl {
     NSString *url = @"";
-    
+
     if ([self isStringEmpty:relativeUrl]) {
         url = mainUrl;
     } else {
         url = [mainUrl stringByAppendingPathComponent:relativeUrl];
     }
-    
+
     return url;
 }
 
 + (NSInteger)getKeyIndexForData:(NSData *)data key:(NSString *)key {
     Byte *srcBytes = (Byte *)[data bytes];
     NSInteger keyIndex = NSNotFound;
-    
+
     //搜索关键字位置
-    for (NSInteger i = 0; i < data.length; i ++) {
+    for (NSInteger i = 0; i < data.length; i++) {
         if (keyIndex != NSNotFound && keyIndex >= 0) {
             break;
         }
-        
-        for (NSInteger j = 0; j < key.length; j ++) {
-            unichar tmpChar = srcBytes[i+j];
+
+        for (NSInteger j = 0; j < key.length; j++) {
+            unichar tmpChar = srcBytes[i + j];
             if (tmpChar == [key characterAtIndex:j]) {
                 if (j == key.length - 1) {
                     keyIndex = i;
@@ -391,18 +388,18 @@
             }
         }
     }
-    
+
     return keyIndex;
 }
 
 + (NSString *)getValueOnResponseHead:(NSData *)headData key:(NSString *)key {
     NSInteger keyIndex = [self getKeyIndexForData:headData key:key];
     NSString *value = @"";
-    
+
     if (keyIndex == NSNotFound || keyIndex < 0) {
         return value;
     }
-    
+
     NSInteger endIndex = 0;
     Byte *headBytes = (Byte *)[headData bytes];
     //从关键字开始往后搜索换行符位置
@@ -415,25 +412,25 @@
     }
     //endIndex-keyIndex关键字与换行符之间的长度,再减去关键字长度,即为值长度,如Content-Length:90
     NSInteger valueLength = endIndex - keyIndex - key.length;
-    Byte *valueBytes = malloc(sizeof(Byte)*valueLength);
+    Byte *valueBytes = malloc(sizeof(Byte) * valueLength);
     //headBytes+keyIndex+key.length从关键字开始拷贝值长度个字符
     memcpy(valueBytes, headBytes + keyIndex + key.length, valueLength);
     NSData *valueData = [[NSData alloc] initWithBytes:valueBytes length:valueLength];
     free(valueBytes);
     value = [[NSString alloc] initWithData:valueData encoding:NSUTF8StringEncoding];
-    
+
     return value;
 }
 
 //从响应头获取编码
 + (NSStringEncoding)getEncodingFromResponseHead:(NSData *)headData {
     NSStringEncoding encoding = NSNotFound;
-    
+
     NSString *contentType = [self getValueOnResponseHead:headData key:@"Content-Type"];
     if ([self isStringEmpty:contentType]) {
         return encoding;
     }
-    
+
     NSArray *contentTypeArray = [contentType componentsSeparatedByString:@"charset="];
     if ([self isArrayEmpty:contentTypeArray]) {
         return encoding;
@@ -443,67 +440,65 @@
     if ([self isStringEmpty:charset]) {
         return encoding;
     }
-    
+
     encoding = [self getEncodingWithCharset:charset];
-    
+
     return encoding;
 }
 
 //从Response获取编码
 + (NSStringEncoding)getEncodingFromResponse:(NSHTTPURLResponse *)httpResponse {
     NSStringEncoding stringEncoding = NSNotFound;
-    
+
     if (!httpResponse) {
         return stringEncoding;
     }
-    
+
     if (![httpResponse respondsToSelector:@selector(allHeaderFields)]) {
         return stringEncoding;
     }
-    
+
     NSDictionary *allHeaderFields = httpResponse.allHeaderFields;
-    
+
     if ([self isDictionaryEmpty:allHeaderFields]) {
         return stringEncoding;
     }
-    
-    NSArray *contentTypeArray =[[allHeaderFields objectForKey:@"Content-Type"] componentsSeparatedByString:@"charset="];
-    
+
+    NSArray *contentTypeArray = [[allHeaderFields objectForKey:@"Content-Type"] componentsSeparatedByString:@"charset="];
+
     if ([self isArrayEmpty:contentTypeArray]) {
         return stringEncoding;
     }
-    
+
     NSString *charset = [contentTypeArray lastObject];
-    
+
     if ([self isStringEmpty:charset]) {
         return stringEncoding;
     }
-    
+
     stringEncoding = [self getEncodingWithCharset:charset];
-    
+
     return stringEncoding;
 }
 
 + (NSStringEncoding)getEncodingWithCharset:(NSString *)charset {
     NSStringEncoding encoding = NSNotFound;
-    
+
     if ([self isStringEmpty:charset]) {
         return encoding;
     }
-    
+
     if ([charset caseInsensitiveCompare:@"utf-8"] == NSOrderedSame) {
-        
         encoding = NSUTF8StringEncoding;
-        
+
     } else if ([charset caseInsensitiveCompare:@"gbk"] == NSOrderedSame ||
                [charset caseInsensitiveCompare:@"gb2312"] == NSOrderedSame) {
-        
         encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
-        
+
     } else if ([charset caseInsensitiveCompare:@"iso-8859-1"] == NSOrderedSame) {
         encoding = NSISOLatin1StringEncoding;
     }
-    
+
     return encoding;
 }
 
@@ -531,8 +526,7 @@
     id result = nil;
     if (![XTool isObjectNull:sender] && aSelector) {
         if ([sender respondsToSelector:aSelector]) {
-            SuppressPerformSelectorLeakWarning
-            ({
+            SuppressPerformSelectorLeakWarning({
                 if (hasReturn) {
                     result = [sender performSelector:aSelector];
                 } else {
@@ -555,7 +549,7 @@
 + (id)performSelector:(SEL)aSelector withSendor:(id)sender withObject:(id)object hasReturn:(BOOL)hasReturn {
     id result = nil;
     if (![XTool isObjectNull:sender] && aSelector) {
-        if([sender respondsToSelector:aSelector]) {
+        if ([sender respondsToSelector:aSelector]) {
             SuppressPerformSelectorLeakWarning({
                 if (hasReturn) {
                     result = [sender performSelector:aSelector withObject:object];
@@ -579,7 +573,7 @@
 + (id)performSelector:(SEL)aSelector withSendor:(id)sender withObject:(id)object1 withObject:(id)object2 hasReturn:(BOOL)hasReturn {
     id result = nil;
     if (![XTool isObjectNull:sender] && aSelector) {
-        if([sender respondsToSelector:aSelector]) {
+        if ([sender respondsToSelector:aSelector]) {
             SuppressPerformSelectorLeakWarning({
                 if (hasReturn) {
                     result = [sender performSelector:aSelector withObject:object1 withObject:object2];
@@ -602,16 +596,16 @@
 
 + (BOOL)isURL:(NSString *)URL {
     NSString *GOOD_IRI_CHAR = @"a-zA-Z0-9\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF";
-    NSString *IRI = [NSString stringWithFormat:@"[%@]([%@\\-]{0,61}[%@]){0,1}",GOOD_IRI_CHAR,GOOD_IRI_CHAR,GOOD_IRI_CHAR];
-    NSString *GOOD_GTLD_CHAR =@"a-zA-Z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF";
-    NSString *GTLD = [NSString stringWithFormat:@"[%@]{2,63}",GOOD_GTLD_CHAR];
-    NSString *HOST_NAME = [NSString stringWithFormat:@"(%@\\.)%@",IRI,GTLD];
+    NSString *IRI = [NSString stringWithFormat:@"[%@]([%@\\-]{0,61}[%@]){0,1}", GOOD_IRI_CHAR, GOOD_IRI_CHAR, GOOD_IRI_CHAR];
+    NSString *GOOD_GTLD_CHAR = @"a-zA-Z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF";
+    NSString *GTLD = [NSString stringWithFormat:@"[%@]{2,63}", GOOD_GTLD_CHAR];
+    NSString *HOST_NAME = [NSString stringWithFormat:@"(%@\\.)%@", IRI, GTLD];
     NSString *IP_ADDRESS = @"((25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9])\\.(25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9]|0)\\.(25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9]|0)\\.(25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[0-9]))";
-    NSString *DOMAIN_NAME = [NSString stringWithFormat:@"(%@|%@)",HOST_NAME,IP_ADDRESS];
-    NSString *regex = [NSString stringWithFormat:@"((?:(http|https|Http|Https|rtsp|Rtsp):\\/\\/(?:(?:[a-zA-Z0-9\\$\\-\\_\\.\\+\\!\\*\\'\\(\\)\\,\\;\\?\\&\\=]|(?:\\%%[a-fA-F0-9]{2})){1,64}(?:\\:(?:[a-zA-Z0-9\\$\\-\\_\\.\\+\\!\\*\\'\\(\\)\\,\\;\\?\\&\\=]|(?:\\%%[a-fA-F0-9]{2})){1,25})?\\@)?)?(?:%@)(?:\\:\\d{1,5})?)(\\/(?:(?:[%@\\;\\/\\?\\:\\@\\&\\=\\#\\~\\-\\.\\+\\!\\*\\'\\(\\)\\,\\_])|(?:\\%%[a-fA-F0-9]{2}))*)?(?:\\b|$)",DOMAIN_NAME,GOOD_IRI_CHAR];
-    
+    NSString *DOMAIN_NAME = [NSString stringWithFormat:@"(%@|%@)", HOST_NAME, IP_ADDRESS];
+    NSString *regex = [NSString stringWithFormat:@"((?:(http|https|Http|Https|rtsp|Rtsp):\\/\\/(?:(?:[a-zA-Z0-9\\$\\-\\_\\.\\+\\!\\*\\'\\(\\)\\,\\;\\?\\&\\=]|(?:\\%%[a-fA-F0-9]{2})){1,64}(?:\\:(?:[a-zA-Z0-9\\$\\-\\_\\.\\+\\!\\*\\'\\(\\)\\,\\;\\?\\&\\=]|(?:\\%%[a-fA-F0-9]{2})){1,25})?\\@)?)?(?:%@)(?:\\:\\d{1,5})?)(\\/(?:(?:[%@\\;\\/\\?\\:\\@\\&\\=\\#\\~\\-\\.\\+\\!\\*\\'\\(\\)\\,\\_])|(?:\\%%[a-fA-F0-9]{2}))*)?(?:\\b|$)", DOMAIN_NAME, GOOD_IRI_CHAR];
+
     NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-    
+
     return [pred evaluateWithObject:URL];
 }
 
@@ -626,26 +620,25 @@
 }
 
 + (BOOL)IsCertificatesTrusted:(NSArray<NSData *> *)certDatas {
-    
     if (certDatas.count == 0) {
         return NO;
     }
-    
+
     CFMutableArrayRef certs = CFArrayCreateMutable(CFAllocatorGetDefault(), 0, &kCFTypeArrayCallBacks);
-    
+
     for (NSData *certData in certDatas) {
-        SecCertificateRef cert = SecCertificateCreateWithData(NULL, (__bridge CFDataRef) certData);
+        SecCertificateRef cert = SecCertificateCreateWithData(NULL, (__bridge CFDataRef)certData);
         if (!cert) {
             continue;
         }
-        
+
         CFArrayAppendValue(certs, cert);
         CFRelease(cert);
     }
-    
+
     SecPolicyRef policy = SecPolicyCreateBasicX509();
     SecTrustRef trust;
-    
+
     OSStatus err = SecTrustCreateWithCertificates(certs, policy, &trust);
     CFRelease(certs);
     CFRelease(policy);
@@ -656,15 +649,15 @@
         CFRelease(trust);
         return NO;
     }
-    
+
     SecTrustResultType trustResult = -1;
     err = SecTrustEvaluate(trust, &trustResult);
     CFRelease(trust);
     if (err != errSecSuccess) {
         return NO;
     }
-    
-    if(trustResult == kSecTrustResultUnspecified) {
+
+    if (trustResult == kSecTrustResultUnspecified) {
         return YES;
     } else {
         return NO;
@@ -675,7 +668,7 @@
     if ([self isStringEmpty:mimeType]) {
         return NO;
     }
-    
+
     if ([self isEqualFromString:mimeType toString:@"image/bmp"] ||
         [self isEqualFromString:mimeType toString:@"image/cis-cod"] ||
         [self isEqualFromString:mimeType toString:@"image/gif"] ||
@@ -697,7 +690,7 @@
         [self isEqualFromString:mimeType toString:@"image/x-xwindowdump"]) {
         return YES;
     }
-    
+
     return NO;
 }
 

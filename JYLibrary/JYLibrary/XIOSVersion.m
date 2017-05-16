@@ -9,6 +9,7 @@
 #import "XIOSVersion.h"
 #import <UIKit/UIKit.h>
 
+
 @implementation XIOSVersion
 
 + (double)systemVersion {
@@ -73,15 +74,15 @@
         return NO;
     }
 #else
-    #ifdef NSFoundationVersionNumber_iOS_8_4
+#ifdef NSFoundationVersionNumber_iOS_8_4
     if ([self iosVersion] > NSFoundationVersionNumber_iOS_8_4) {
         return YES;
     } else {
         return NO;
     }
-    #else
-        return NO;
-    #endif
+#else
+    return NO;
+#endif
 #endif
 }
 

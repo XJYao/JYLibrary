@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 
 typedef NS_ENUM(NSInteger, XGroupTableStyle) {
-    XGroupTableStyleSingle  =   0,  // default, 展开的同时收起其他已展开的同级列表
-    XGroupTableStyleMulti           // 展开时不收起其他列表
+    XGroupTableStyleSingle = 0, // default, 展开的同时收起其他已展开的同级列表
+    XGroupTableStyleMulti       // 展开时不收起其他列表
 };
 
 @protocol XGroupTableDelegate <NSObject>
@@ -28,23 +28,24 @@ typedef NS_ENUM(NSInteger, XGroupTableStyle) {
 
 @end
 
+
 @interface XGroupTable : UIView
 
-#pragma mark ---------- property ----------
+#pragma mark---------- property ----------
 
-typedef NSArray * (^GetNextLevelDataBlock)(id model);//用于获取下一级数据的block
+typedef NSArray * (^GetNextLevelDataBlock)(id model); //用于获取下一级数据的block
 
-@property (nonatomic, strong, readonly) UITableView    *   tableView;
+@property (nonatomic, strong, readonly) UITableView *tableView;
 
-@property (nonatomic, weak) id <XGroupTableDelegate> delegate;
+@property (nonatomic, weak) id<XGroupTableDelegate> delegate;
 
-@property (nonatomic, assign)   BOOL  animated; //default is YES. 如果为YES, 则有动画效果, 所有操作都是只针对需要修改的行或者根分组,效率更高. 如果为NO, 则是调用reloadData, 整个tableview刷新, 效率低.
+@property (nonatomic, assign) BOOL animated; //default is YES. 如果为YES, 则有动画效果, 所有操作都是只针对需要修改的行或者根分组,效率更高. 如果为NO, 则是调用reloadData, 整个tableview刷新, 效率低.
 
-@property (nonatomic, assign)   UITableViewCellSeparatorStyle separatorStyle;//分割线样式
+@property (nonatomic, assign) UITableViewCellSeparatorStyle separatorStyle; //分割线样式
 
-@property (nonatomic, assign) BOOL showSelectedBackground;//显示cell选中背景，默认为NO
+@property (nonatomic, assign) BOOL showSelectedBackground; //显示cell选中背景，默认为NO
 
-#pragma mark ---------- method ----------
+#pragma mark---------- method ----------
 
 #pragma mark init
 

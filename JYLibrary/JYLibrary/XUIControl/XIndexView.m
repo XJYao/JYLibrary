@@ -8,11 +8,13 @@
 
 #import "XIndexView.h"
 
+
 @interface XIndexView ()
 
 @property (nonatomic, strong) NSTimer *timer;
 
 @end
+
 
 @implementation XIndexView
 
@@ -34,7 +36,7 @@
     if (!view) {
         return;
     }
-    
+
     for (UIView *subView in view.subviews) {
         if ([subView isKindOfClass:[self class]]) {
             XIndexView *label = (XIndexView *)subView;
@@ -45,18 +47,18 @@
             break;
         }
     }
-    
+
     XIndexView *label = [[XIndexView alloc] init];
     [label setText:text];
     [view addSubview:label];
-    
+
     CGFloat width = 80;
     CGFloat height = width;
     CGFloat x = (view.frame.size.width - width) / 2.0;
     CGFloat y = (view.frame.size.height - height) / 2.0;
     CGRect frame = CGRectMake(x, y, width, height);
     [label setFrame:frame];
-    
+
     label.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:label selector:@selector(hide) userInfo:nil repeats:NO];
 }
 
@@ -64,9 +66,9 @@
     if (self.alpha == 0 || !self.superview) {
         return;
     }
-    
+
     __weak typeof(self) weak_self = self;
-    
+
     [UIView animateWithDuration:0.5 animations:^{
         [weak_self setAlpha:0];
     } completion:^(BOOL finished) {

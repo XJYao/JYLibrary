@@ -54,7 +54,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*! @abstract 身份认证
  */
-- (void)webManager:(XWebManager *)manager didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential * credential))completionHandler NS_AVAILABLE(10_10, 8_0);
+- (void)webManager:(XWebManager *)manager didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *credential))completionHandler NS_AVAILABLE(10_10, 8_0);
 
 /*! @abstract 打开新窗口
  */
@@ -82,7 +82,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*! @abstract 捕捉到JavaScript执行prompt
  */
-- (void)webManager:(XWebManager *)manager textInputWithPrompt:(NSString *)prompt defaultText:(NSString *)defaultText completionHandler:(void (^)(NSString * result))completionHandler;
+- (void)webManager:(XWebManager *)manager textInputWithPrompt:(NSString *)prompt defaultText:(NSString *)defaultText completionHandler:(void (^)(NSString *result))completionHandler;
 
 /*! @abstract 捕捉到JavaScript调oc的消息
  */
@@ -90,24 +90,25 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+
 @interface XWebManager : NSObject
 
-@property (nonatomic, weak) id <XWebManagerDelegate> delegate;
+@property (nonatomic, weak) id<XWebManagerDelegate> delegate;
 
 @property (nonatomic, readonly, strong) UIView *webView;
 @property (nonatomic, readonly, strong) UIScrollView *scrollView;
 
 /*! @abstract 是否可以返回
  */
-@property (nonatomic, readonly, getter=canGoBack)       BOOL canGoBack;
+@property (nonatomic, readonly, getter=canGoBack) BOOL canGoBack;
 
 /*! @abstract 是否可以前进
  */
-@property (nonatomic, readonly, getter=canGoForward)    BOOL canGoForward;
+@property (nonatomic, readonly, getter=canGoForward) BOOL canGoForward;
 
 /*! @abstract 是否正在加载
  */
-@property (nonatomic, readonly, getter=isLoading)       BOOL loading;
+@property (nonatomic, readonly, getter=isLoading) BOOL loading;
 
 /*! @abstract 当前加载页面的标题
  */
@@ -148,7 +149,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*! @abstract 执行JS
  */
-- (void)evaluateJavaScript:(NSString *)javaScriptString completionHandler:(void (^)(id result, NSError * error))completionHandler;
+- (void)evaluateJavaScript:(NSString *)javaScriptString completionHandler:(void (^)(id result, NSError *error))completionHandler;
 
 /*! @abstract 清空缓存
  */

@@ -10,11 +10,12 @@
 #import <UIKit/UIKit.h>
 
 typedef NS_OPTIONS(NSUInteger, XImageCacheType) {
-    XImageCacheTypeNone     = 1 << 0,
-    XImageCacheTypeDisk     = 1 << 1,
-    XImageCacheTypeMemory   = 1 << 2,
-    XImageCacheTypeAll      = XImageCacheTypeDisk | XImageCacheTypeMemory
+    XImageCacheTypeNone = 1 << 0,
+    XImageCacheTypeDisk = 1 << 1,
+    XImageCacheTypeMemory = 1 << 2,
+    XImageCacheTypeAll = XImageCacheTypeDisk | XImageCacheTypeMemory
 };
+
 
 @interface XImageManager : NSObject
 
@@ -24,7 +25,7 @@ typedef void (^XWebImageProgressBlock)(long long completedCount, long long total
 typedef void (^XWebImageCompletionBlock)(BOOL success, UIImage *image, NSError *error);
 
 @property (nonatomic, assign) XImageCacheType imageCacheType;
-@property (nonatomic, assign) BOOL  useNSURLConnection;
+@property (nonatomic, assign) BOOL useNSURLConnection;
 
 #pragma mark - Web Image
 

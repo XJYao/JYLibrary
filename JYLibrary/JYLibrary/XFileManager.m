@@ -10,6 +10,7 @@
 #import "XTool.h"
 #import "NSArray+XArray.h"
 
+
 @implementation XFileManager
 
 + (NSString *)appendingPathComponent:(NSString *)componentStr sourcePath:(NSString *)sourcePath {
@@ -65,7 +66,7 @@
     if ([self isDirectoryExist:directoryPath]) {
         return YES;
     }
-    
+
     NSFileManager *fileManager = [NSFileManager defaultManager];
     BOOL result = [fileManager createDirectoryAtPath:directoryPath withIntermediateDirectories:YES attributes:nil error:NULL];
     return result;
@@ -78,10 +79,10 @@
     if ([XTool isStringEmpty:directoryPath]) {
         return NO;
     }
-    
+
     BOOL fileResult = NO;
     BOOL directoryResult = NO;
-    
+
     NSFileManager *fileManager = [NSFileManager defaultManager];
     BOOL isDirectoryExist = [self isDirectoryExist:directoryPath];
     if (isDirectoryExist) {
@@ -128,15 +129,15 @@
     if ([XTool isStringEmpty:filePath]) {
         return NO;
     }
-    
+
     NSArray *filePathArray = [filePath componentsSeparatedByString:@"/"];
     NSString *fileName = [filePathArray lastObject];
-    
+
     NSString *directoryPath = @"";
-    for (NSInteger i = 0; i < filePathArray.count - 1; i ++) {
+    for (NSInteger i = 0; i < filePathArray.count - 1; i++) {
         directoryPath = [directoryPath stringByAppendingPathComponent:[filePathArray x_objectAtIndex:i]];
     }
-    
+
     return [self createFile:fileName directoryPath:directoryPath contents:contents allowMulti:allowMulti];
 }
 
@@ -153,11 +154,11 @@
     if ([XTool isStringEmpty:filePath]) {
         return NO;
     }
-    
+
     if (![self isFileExist:filePath]) {
         return YES;
     }
-    
+
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSError *error = nil;
     BOOL result = [fileManager removeItemAtPath:filePath error:&error];
@@ -171,11 +172,11 @@
     if ([XTool isStringEmpty:directory]) {
         return NO;
     }
-    
+
     if (![self isDirectoryExist:directory]) {
         return YES;
     }
-    
+
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSError *error = nil;
     BOOL result = [fileManager removeItemAtPath:directory error:&error];
@@ -189,12 +190,12 @@
     if ([XTool isStringEmpty:fileName] || [XTool isStringEmpty:directoryPath]) {
         return NO;
     }
-    
+
     NSString *filePath = [directoryPath stringByAppendingPathComponent:fileName];
     if (![self isFileExist:filePath]) {
         return YES;
     }
-    
+
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSError *error = nil;
     BOOL result = [fileManager removeItemAtPath:filePath error:&error];
@@ -222,14 +223,14 @@
     if (![self isFileExist:srcPath]) {
         return NO;
     }
-    
+
     [self createDirectory:dstPath];
-    
+
     if ([self isFileExist:dstPath]) {
         [self removeFile:dstPath];
     }
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    
+
     NSError *error = nil;
     return [fileManager copyItemAtPath:srcPath toPath:dstPath error:&error];
 }
@@ -323,11 +324,11 @@
     if ([XTool isStringEmpty:directoryPath]) {
         return;
     }
-    
+
     if (!fileNamesArray) {
         return;
     }
-    
+
     NSArray *allFiles = [self getAllFiles:directoryPath];
     if ([XTool isArrayEmpty:allFiles]) {
         return;
@@ -336,7 +337,6 @@
         NSString *filePath = [directoryPath stringByAppendingPathComponent:fileName];
         [fileNamesArray x_addObject:filePath];
         [self getAllFilesPathWithRootPath:filePath fileNames:fileNamesArray];
-        
     }
 }
 
@@ -368,14 +368,14 @@
     if ([XTool isStringEmpty:bundleName] || [XTool isStringEmpty:resourceName]) {
         return nil;
     }
-    
+
     if ([bundleName rangeOfString:@".bundle"].location == NSNotFound) {
         bundleName = [bundleName stringByAppendingString:@".bundle"];
     }
-    
+
     NSString *bundlePath = [[NSBundle mainBundle].resourcePath stringByAppendingPathComponent:bundleName];
     NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
-    
+
     if ([XTool isStringEmpty:directory]) {
         return [bundle pathForResource:resourceName ofType:type];
     } else {
@@ -387,29 +387,29 @@
     if (![self isDirectoryExist:directoryPath]) {
         [self createDirectory:directoryPath];
     }
-    
+
     NSString *keyedArchivePath = [directoryPath stringByAppendingPathComponent:keyedArchiveName];
-    
+
     if ([self isFileExist:keyedArchivePath]) {
         [self removeFile:keyedArchivePath];
     }
-    
+
     if (!rootObject) {
         return NO;
     }
-    
+
     return [NSKeyedArchiver archiveRootObject:rootObject toFile:keyedArchivePath];
 }
 
 + (BOOL)archive:(id)rootObject keyedArchivePath:(NSString *)keyedArchivePath {
     NSArray *filePathArray = [keyedArchivePath componentsSeparatedByString:@"/"];
     NSString *fileName = [filePathArray lastObject];
-    
+
     NSString *directoryPath = @"";
-    for (NSInteger i = 0; i < filePathArray.count - 1; i ++) {
+    for (NSInteger i = 0; i < filePathArray.count - 1; i++) {
         directoryPath = [directoryPath stringByAppendingPathComponent:[filePathArray x_objectAtIndex:i]];
     }
-    
+
     return [self archive:rootObject keyedArchiveName:fileName directoryPath:directoryPath];
 }
 
@@ -421,7 +421,7 @@
     if (![self isDirectoryExist:directoryPath]) {
         return nil;
     }
-    
+
     NSString *keyedArchivePath = [directoryPath stringByAppendingPathComponent:fileName];
     return [NSKeyedUnarchiver unarchiveObjectWithFile:keyedArchivePath];
 }
@@ -434,13 +434,13 @@
         return nil;
     }
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    
+
     NSError *error = nil;
     NSDictionary *attributes = [fileManager attributesOfItemAtPath:filePath error:&error];
     if (error) {
         return nil;
     }
-    
+
     return attributes;
 }
 
@@ -449,7 +449,7 @@
     if ([XTool isDictionaryEmpty:attributes]) {
         return 0;
     }
-    
+
     return [attributes fileSize];
 }
 
@@ -458,7 +458,7 @@
     if ([XTool isDictionaryEmpty:attributes]) {
         return nil;
     }
-    
+
     return [attributes fileCreationDate];
 }
 
@@ -467,7 +467,7 @@
     if ([XTool isDictionaryEmpty:attributes]) {
         return nil;
     }
-    
+
     return [attributes fileModificationDate];
 }
 
@@ -476,7 +476,7 @@
     if ([XTool isDictionaryEmpty:attributes]) {
         return nil;
     }
-    
+
     return [attributes fileType];
 }
 
@@ -484,19 +484,19 @@
     if ([XTool isStringEmpty:directoryPath] || ![self isDirectoryExist:directoryPath]) {
         return 0;
     }
-    
+
     NSArray *allFiles = [[NSFileManager defaultManager] subpathsAtPath:directoryPath];
     if ([XTool isArrayEmpty:allFiles]) {
         return 0;
     }
-    
+
     unsigned long long totalSize = 0;
-    
+
     for (NSString *subFilePath in allFiles) {
         NSString *filePath = [directoryPath stringByAppendingPathComponent:subFilePath];
         totalSize += [self getFileSize:filePath];
     }
-    
+
     return totalSize;
 }
 

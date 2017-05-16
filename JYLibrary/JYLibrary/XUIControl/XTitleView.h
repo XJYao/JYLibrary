@@ -16,26 +16,27 @@
 
 @end
 
+
 @interface XTitleView : UIView
 
-@property (nonatomic, weak) id <XTitleViewDelegate> delegate;
+@property (nonatomic, weak) id<XTitleViewDelegate> delegate;
 
-@property (nonatomic, strong) UIFont  * leftButtonFont;
-@property (nonatomic, strong) UIColor * leftButtonNormalColor;
-@property (nonatomic, strong) UIColor * leftButtonHighlightedColor;
-@property (nonatomic, strong) UIImage * leftButtonNormalImage;
-@property (nonatomic, strong) UIImage * leftButtonHighlightedImage;
+@property (nonatomic, strong) UIFont *leftButtonFont;
+@property (nonatomic, strong) UIColor *leftButtonNormalColor;
+@property (nonatomic, strong) UIColor *leftButtonHighlightedColor;
+@property (nonatomic, strong) UIImage *leftButtonNormalImage;
+@property (nonatomic, strong) UIImage *leftButtonHighlightedImage;
 
-@property (nonatomic, strong) UIFont  * rightButtonFont;
-@property (nonatomic, strong) UIColor * rightButtonNormalColor;
-@property (nonatomic, strong) UIColor * rightButtonHighlightedColor;
-@property (nonatomic, strong) UIImage * rightButtonNormalImage;
-@property (nonatomic, strong) UIImage * rightButtonHighlightedImage;
+@property (nonatomic, strong) UIFont *rightButtonFont;
+@property (nonatomic, strong) UIColor *rightButtonNormalColor;
+@property (nonatomic, strong) UIColor *rightButtonHighlightedColor;
+@property (nonatomic, strong) UIImage *rightButtonNormalImage;
+@property (nonatomic, strong) UIImage *rightButtonHighlightedImage;
 
-@property (nonatomic, strong) UIFont  * titleFont;
-@property (nonatomic, strong) UIColor * titleColor;
+@property (nonatomic, strong) UIFont *titleFont;
+@property (nonatomic, strong) UIColor *titleColor;
 
-@property (nonatomic, strong) UIImage * backgroundImage;
+@property (nonatomic, strong) UIImage *backgroundImage;
 
 /**
  设置按钮显示

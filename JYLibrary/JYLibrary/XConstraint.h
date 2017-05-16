@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "XExpObject.h"
 
+
 @interface UIView (XConstraint)
 
 #define XConstraintMaker UIView
@@ -61,26 +62,26 @@
 @property (nonatomic, strong, readonly) XConstraintMaker *x_edge;
 @property (nonatomic, strong, readonly) XConstraintMaker *x_size;
 
-- (XConstraintMaker * (^)(CGFloat multiplier))x_multiplier;//default is 1.0
-- (XConstraintMaker * (^)(CGFloat constant))x_constant;    //default is 0.0
+- (XConstraintMaker * (^)(CGFloat multiplier))x_multiplier; //default is 1.0
+- (XConstraintMaker * (^)(CGFloat constant))x_constant;     //default is 0.0
 
 //call when you first add layout constraint.
 - (XConstraintMaker * (^)(id reference))x_equalTo;
 - (XConstraintMaker * (^)(id reference))x_lessThanOrEqualTo;
 - (XConstraintMaker * (^)(id reference))x_greaterThanOrEqualTo;
 
-#define x_equalTo(...)                x_equalTo(expObject((__VA_ARGS__)))
-#define x_lessThanOrEqualTo(...)      x_lessThanOrEqualTo(expObject((__VA_ARGS__)))
-#define x_greaterThanOrEqualTo(...)   x_greaterThanOrEqualTo(expObject((__VA_ARGS__)))
+#define x_equalTo(...) x_equalTo(expObject((__VA_ARGS__)))
+#define x_lessThanOrEqualTo(...) x_lessThanOrEqualTo(expObject((__VA_ARGS__)))
+#define x_greaterThanOrEqualTo(...) x_greaterThanOrEqualTo(expObject((__VA_ARGS__)))
 
 //call when you need update constraint.
 - (XConstraintMaker * (^)(id reference))x_update_equalTo;
 - (XConstraintMaker * (^)(id reference))x_update_lessThanOrEqualTo;
 - (XConstraintMaker * (^)(id reference))x_update_greaterThanOrEqualTo;
 
-#define x_update_equalTo(...)                x_update_equalTo(expObject((__VA_ARGS__)))
-#define x_update_lessThanOrEqualTo(...)      x_update_lessThanOrEqualTo(expObject((__VA_ARGS__)))
-#define x_update_greaterThanOrEqualTo(...)   x_update_greaterThanOrEqualTo(expObject((__VA_ARGS__)))
+#define x_update_equalTo(...) x_update_equalTo(expObject((__VA_ARGS__)))
+#define x_update_lessThanOrEqualTo(...) x_update_lessThanOrEqualTo(expObject((__VA_ARGS__)))
+#define x_update_greaterThanOrEqualTo(...) x_update_greaterThanOrEqualTo(expObject((__VA_ARGS__)))
 
 /** 
  remove constraints

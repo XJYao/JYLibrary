@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface UIAlertView (XAlertView)
 
 typedef void (^XAlertViewBlock)(UIAlertView *alertView, NSString *buttonTitle, NSInteger buttonIndex, id object);

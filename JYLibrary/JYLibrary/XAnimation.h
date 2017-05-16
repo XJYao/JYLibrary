@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface XAnimation : NSObject
 
-#define kRadianToDegrees(radian) (radian*M_PI)/180.0
+#define kRadianToDegrees(radian) (radian * M_PI) / 180.0
 
 /**
  淡入淡出

@@ -8,13 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface UIColor (XColor)
 
 //RGB color macro with alpha
-#define colorFromRGBWithAlpha(rgbValue, alpha) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 \
-                                                                 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 \
-                                                                  blue:((float)(rgbValue & 0xFF))/255.0 \
-                                                                 alpha:alpha]
+#define colorFromRGBWithAlpha(rgbValue, alpha) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16)) / 255.0 \
+                                                               green:((float)((rgbValue & 0xFF00) >> 8)) / 255.0    \
+                                                                blue:((float)(rgbValue & 0xFF)) / 255.0             \
+                                                               alpha:alpha]
 
 //RGB Color macro
 #define colorFromRGB(rgbValue) colorFromRGBWithAlpha(rgbValue, 1.0f)

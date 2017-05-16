@@ -12,29 +12,32 @@
 #import "XIOSVersion.h"
 #import "XJsonParser.h"
 
+
 @implementation XHttpResult
 
 @end
 
-@interface XHttpRequest () <NSURLConnectionDelegate, NSURLConnectionDataDelegate, NSURLSessionTaskDelegate, NSURLSessionDataDelegate> {
 
+@interface XHttpRequest () <NSURLConnectionDelegate, NSURLConnectionDataDelegate, NSURLSessionTaskDelegate, NSURLSessionDataDelegate>
+{
     NSString *requestUrlString;
-    
+
     NSURLResponse *urlResponse;
     NSMutableData *responseData;
     NSError *requestError;
-    
+
     XHttpRequestFinishedBlock finishedBlock;
     XHttpRequestProgressBlock progressBlock;
-    
+
     //before ios7
     NSURLConnection *urlConnection;
-    
+
     //ios7 or later
     NSURLSessionTask *urlSessionTask;
 }
 
 @end
+
 
 @implementation XHttpRequest
 
@@ -131,63 +134,56 @@
 #pragma mark - HTTP
 
 - (void)httpRequestWithURLString:(NSString *)URLString method:(NSString *)method parameters:(id)parameters progressBlock:(XHttpRequestProgressBlock)progress finshedBlock:(XHttpRequestFinishedBlock)finished {
-
     [self httpRequestWithURL:[NSURL URLWithString:URLString] method:method parameters:parameters progressBlock:progress finshedBlock:finished];
 }
 
 - (void)httpRequestWithURL:(NSURL *)URL method:(NSString *)method parameters:(id)parameters progressBlock:(XHttpRequestProgressBlock)progress finshedBlock:(XHttpRequestFinishedBlock)finished {
-    
     [self httpRequestWithURL:URL method:method parameters:parameters async:YES progressBlock:progress finshedBlock:finished];
 }
 
 - (XHttpResult *)httpSyncRequestWithURLString:(NSString *)URLString method:(NSString *)method parameters:(id)parameters {
-    
     return [self httpSyncRequestWithURL:[NSURL URLWithString:URLString] method:method parameters:parameters];
 }
 
 - (XHttpResult *)httpSyncRequestWithURL:(NSURL *)URL method:(NSString *)method parameters:(id)parameters {
-    
     return [self httpRequestWithURL:URL method:method parameters:parameters async:NO progressBlock:nil finshedBlock:nil];
 }
 
 - (XHttpResult *)httpRequestWithURL:(NSURL *)URL method:(NSString *)method parameters:(id)parameters async:(BOOL)async progressBlock:(XHttpRequestProgressBlock)progress finshedBlock:(XHttpRequestFinishedBlock)finished {
-    
     [self clear];
-    
+
     NSURLRequest *request = [self requestWithURL:URL method:method parameters:parameters progressBlock:progress finshedBlock:finished];
-    
+
     if (!_useNSURLConnection && [XIOSVersion isIOS7OrGreater]) {
         //ios7 or later
 
         if (async) {
-            
             NSURLSession *urlSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:self delegateQueue:[[NSOperationQueue alloc] init]];
-            
+
             urlSessionTask = [urlSession dataTaskWithRequest:request];
             [urlSessionTask resume];
         } else {
-            
             //创建一个信号量，值为0
             [XThread semaphoreCreate:0 executingBlock:^(WaitSignal waitSignal, SendSignal sendSignal) {
-                
+
                 NSURLSession *urlSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-                
+
                 __weak __typeof(self) weak_self = self;
-                
-                NSURLSessionTask *task = [urlSession dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-                    
+
+                NSURLSessionTask *task = [urlSession dataTaskWithRequest:request completionHandler:^(NSData *_Nullable data, NSURLResponse *_Nullable response, NSError *_Nullable error) {
+
                     responseData = [[NSMutableData alloc] initWithData:data];
                     urlResponse = response;
                     requestError = error;
-                    
+
                     [weak_self dealRequestResult];
-                    
+
                     //释放信号
                     sendSignal();
                 }];
-                
+
                 [task resume];
-                
+
                 //等待可用信号
                 waitSignal();
             }];
@@ -196,26 +192,22 @@
     } else {
         //before ios7
         if (async) {
-            
             urlConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
             [urlConnection setDelegateQueue:[[NSOperationQueue alloc] init]];
             [urlConnection start];
-            
+
         } else {
-            
             NSURLResponse *response = nil;
             NSError *error = nil;
-            
+
             NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-            
+
             responseData = [[NSMutableData alloc] initWithData:data];
             urlResponse = response;
             requestError = error;
-            
+
             [self dealRequestResult];
-            
         }
-        
     }
 
     if (async) {
@@ -225,10 +217,9 @@
         [httpResult setData:responseData];
         [httpResult setResponse:(NSHTTPURLResponse *)urlResponse];
         [httpResult setError:requestError];
-        
+
         return httpResult;
     }
-
 }
 
 - (void)cancel {
@@ -236,7 +227,7 @@
         [urlConnection cancel];
         urlConnection = nil;
     }
-    
+
     if (urlSessionTask) {
         [urlSessionTask cancel];
         urlSessionTask = nil;
@@ -247,34 +238,32 @@
 
 - (long long)totalCount {
     long long count = NSNotFound;
-    
+
     if (!urlResponse) {
         return count;
     }
 
     NSString *key = @"Content-Length";
-    
+
     NSHTTPURLResponse *httpUrlResponse = (NSHTTPURLResponse *)urlResponse;
     NSDictionary *allHeaderFields = httpUrlResponse.allHeaderFields;
-    
+
     if ([XTool isDictionaryEmpty:allHeaderFields] || ![allHeaderFields.allKeys containsObject:key]) {
-        
         count = urlResponse.expectedContentLength;
     } else {
-        
         count = [[allHeaderFields objectForKey:key] longLongValue];
     }
-    
+
     return count;
 }
 
-#pragma mark ---------- Private ----------
+#pragma mark---------- Private ----------
 
 - (instancetype)init {
     self = [super init];
     if (self) {
         [self clear];
-        
+
         _requestStringEncoding = NSUTF8StringEncoding;
         _responseStringEncoding = NSUTF8StringEncoding;
         _timeout = 60;
@@ -298,22 +287,21 @@
 }
 
 - (NSURLRequest *)requestWithURL:(NSURL *)URL method:(NSString *)method parameters:(id)parameters progressBlock:(XHttpRequestProgressBlock)progress finshedBlock:(XHttpRequestFinishedBlock)finished {
-    
     requestUrlString = URL.absoluteString;
     finishedBlock = finished;
     progressBlock = progress;
-    
+
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:URL cachePolicy:_requestCachePolicy timeoutInterval:_timeout];
-    
+
     [request setHTTPMethod:method];
-    
+
     if (![XTool isDictionaryEmpty:_HTTPRequestHeaders]) {
         for (NSString *key in _HTTPRequestHeaders.allKeys) {
             NSString *value = [_HTTPRequestHeaders objectForKey:key];
             [request setValue:value forHTTPHeaderField:key];
         }
     }
-    
+
     if (parameters) {
         if ([parameters isKindOfClass:[NSData class]]) {
             [request setHTTPBody:parameters];
@@ -323,18 +311,18 @@
             if (![request valueForHTTPHeaderField:@"Content-Type"]) {
                 [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
             }
-            
+
             NSError *error;
             [request setHTTPBody:[XJsonParser jsonDataWithObject:parameters error:&error]];
         }
     } else {
         [request setHTTPBody:nil];
     }
-    
+
     if (_activityIndicatorEnable) {
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     }
-    
+
     return request;
 }
 
@@ -344,25 +332,24 @@
         responseData = [[NSMutableData alloc] init];
     }
     [responseData appendData:data];
-    
+
     //progress
     [self executeProgressBlock];
 }
 
 - (void)dealRequestResult {
-    
     if (_activityIndicatorEnable) {
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     }
-    
+
     NSHTTPURLResponse *httpUrlResponse = (NSHTTPURLResponse *)urlResponse;
-    
+
     NSStringEncoding stringEncoding = [XTool getEncodingFromResponse:httpUrlResponse];
-    
+
     if (stringEncoding != NSNotFound) {
         _responseStringEncoding = stringEncoding;
     }
-    
+
     [self executeFinishedBlock];
 }
 
@@ -385,13 +372,13 @@
 - (void)executeFinishedBlock {
     if (finishedBlock) {
         NSString *responseString = nil;
-        
+
         if (responseData) {
             responseString = [[NSString alloc] initWithData:responseData encoding:_responseStringEncoding];
         }
- 
+
         NSHTTPURLResponse *httpUrlResponse = (NSHTTPURLResponse *)urlResponse;
-        
+
         if (_finishedOnMainThread) {
             x_dispatch_main_async(^{
                 finishedBlock(responseData, responseString, httpUrlResponse.statusCode, requestError);
@@ -449,7 +436,8 @@
 #pragma mark - NSURLSessionDataDelegate
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask
-didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))completionHandler {
+didReceiveResponse:(NSURLResponse *)response
+ completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))completionHandler {
     urlResponse = dataTask.response;
     completionHandler(NSURLSessionResponseAllow);
 }

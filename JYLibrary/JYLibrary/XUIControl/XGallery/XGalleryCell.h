@@ -10,11 +10,12 @@
 
 extern NSString *const galleryCellIdentifier;
 
+
 @interface XGalleryCell : UICollectionViewCell
 
-@property (nonatomic, copy)     NSString    *   placeholderImageName;
-@property (nonatomic, assign)   CGFloat         maximumZoomScale;       //default is 2.0
-@property (nonatomic, assign)   CGFloat         minimumZoomScale;       //default is 1.0
+@property (nonatomic, copy) NSString *placeholderImageName;
+@property (nonatomic, assign) CGFloat maximumZoomScale; //default is 2.0
+@property (nonatomic, assign) CGFloat minimumZoomScale; //default is 1.0
 
 - (void)addImageForName:(NSString *)imageName;
 

@@ -10,6 +10,7 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <ImageIO/ImageIO.h>
 
+
 @interface UIImage (XImage)
 
 /**
@@ -57,7 +58,7 @@
 /**
  将UIImage转化为NSData
  */
-+ (NSData *)dataWithImage:(UIImage *)image ;
++ (NSData *)dataWithImage:(UIImage *)image;
 
 /**
  将图片裁剪为指定大小

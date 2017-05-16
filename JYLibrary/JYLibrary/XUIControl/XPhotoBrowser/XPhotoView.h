@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface XPhotoView : UICollectionViewCell
 
 typedef void (^XPhotoViewBeginLoadBlock)(void);
@@ -15,9 +16,9 @@ typedef void (^XPhotoViewLoadProgressBlock)(CGFloat progress);
 typedef void (^XPhotoViewLoadCompletionBlock)(void);
 
 @property (nonatomic, strong) UIImage *placeholderImage;
-@property (nonatomic, assign) CGFloat maximumZoomScale;       //default is 2.0
-@property (nonatomic, assign) CGFloat minimumZoomScale;       //default is 1.0
-@property (nonatomic, assign) BOOL showLoading;               //default is YES
+@property (nonatomic, assign) CGFloat maximumZoomScale; //default is 2.0
+@property (nonatomic, assign) CGFloat minimumZoomScale; //default is 1.0
+@property (nonatomic, assign) BOOL showLoading;         //default is YES
 
 - (void)loadImageForPath:(NSString *)path;
 

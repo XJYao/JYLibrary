@@ -8,11 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface NSArray (XArray)
 
 - (id)x_objectAtIndex:(NSUInteger)index;
 
 @end
+
 
 @interface NSMutableArray (XMutableArray)
 

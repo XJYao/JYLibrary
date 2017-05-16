@@ -8,6 +8,7 @@
 
 #import "NSDictionary+XDictionary.h"
 
+
 @implementation NSDictionary (XDictionary)
 
 + (NSData *)dataWithDictionary:(NSDictionary *)dict {
@@ -24,11 +25,12 @@
 
 @end
 
+
 @implementation NSMutableDictionary (XMutableDictionary)
 
 - (void)x_setObject:(id)anObject forKey:(id<NSCopying>)aKey {
 #ifdef DEBUG
-        [self setObject:anObject forKey:aKey];
+    [self setObject:anObject forKey:aKey];
 #else
     if (anObject && aKey) {
         [self setObject:anObject forKey:aKey];

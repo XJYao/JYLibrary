@@ -8,30 +8,34 @@
 
 #import "XThread.h"
 
-@interface XThread () {
+
+@interface XThread ()
+{
     dispatch_semaphore_t x_semaphore;
 }
 
 @end
 
+
 @implementation XThread
 
 + (void)semaphoreCreate:(NSInteger)maxNumber executingBlock:(void (^)(WaitSignal, SendSignal))executingBlock {
     if (executingBlock) {
-        
         XThread *x_thread = [[XThread alloc] init];
         [x_thread semaphoreCreate:maxNumber];
         executingBlock(
-                       ^(void){[x_thread semaphoreWait];},
-                       ^(void){[x_thread semaphoreSignal];}
-                       );
-        
+            ^(void) {
+                [x_thread semaphoreWait];
+            },
+            ^(void) {
+                [x_thread semaphoreSignal];
+            });
     }
 }
 
 - (dispatch_semaphore_t)semaphoreCreate:(NSInteger)maxNumber {
     x_semaphore = dispatch_semaphore_create(maxNumber);
-    
+
     return x_semaphore;
 }
 

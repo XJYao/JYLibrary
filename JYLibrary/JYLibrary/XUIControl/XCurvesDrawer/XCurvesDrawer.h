@@ -32,20 +32,21 @@
 
 @end
 
+
 @interface XCurvesDrawer : UIView
 
-@property (nonatomic, weak) id <XCurvesDrawerDelegate> delegate;
+@property (nonatomic, weak) id<XCurvesDrawerDelegate> delegate;
 
-@property (nonatomic, copy)   NSString *user;
-@property (nonatomic, strong) UIColor *drawerColor;                    //默认颜色，默认黑色
-@property (nonatomic, assign) CGFloat drawerWidth;                     //默认线条宽度，默认1
-@property (nonatomic, strong, readonly) NSArray<XCurveInfo *> *curves;  //所有曲线
-@property (nonatomic, strong, readonly) NSArray<XCurveInfo *> *selectedCurves;//被选中的曲线
-@property (nonatomic, assign, readonly) BOOL hasChanged;                //当前有增加或修改或删除曲线
+@property (nonatomic, copy) NSString *user;
+@property (nonatomic, strong) UIColor *drawerColor;                            //默认颜色，默认黑色
+@property (nonatomic, assign) CGFloat drawerWidth;                             //默认线条宽度，默认1
+@property (nonatomic, strong, readonly) NSArray<XCurveInfo *> *curves;         //所有曲线
+@property (nonatomic, strong, readonly) NSArray<XCurveInfo *> *selectedCurves; //被选中的曲线
+@property (nonatomic, assign, readonly) BOOL hasChanged;                       //当前有增加或修改或删除曲线
 
 //drawerEnabled 和 curvesSelectionEnabled总是相反的！
-@property (nonatomic, assign) BOOL drawerEnabled;           //画图开关
-@property (nonatomic, assign) BOOL curvesSelectionEnabled;  //选择曲线开关
+@property (nonatomic, assign) BOOL drawerEnabled;          //画图开关
+@property (nonatomic, assign) BOOL curvesSelectionEnabled; //选择曲线开关
 
 /**
  初始化时传入初始曲线
@@ -67,12 +68,12 @@
  */
 - (BOOL)replaceCurve:(XCurveInfo *)target withCurve:(XCurveInfo *)replacement;
 
- /**
+/**
   替换多条曲线
   */
 - (BOOL)replaceCurves:(NSArray<XCurveInfo *> *)targets withCurves:(NSArray<XCurveInfo *> *)replacements;
 
- /**
+/**
   替换所有的曲线
   */
 - (BOOL)replaceAllCurves:(NSArray<XCurveInfo *> *)replacements;

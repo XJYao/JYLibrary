@@ -8,11 +8,14 @@
 
 #import "XTextField.h"
 
-@interface XTextField() {
+
+@interface XTextField ()
+{
     UILabel *placeHolderLabel;
 }
 
 @end
+
 
 @implementation XTextField
 
@@ -51,7 +54,7 @@
     }
 }
 
-- (void)delete:(id)sender {
+- (void) delete:(id)sender {
     //实现长按选择删除方法,如果不实现这方法,点击删除按钮会崩溃!
 }
 
@@ -67,14 +70,14 @@
 
 - (void)textFieldDidChange:(UITextField *)textField {
     [self refreshPlaceholder];
-    BOOL isChinese;//判断当前输入法是否是中文
-    if ([[UITextInputMode currentInputMode].primaryLanguage isEqualToString: @"en-US"]) {
+    BOOL isChinese; //判断当前输入法是否是中文
+    if ([[UITextInputMode currentInputMode].primaryLanguage isEqualToString:@"en-US"]) {
         isChinese = NO;
     } else {
         isChinese = YES;
     }
     NSString *text = [textField.text stringByReplacingOccurrencesOfString:@"?" withString:@""];
-    if (isChinese) {//中文输入法下
+    if (isChinese) { //中文输入法下
         UITextRange *selectedRange = [textField markedTextRange];
         //获取高亮部分
         UITextPosition *position = [textField positionFromPosition:selectedRange.start offset:0];
@@ -94,9 +97,9 @@
             [self setText:[newText substringToIndex:_maxLengthForInput]];
         }
     }
-    
+
     id x_delegate = self.delegate;
-    if(x_delegate && [x_delegate respondsToSelector:@selector(updateInputLengthForTextField:)]) {
+    if (x_delegate && [x_delegate respondsToSelector:@selector(updateInputLengthForTextField:)]) {
         [x_delegate updateInputLengthForTextField:self];
     }
 }
@@ -154,19 +157,19 @@
     if (!placeHolderLabel) {
         placeHolderLabel = [[UILabel alloc] init];
         [placeHolderLabel setBackgroundColor:[UIColor clearColor]];
-        [placeHolderLabel setAutoresizingMask:(UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight)];
+        [placeHolderLabel setAutoresizingMask:(UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight)];
         [placeHolderLabel setFont:_multiLinePlaceholderFont];
         [placeHolderLabel setTextColor:_multiLinePlaceholderColor];
         [placeHolderLabel setTextAlignment:_multiLinePlaceholderAlignment];
         [placeHolderLabel setNumberOfLines:0];
-        [placeHolderLabel setLineBreakMode:NSLineBreakByWordWrapping|NSLineBreakByTruncatingTail];
+        [placeHolderLabel setLineBreakMode:NSLineBreakByWordWrapping | NSLineBreakByTruncatingTail];
         [placeHolderLabel setAlpha:0];
         [self addSubview:placeHolderLabel];
     }
 }
 
 - (void)updatePlaceHolderLabelFrame {
-    if(placeHolderLabel && _multiLinePlaceholderEnable) {
+    if (placeHolderLabel && _multiLinePlaceholderEnable) {
         CGFloat offset = 8;
         [placeHolderLabel setFrame:CGRectMake(offset, 0, self.frame.size.width - offset * 2, self.frame.size.height)];
     }
@@ -178,4 +181,3 @@
 }
 
 @end
-

@@ -16,20 +16,23 @@
 #import "NSDictionary+XDictionary.h"
 #import "NSArray+XArray.h"
 
-@interface XGroupTable() <UITableViewDataSource, UITableViewDelegate> {
-    NSMutableDictionary *   groupsDictionary;
-    NSMutableDictionary *   groupTableCellClassesNameDic;
-    
-    GetNextLevelDataBlock   getNextLevelDataBlock;
-    
-    XGroupTableStyle        groupTableStyle;
+
+@interface XGroupTable () <UITableViewDataSource, UITableViewDelegate>
+{
+    NSMutableDictionary *groupsDictionary;
+    NSMutableDictionary *groupTableCellClassesNameDic;
+
+    GetNextLevelDataBlock getNextLevelDataBlock;
+
+    XGroupTableStyle groupTableStyle;
 }
 
 @end
 
+
 @implementation XGroupTable
 
-#pragma mark ---------- Public ----------
+#pragma mark---------- Public ----------
 
 - (instancetype)initWithGroups:(NSArray *)groups style:(XGroupTableStyle)style {
     self = [super init];
@@ -53,7 +56,7 @@
     if (!_tableView) {
         return;
     }
-    
+
     [_tableView setShowsHorizontalScrollIndicator:show];
     [_tableView setShowsVerticalScrollIndicator:show];
 }
@@ -69,7 +72,7 @@
     if (!_tableView) {
         return;
     }
-    
+
     [self registerCellClass];
     [_tableView reloadData];
 }
@@ -86,12 +89,12 @@
     if (!model) {
         return;
     }
-    
+
     NSIndexPath *indexPath = [self indexPathForModel:model];
     if (!indexPath) {
         return;
     }
-    
+
     [self didSelectRowAtIndexPath:indexPath];
 }
 
@@ -102,7 +105,7 @@
     if ([XTool isDictionaryEmpty:groupsDictionary]) {
         return;
     }
-    
+
     XGroupTableCell *cell = (XGroupTableCell *)[_tableView cellForRowAtIndexPath:indexPath];
     if (!cell.currentGroupTableModel) {
         return;
@@ -110,16 +113,16 @@
     if (_showSelectedBackground) {
         [_tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
     }
-    
-    if (cell.currentGroupTableModel.nextIsShowing) {//下一级已展开,点击后收起, 从当前点击的行往下查找, 当level比当前行高(即等级更低), 就删除, 一旦遇到等级一样或者更高时, 就退出循环。
+
+    if (cell.currentGroupTableModel.nextIsShowing) { //下一级已展开,点击后收起, 从当前点击的行往下查找, 当level比当前行高(即等级更低), 就删除, 一旦遇到等级一样或者更高时, 就退出循环。
         [cell.currentGroupTableModel setNextIsShowing:NO];
         [self closeGroupWithTableView:_tableView withIndexPath:indexPath withModel:cell.currentGroupTableModel];
-    } else {//下一级未展开, 点击后展开
+    } else { //下一级未展开, 点击后展开
         if (groupTableStyle == XGroupTableStyleSingle) {
             [self closeThisGroupOtherSameLevelOrLowerShowingRows:_tableView withIndexPath:indexPath withModel:cell.currentGroupTableModel];
         }
         [cell.currentGroupTableModel setNextIsShowing:YES];
-        if ([XTool isArrayEmpty:cell.currentGroupTableModel.nextLevelModels]) {//下一级无数据
+        if ([XTool isArrayEmpty:cell.currentGroupTableModel.nextLevelModels]) { //下一级无数据
             NSArray *nextLevelModels = nil;
             if (getNextLevelDataBlock) {
                 nextLevelModels = getNextLevelDataBlock(cell.currentGroupTableModel);
@@ -131,7 +134,7 @@
                 [cell.currentGroupTableModel setNextLevelModels:nextLevelModels];
                 [self openGroupWithTableView:_tableView withIndexPath:indexPath withModel:cell.currentGroupTableModel];
             }
-        } else {//下一级有数据
+        } else { //下一级有数据
             [self openGroupWithTableView:_tableView withIndexPath:indexPath withModel:cell.currentGroupTableModel];
         }
     }
@@ -143,28 +146,28 @@
     if (!newRootModel) {
         return;
     }
-    
+
     if (!groupsDictionary) {
         return;
     }
-    
+
     if (atIndex < 0 || atIndex == NSNotFound || atIndex > groupsDictionary.count) {
         return;
     }
     if (atIndex < groupsDictionary.count) {
-        for (NSInteger section = groupsDictionary.count - 1; section >= atIndex;  section --) {
+        for (NSInteger section = groupsDictionary.count - 1; section >= atIndex; section--) {
             NSNumber *oldSectionNumber = [NSNumber numberWithInteger:section];
-            NSNumber *newSectionNumber = [NSNumber numberWithInteger:section+1];
+            NSNumber *newSectionNumber = [NSNumber numberWithInteger:section + 1];
             NSArray *groupModelForRowArray = [groupsDictionary objectForKey:oldSectionNumber];
             [groupsDictionary x_setObject:groupModelForRowArray forKey:newSectionNumber];
         }
     }
 
-    [groupsDictionary x_setObject:@[newRootModel] forKey:[NSNumber numberWithInteger:atIndex]];
-    
+    [groupsDictionary x_setObject:@[ newRootModel ] forKey:[NSNumber numberWithInteger:atIndex]];
+
     [self addCellClassesName:((XGroupTableModel *)newRootModel).cellClassName];
     [self registerCellClass];
-    
+
     if (_animated) {
         NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:atIndex];
         [_tableView beginUpdates];
@@ -183,32 +186,32 @@
     if ([XTool isArrayEmpty:rootModels]) {
         return;
     }
-    
+
     if (!groupsDictionary) {
         return;
     }
-    
+
     if (atIndex < 0 || atIndex == NSNotFound || atIndex > groupsDictionary.count) {
         return;
     }
     if (atIndex < groupsDictionary.count) {
-        for (NSInteger section = groupsDictionary.count - 1; section >= atIndex; section --) {
+        for (NSInteger section = groupsDictionary.count - 1; section >= atIndex; section--) {
             NSNumber *oldSectionNumber = [NSNumber numberWithInteger:section];
-            NSNumber *newSectionNumber = [NSNumber numberWithInteger:section+rootModels.count];
+            NSNumber *newSectionNumber = [NSNumber numberWithInteger:section + rootModels.count];
             NSArray *groupModelForRowArray = [groupsDictionary objectForKey:oldSectionNumber];
             [groupsDictionary x_setObject:groupModelForRowArray forKey:newSectionNumber];
         }
     }
-    
+
     NSInteger insertIndex = atIndex;
     for (id model in rootModels) {
-        [groupsDictionary x_setObject:@[model] forKey:[NSNumber numberWithInteger:insertIndex]];
+        [groupsDictionary x_setObject:@[ model ] forKey:[NSNumber numberWithInteger:insertIndex]];
         [self addCellClassesName:((XGroupTableModel *)model).cellClassName];
-        insertIndex ++;
+        insertIndex++;
     }
-    
+
     [self registerCellClass];
-    
+
     if (_animated) {
         NSIndexSet *indexSet = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(atIndex, rootModels.count)];
         [_tableView beginUpdates];
@@ -228,41 +231,41 @@
         [self insertRoot:newModel atIndex:atIndex];
         return;
     }
-    
+
     if (!newModel || !rootModel || !fatherModel) {
         return;
     }
-    
+
     if (atIndex < 0 || atIndex == NSNotFound) {
         return;
     }
-    
+
     if ([XTool isDictionaryEmpty:groupsDictionary]) {
         return;
     }
-    
+
     NSInteger rootIndex = [self indexForRoot:rootModel];
     if (rootIndex == NSNotFound) {
         return;
     }
-    
+
     XGroupTableModel *fatherGroupModel = (XGroupTableModel *)fatherModel;
-    
+
     if (atIndex > fatherGroupModel.nextLevelModels.count) {
         return;
     }
-    
+
     NSMutableArray *fatherModelNextLevelModels = [[NSMutableArray alloc] init];
     if (![XTool isArrayEmpty:fatherGroupModel.nextLevelModels]) {
         [fatherModelNextLevelModels addObjectsFromArray:fatherGroupModel.nextLevelModels];
     }
     [fatherModelNextLevelModels x_insertObject:newModel atIndex:atIndex];
     [fatherGroupModel setNextLevelModels:fatherModelNextLevelModels];
-    
+
     if (!fatherGroupModel.nextIsShowing) {
         return;
     }
-    
+
     XGroupTableModel *rootGroupModel = (XGroupTableModel *)rootModel;
     if (!rootGroupModel.nextIsShowing) {
         return;
@@ -270,39 +273,39 @@
 
     NSNumber *sectionNumber = [NSNumber numberWithInteger:rootIndex];
     NSArray *groupModelForRowArray = [groupsDictionary objectForKey:sectionNumber];
-    
+
     NSInteger fatherIndex = [groupModelForRowArray indexOfObject:fatherGroupModel];
     if (fatherIndex == NSNotFound) {
         return;
     }
-    
+
     NSMutableArray *groupModelForRowMutableArray = [[NSMutableArray alloc] init];
     if (![XTool isArrayEmpty:groupModelForRowArray]) {
         [groupModelForRowMutableArray addObjectsFromArray:groupModelForRowArray];
     }
-    
+
     XGroupTableModel *newGroupModel = (XGroupTableModel *)newModel;
-    
+
     if (atIndex == 0) {
         NSInteger insertRow = fatherIndex + 1;
         [groupModelForRowMutableArray x_insertObject:newGroupModel atIndex:insertRow];
         [groupsDictionary x_setObject:groupModelForRowMutableArray forKey:sectionNumber];
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:insertRow inSection:[sectionNumber integerValue]];
-        
+
         [self addCellClassesName:newGroupModel.cellClassName];
         [self registerCellClass];
-        
+
         if (_animated) {
             [_tableView beginUpdates];
-            [_tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [_tableView insertRowsAtIndexPaths:@[ indexPath ] withRowAnimation:UITableViewRowAnimationFade];
             [_tableView endUpdates];
         } else {
             [_tableView reloadData];
         }
-        
+
         return;
     }
-    
+
     NSInteger brothersCount = 0;
     for (NSInteger i = fatherIndex + 1; i < groupModelForRowMutableArray.count; i++) {
         XGroupTableModel *model = [groupModelForRowMutableArray x_objectAtIndex:i];
@@ -312,9 +315,8 @@
         if (model.level == newGroupModel.level) {
             brothersCount++;
             if (atIndex == brothersCount) {
-                
                 NSInteger insertRow = NSNotFound;
-                for (NSInteger j = i + 1; j < groupModelForRowMutableArray.count; j ++) {
+                for (NSInteger j = i + 1; j < groupModelForRowMutableArray.count; j++) {
                     XGroupTableModel *subModel = [groupModelForRowMutableArray x_objectAtIndex:j];
                     if (subModel.level <= newGroupModel.level) {
                         insertRow = j;
@@ -324,26 +326,26 @@
                 if (insertRow == NSNotFound) {
                     insertRow = groupModelForRowMutableArray.count;
                 }
-                
+
                 if (insertRow < 0 || insertRow > groupModelForRowMutableArray.count) {
                     return;
                 }
-                
+
                 [groupModelForRowMutableArray x_insertObject:newGroupModel atIndex:insertRow];
                 [groupsDictionary x_setObject:groupModelForRowMutableArray forKey:sectionNumber];
                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow:insertRow inSection:[sectionNumber integerValue]];
-                
+
                 [self addCellClassesName:newGroupModel.cellClassName];
                 [self registerCellClass];
-                
+
                 if (_animated) {
                     [_tableView beginUpdates];
-                    [_tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                    [_tableView insertRowsAtIndexPaths:@[ indexPath ] withRowAnimation:UITableViewRowAnimationFade];
                     [_tableView endUpdates];
                 } else {
                     [_tableView reloadData];
                 }
-                
+
                 return;
             }
         }
@@ -355,17 +357,17 @@
         [self insertRoot:newModel];
         return;
     }
-    
+
     if (!newModel || !rootModel || !fatherModel) {
         return;
     }
-    
+
     XGroupTableModel *fatherGroupModel = (XGroupTableModel *)fatherModel;
     NSInteger insertIndex = 0;
     if (![XTool isArrayEmpty:fatherGroupModel.nextLevelModels]) {
         insertIndex = fatherGroupModel.nextLevelModels.count;
     }
-    
+
     [self insertRowForModel:newModel rootModel:rootModel fatherModel:fatherModel atIndex:insertIndex];
 }
 
@@ -375,30 +377,30 @@
     if (atIndex == NSNotFound || atIndex < 0) {
         return;
     }
-    
+
     if ([XTool isDictionaryEmpty:groupsDictionary]) {
         return;
     }
-    
+
     if (atIndex >= groupsDictionary.count) {
         return;
     }
-    
+
     if (atIndex == groupsDictionary.count - 1) {
         [groupsDictionary removeObjectForKey:[NSNumber numberWithInteger:atIndex]];
     } else {
-        for (NSInteger section = atIndex+1; section < groupsDictionary.count; section ++) {
+        for (NSInteger section = atIndex + 1; section < groupsDictionary.count; section++) {
             NSNumber *oldSectionNumber = [NSNumber numberWithInteger:section];
-            NSNumber *newSectionNumber = [NSNumber numberWithInteger:section-1];
+            NSNumber *newSectionNumber = [NSNumber numberWithInteger:section - 1];
             NSArray *groupModelForRowArray = [groupsDictionary objectForKey:oldSectionNumber];
             [groupsDictionary x_setObject:groupModelForRowArray forKey:newSectionNumber];
-            
+
             if (section == groupsDictionary.count - 1) {
                 [groupsDictionary removeObjectForKey:oldSectionNumber];
             }
         }
     }
-    
+
     if (_animated) {
         NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:atIndex];
         [_tableView beginUpdates];
@@ -413,37 +415,37 @@
     if ([XTool isArrayEmpty:atIndexs]) {
         return;
     }
-    
+
     if ([XTool isDictionaryEmpty:groupsDictionary]) {
         return;
     }
-    
+
     NSMutableArray *newAtIndexs = [[NSMutableArray alloc] init];
     for (NSNumber *atIndexNumber in atIndexs) {
         NSInteger atIndex = [atIndexNumber integerValue];
         if (atIndex == NSNotFound || atIndex < 0 || atIndex >= groupsDictionary.count) {
             continue;
         }
-        
+
         [newAtIndexs x_addObject:atIndexNumber];
     }
-    
+
     if ([XTool isArrayEmpty:newAtIndexs]) {
         return;
     }
-    
-    for (NSInteger i = newAtIndexs.count - 1; i >= 0; i --) {
+
+    for (NSInteger i = newAtIndexs.count - 1; i >= 0; i--) {
         NSInteger atIndex = [[newAtIndexs x_objectAtIndex:i] integerValue];
-        
+
         if (atIndex == groupsDictionary.count - 1) {
             [groupsDictionary removeObjectForKey:[NSNumber numberWithInteger:atIndex]];
         } else {
-            for (NSInteger section = atIndex+1; section < groupsDictionary.count; section ++) {
+            for (NSInteger section = atIndex + 1; section < groupsDictionary.count; section++) {
                 NSNumber *oldSectionNumber = [NSNumber numberWithInteger:section];
-                NSNumber *newSectionNumber = [NSNumber numberWithInteger:section-1];
+                NSNumber *newSectionNumber = [NSNumber numberWithInteger:section - 1];
                 NSArray *groupModelForRowArray = [groupsDictionary objectForKey:oldSectionNumber];
                 [groupsDictionary x_setObject:groupModelForRowArray forKey:newSectionNumber];
-                
+
                 if (section == groupsDictionary.count - 1) {
                     [groupsDictionary removeObjectForKey:oldSectionNumber];
                 }
@@ -457,7 +459,7 @@
             NSInteger atIndex = [atIndexNumber integerValue];
             [indexSet addIndex:atIndex];
         }
-        
+
         [_tableView beginUpdates];
         [_tableView deleteSections:indexSet withRowAnimation:UITableViewRowAnimationFade];
         [_tableView endUpdates];
@@ -470,17 +472,17 @@
     if (!rootModel) {
         return;
     }
-    
+
     if ([XTool isDictionaryEmpty:groupsDictionary]) {
         return;
     }
 
     NSInteger waitRemoveSection = [self indexForRoot:rootModel];
-    
+
     if (waitRemoveSection == NSNotFound || waitRemoveSection < 0) {
         return;
     }
-    
+
     [self removeRootAtIndex:waitRemoveSection];
 }
 
@@ -488,22 +490,22 @@
     if ([XTool isArrayEmpty:rootModels]) {
         return;
     }
-    
+
     if ([XTool isDictionaryEmpty:groupsDictionary]) {
         return;
     }
-    
+
     NSMutableArray *indexs = [[NSMutableArray alloc] init];
     for (id rootModel in rootModels) {
         NSInteger waitRemoveSection = [self indexForRoot:rootModel];
-        
+
         if (waitRemoveSection == NSNotFound || waitRemoveSection < 0) {
             continue;
         }
-        
+
         [indexs x_addObject:[NSNumber numberWithInteger:waitRemoveSection]];
     }
-    
+
     [self removeRootsAtIndexs:indexs];
 }
 
@@ -522,26 +524,26 @@
     if (atIndex == NSNotFound || atIndex < 0) {
         return;
     }
-    
+
     if (!rootModel && !fatherModel) {
         [self removeRootAtIndex:atIndex];
         return;
     }
-    
+
     if (!rootModel || !fatherModel) {
         return;
     }
-    
+
     if ([XTool isDictionaryEmpty:groupsDictionary]) {
         return;
     }
-    
+
     XGroupTableModel *fatherGroupModel = (XGroupTableModel *)fatherModel;
-    
+
     if (atIndex >= fatherGroupModel.nextLevelModels.count) {
         return;
     }
-    
+
     id removeModel = [fatherGroupModel.nextLevelModels x_objectAtIndex:atIndex];
     [self removeRowForModel:removeModel rootModel:rootModel fatherModel:fatherModel];
 }
@@ -550,34 +552,34 @@
     if ([XTool isArrayEmpty:atIndexs]) {
         return;
     }
-    
+
     if (!rootModel && !fatherModel) {
         [self removeRootsAtIndexs:atIndexs];
         return;
     }
-    
+
     if (!rootModel || !fatherModel) {
         return;
     }
-    
+
     if ([XTool isDictionaryEmpty:groupsDictionary]) {
         return;
     }
-    
+
     XGroupTableModel *fatherGroupModel = (XGroupTableModel *)fatherModel;
-    
+
     NSMutableArray *removeModels = [[NSMutableArray alloc] init];
-    
+
     for (NSNumber *atIndexNumber in atIndexs) {
         NSInteger atIndex = [atIndexNumber integerValue];
         if (atIndex >= fatherGroupModel.nextLevelModels.count) {
             continue;
         }
-        
+
         id removeModel = [fatherGroupModel.nextLevelModels x_objectAtIndex:atIndex];
         [removeModels x_addObject:removeModel];
     }
-    
+
     [self removeRowsForModels:removeModels rootModel:rootModel fatherModel:fatherModel];
 }
 
@@ -586,17 +588,17 @@
         [self removeRoot:removeModel];
         return;
     }
-    
+
     if (!removeModel || !rootModel || !fatherModel) {
         return;
     }
-    
+
     if ([XTool isDictionaryEmpty:groupsDictionary]) {
         return;
     }
-    
+
     XGroupTableModel *fatherGroupModel = (XGroupTableModel *)fatherModel;
-    
+
     if ([fatherGroupModel.nextLevelModels containsObject:removeModel]) {
         NSMutableArray *fatherModelNextLevelModels = [[NSMutableArray alloc] init];
         if (![XTool isArrayEmpty:fatherGroupModel.nextLevelModels]) {
@@ -605,43 +607,43 @@
         [fatherModelNextLevelModels removeObject:removeModel];
         [fatherGroupModel setNextLevelModels:fatherModelNextLevelModels];
     }
-    
+
     if (!fatherGroupModel.nextIsShowing) {
         return;
     }
-    
+
     XGroupTableModel *rootGroupModel = (XGroupTableModel *)rootModel;
     if (!rootGroupModel.nextIsShowing) {
         return;
     }
-    
+
     NSInteger rootIndex = [self indexForRoot:rootGroupModel];
-    
+
     if (rootIndex == NSNotFound) {
         return;
     }
-    
+
     NSNumber *sectionNumber = [NSNumber numberWithInteger:rootIndex];
     NSArray *groupModelForRowArray = [groupsDictionary objectForKey:sectionNumber];
-    
+
     NSInteger removeModelIndex = [groupModelForRowArray indexOfObject:removeModel];
-    
+
     if (removeModelIndex == NSNotFound || removeModelIndex < 0) {
         return;
     }
-    
+
     NSMutableArray *groupModelForRowMutableArray = [[NSMutableArray alloc] init];
     if (![XTool isArrayEmpty:groupModelForRowArray]) {
         [groupModelForRowMutableArray addObjectsFromArray:groupModelForRowArray];
     }
     [groupModelForRowMutableArray removeObject:removeModel];
     [groupsDictionary x_setObject:groupModelForRowMutableArray forKey:sectionNumber];
-    
+
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:removeModelIndex inSection:[sectionNumber integerValue]];
-    
+
     if (_animated) {
         [_tableView beginUpdates];
-        [_tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [_tableView deleteRowsAtIndexPaths:@[ indexPath ] withRowAnimation:UITableViewRowAnimationFade];
         [_tableView endUpdates];
     } else {
         [_tableView reloadData];
@@ -653,64 +655,64 @@
         [self removeRoots:removeModels];
         return;
     }
-    
+
     if ([XTool isArrayEmpty:removeModels] || !rootModel || !fatherModel) {
         return;
     }
-    
+
     if ([XTool isDictionaryEmpty:groupsDictionary]) {
         return;
     }
-    
+
     XGroupTableModel *fatherGroupModel = (XGroupTableModel *)fatherModel;
-    
+
     NSMutableArray *fatherModelNextLevelModels = [[NSMutableArray alloc] init];
     if (![XTool isArrayEmpty:fatherGroupModel.nextLevelModels]) {
         [fatherModelNextLevelModels addObjectsFromArray:fatherGroupModel.nextLevelModels];
     }
     [fatherModelNextLevelModels removeObjectsInArray:removeModels];
     [fatherGroupModel setNextLevelModels:fatherModelNextLevelModels];
-    
+
     if (!fatherGroupModel.nextIsShowing) {
         return;
     }
-    
+
     XGroupTableModel *rootGroupModel = (XGroupTableModel *)rootModel;
     if (!rootGroupModel.nextIsShowing) {
         return;
     }
-    
+
     NSInteger rootIndex = [self indexForRoot:rootGroupModel];
-    
+
     if (rootIndex == NSNotFound) {
         return;
     }
-    
+
     NSNumber *sectionNumber = [NSNumber numberWithInteger:rootIndex];
     NSArray *groupModelForRowArray = [groupsDictionary objectForKey:sectionNumber];
-    
+
     NSMutableArray *groupModelForRowMutableArray = [[NSMutableArray alloc] init];
     if (![XTool isArrayEmpty:groupModelForRowArray]) {
         [groupModelForRowMutableArray addObjectsFromArray:groupModelForRowArray];
     }
-    
+
     NSMutableArray *indexPaths = [[NSMutableArray alloc] init];
-    
+
     for (id removeModel in removeModels) {
         NSInteger removeModelIndex = [groupModelForRowArray indexOfObject:removeModel];
-        
+
         if (removeModelIndex == NSNotFound || removeModelIndex < 0) {
             continue;
         }
-        
+
         [groupModelForRowMutableArray removeObject:removeModel];
-        
+
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:removeModelIndex inSection:[sectionNumber integerValue]];
         [indexPaths x_addObject:indexPath];
     }
-    
+
     [groupsDictionary x_setObject:groupModelForRowMutableArray forKey:sectionNumber];
-    
+
     if (_animated) {
         [_tableView beginUpdates];
         [_tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
@@ -726,29 +728,29 @@
     if (!rootModel) {
         return;
     }
-    
+
     if ([XTool isDictionaryEmpty:groupsDictionary]) {
         return;
     }
-    
+
     NSInteger waitReloadSection = [self indexForRoot:rootModel];
 
     if (waitReloadSection == NSNotFound || waitReloadSection < 0 || waitReloadSection >= groupsDictionary.count) {
         return;
     }
-    
+
     XGroupTableModel *groupTableModel = (XGroupTableModel *)rootModel;
     if (!groupTableModel.nextIsShowing) {
         return;
     }
-    
+
     NSMutableArray *newGroupModelForRowArray = [[NSMutableArray alloc] init];
     [newGroupModelForRowArray x_addObject:groupTableModel];
     [self reloadRootRowAndChildrenData:groupTableModel storageArray:newGroupModelForRowArray];
     [groupsDictionary x_setObject:newGroupModelForRowArray forKey:[NSNumber numberWithInteger:waitReloadSection]];
-    
+
     [self registerCellClass];
-    
+
     [_tableView reloadData];
 }
 
@@ -758,7 +760,7 @@
     }
     if (_animated) {
         [_tableView beginUpdates];
-        [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [_tableView reloadRowsAtIndexPaths:@[ indexPath ] withRowAnimation:UITableViewRowAnimationFade];
         [_tableView endUpdates];
     } else {
         [_tableView reloadData];
@@ -770,11 +772,11 @@
         return;
     }
     NSIndexPath *indexPath = [self indexPathForModel:model];
-    
+
     if (!indexPath) {
         return;
     }
-    
+
     [self reloadRowAtIndexPath:indexPath];
 }
 
@@ -784,7 +786,7 @@
     if (!_tableView || !indexPath) {
         return nil;
     }
-    
+
     id cell = [_tableView cellForRowAtIndexPath:indexPath];
     return cell;
 }
@@ -797,30 +799,30 @@
     if (!indexPath) {
         return nil;
     }
-    
+
     if ([XTool isDictionaryEmpty:groupsDictionary]) {
         return nil;
     }
-    
+
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
-    
+
     if (section == NSNotFound || section < 0 || section >= groupsDictionary.count ||
         row == NSNotFound || row < 0) {
         return nil;
     }
-    
+
     NSNumber *sectionNumber = [NSNumber numberWithInteger:section];
     NSArray *groupModelForRowArray = [groupsDictionary objectForKey:sectionNumber];
-    
+
     if ([XTool isArrayEmpty:groupModelForRowArray]) {
         return nil;
     }
-    
+
     if (row >= groupModelForRowArray.count) {
         return nil;
     }
-    
+
     return [groupModelForRowArray x_objectAtIndex:row];
 }
 
@@ -828,13 +830,13 @@
     if (!model) {
         return nil;
     }
-    
+
     if ([XTool isDictionaryEmpty:groupsDictionary]) {
         return nil;
     }
-    
+
     NSIndexPath *indexPath = nil;
-    
+
     for (NSNumber *sectionNumber in groupsDictionary.allKeys) {
         NSArray *groupModelForRowArray = [groupsDictionary objectForKey:sectionNumber];
         if (![XTool isArrayEmpty:groupModelForRowArray]) {
@@ -846,7 +848,7 @@
             }
         }
     }
-    
+
     return indexPath;
 }
 
@@ -864,20 +866,20 @@
     if (!model || !indexPath) {
         return nil;
     }
-    
+
     if ([XTool isDictionaryEmpty:groupsDictionary]) {
         return nil;
     }
-    
+
     NSMutableArray *itemsArray = [[NSMutableArray alloc] init];
     [itemsArray x_addObject:model];
-    
+
     NSNumber *sectionNumber = [NSNumber numberWithInteger:indexPath.section];
-    
+
     NSArray *groupModelForRowArray = [groupsDictionary objectForKey:sectionNumber];
     NSInteger fatherLevel = ((XGroupTableModel *)model).level;
-    
-    for (NSInteger i = indexPath.row - 1; i >= 0; i --) {
+
+    for (NSInteger i = indexPath.row - 1; i >= 0; i--) {
         XGroupTableModel *groupTableModel = (XGroupTableModel *)[groupModelForRowArray x_objectAtIndex:i];
         if (groupTableModel.level < fatherLevel) {
             fatherLevel = groupTableModel.level;
@@ -887,7 +889,7 @@
             break;
         }
     }
-    
+
     return itemsArray;
 }
 
@@ -895,7 +897,7 @@
     if (!rootModel || [XTool isDictionaryEmpty:groupsDictionary]) {
         return NSNotFound;
     }
-    
+
     NSInteger rootIndex = NSNotFound;
     for (NSString *sectionNumber in groupsDictionary.allKeys) {
         NSArray *groupModelForRowArray = [groupsDictionary objectForKey:sectionNumber];
@@ -907,7 +909,7 @@
             }
         }
     }
-    
+
     return NSNotFound;
 }
 
@@ -915,7 +917,7 @@
     if ([XTool isDictionaryEmpty:groupsDictionary]) {
         return 0;
     }
-    
+
     return groupsDictionary.count;
 }
 
@@ -923,16 +925,16 @@
     if ([XTool isDictionaryEmpty:groupsDictionary]) {
         return nil;
     }
-    
+
     if (atIndex < 0 || atIndex == NSNotFound || atIndex >= groupsDictionary.count) {
         return nil;
     }
-    
+
     NSArray *groupModelForRowArray = [groupsDictionary objectForKey:[NSNumber numberWithInteger:atIndex]];
     if ([XTool isArrayEmpty:groupModelForRowArray]) {
         return nil;
     }
-    
+
     return [groupModelForRowArray x_objectAtIndex:0];
 }
 
@@ -940,10 +942,10 @@
     if ([XTool isDictionaryEmpty:groupsDictionary]) {
         return nil;
     }
-    
+
     NSMutableArray *rootModels = [[NSMutableArray alloc] init];
     NSInteger rootsCount = groupsDictionary.count;
-    for (NSInteger section = 0; section < rootsCount; section ++) {
+    for (NSInteger section = 0; section < rootsCount; section++) {
         NSArray *groupModelForRowArray = [groupsDictionary objectForKey:[NSNumber numberWithInteger:section]];
         if (![XTool isArrayEmpty:groupModelForRowArray]) {
             [rootModels x_addObject:[groupModelForRowArray x_objectAtIndex:0]];
@@ -956,10 +958,10 @@
     if ([XTool isDictionaryEmpty:groupsDictionary]) {
         return nil;
     }
-    
+
     NSMutableArray *rootCells = [[NSMutableArray alloc] init];
     NSInteger rootsCount = groupsDictionary.count;
-    for (NSInteger section = 0; section < rootsCount; section ++) {
+    for (NSInteger section = 0; section < rootsCount; section++) {
         NSArray *groupModelForRowArray = [groupsDictionary objectForKey:[NSNumber numberWithInteger:section]];
         if (![XTool isArrayEmpty:groupModelForRowArray]) {
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:section];
@@ -972,17 +974,17 @@
     return rootCells;
 }
 
-#pragma mark ---------- Private ----------
+#pragma mark---------- Private ----------
 
 #pragma mark init
 
 - (void)initialize:(XGroupTableStyle)style {
     [self setBackgroundColor:[UIColor clearColor]];
-    
+
     getNextLevelDataBlock = nil;
     groupsDictionary = [[NSMutableDictionary alloc] init];
     groupTableCellClassesNameDic = [[NSMutableDictionary alloc] init];
-    
+
     _animated = YES;
     _showSelectedBackground = NO;
     _separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -995,7 +997,7 @@
     } else {
         groupsDictionary = [[NSMutableDictionary alloc] init];
     }
-    
+
     if (groupTableCellClassesNameDic) {
         [groupTableCellClassesNameDic removeAllObjects];
     } else {
@@ -1009,7 +1011,7 @@
         [groupsDictionary x_setObject:groupModelForRowArray forKey:[NSNumber numberWithInteger:section]];
 
         [self addCellClassesName:model.cellClassName];
-        section ++;
+        section++;
     }
 }
 
@@ -1024,7 +1026,7 @@
     [_tableView setDelegate:self];
     [_tableView setDataSource:self];
     [self addSubview:_tableView];
-    
+
     _tableView.x_edge.x_equalTo(self).x_edge.x_multiplier(1.0).x_constant(0.0);
 }
 
@@ -1050,11 +1052,11 @@
     if (!_tableView) {
         return;
     }
-    
+
     if ([XTool isDictionaryEmpty:groupTableCellClassesNameDic]) {
         return;
     }
-    
+
     for (NSString *cellClassName in groupTableCellClassesNameDic.allKeys) {
         BOOL isRegistered = [[groupTableCellClassesNameDic objectForKey:cellClassName] boolValue];
         if (!isRegistered) {
@@ -1070,19 +1072,19 @@
     }
 
     NSNumber *sectionNumber = [NSNumber numberWithInteger:indexPath.section];
-    
+
     NSMutableArray *groupModelForRowArray = [[NSMutableArray alloc] init];
     NSArray *tempGroupModelForRowArray = [groupsDictionary objectForKey:sectionNumber];
     if (![XTool isArrayEmpty:tempGroupModelForRowArray]) {
         [groupModelForRowArray addObjectsFromArray:tempGroupModelForRowArray];
     }
-    
+
     NSInteger currentRow = [groupModelForRowArray indexOfObject:currentGroupModel];
     NSIndexSet *indexSets = [[NSIndexSet alloc] initWithIndexesInRange:NSMakeRange(currentRow + 1, currentGroupModel.nextLevelModels.count)];
-    
+
     [groupModelForRowArray insertObjects:currentGroupModel.nextLevelModels atIndexes:indexSets];
     [groupsDictionary x_setObject:groupModelForRowArray forKey:sectionNumber];
-    
+
     NSMutableArray *indexPathsArray = [[NSMutableArray alloc] init];
     for (int i = 0; i < currentGroupModel.nextLevelModels.count; i++) {
         XGroupTableModel *groupTableModel = [currentGroupModel.nextLevelModels x_objectAtIndex:i];
@@ -1091,7 +1093,7 @@
         NSIndexPath *insertIndexPath = [NSIndexPath indexPathForRow:currentRow + 1 + i inSection:indexPath.section];
         [indexPathsArray x_addObject:insertIndexPath];
     }
-    
+
     if (_animated) {
         [tableView beginUpdates];
         [tableView insertRowsAtIndexPaths:indexPathsArray withRowAnimation:UITableViewRowAnimationFade];
@@ -1099,7 +1101,7 @@
     } else {
         [tableView reloadData];
     }
-    
+
     if (currentGroupModel.level == 0) {
         [tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:_animated];
     } else {
@@ -1111,14 +1113,14 @@
     if (!tableView || !indexPath || !currentGroupModel) {
         return;
     }
-    
+
     NSNumber *sectionNumber = [NSNumber numberWithInteger:indexPath.section];
-    
+
     NSArray *groupModelForRowArray = [groupsDictionary objectForKey:sectionNumber];
-    
+
     NSMutableArray *waitDeleteModelArray = [[NSMutableArray alloc] init];
     NSMutableArray *waitDeleteIndexPathsArray = [[NSMutableArray alloc] init];
-    
+
     for (NSInteger i = (indexPath.row + 1); i < groupModelForRowArray.count; i++) {
         XGroupTableModel *model = [groupModelForRowArray x_objectAtIndex:i];
         if (model.level > currentGroupModel.level) {
@@ -1138,7 +1140,7 @@
         [groupModelForRowMutableArray removeObjectsInArray:waitDeleteModelArray];
         [groupsDictionary x_setObject:groupModelForRowMutableArray forKey:sectionNumber];
     }
-    
+
     if (_animated) {
         if (![XTool isArrayEmpty:waitDeleteIndexPathsArray]) {
             [tableView beginUpdates];
@@ -1154,16 +1156,16 @@
     if (!indexPath || !currentGroupModel) {
         return;
     }
-    
+
     if (!currentGroupModel.allowSelect) {
         return;
     }
-    
-    if(_delegate && [_delegate respondsToSelector:@selector(selectedRow:atIndexPath:model:)]) {
+
+    if (_delegate && [_delegate respondsToSelector:@selector(selectedRow:atIndexPath:model:)]) {
         [_delegate selectedRow:_tableView atIndexPath:indexPath model:currentGroupModel];
     }
-    
-    if(_delegate && [_delegate respondsToSelector:@selector(fullGroupItemsForSelectedRow:atIndexPath:items:)]) {
+
+    if (_delegate && [_delegate respondsToSelector:@selector(fullGroupItemsForSelectedRow:atIndexPath:items:)]) {
         NSArray *itemsArray = [self getFullGroupItems:currentGroupModel atIndexPath:indexPath];
         [_delegate fullGroupItemsForSelectedRow:_tableView atIndexPath:indexPath items:itemsArray];
     }
@@ -1173,28 +1175,28 @@
     if (!tableView || !indexPath || !currentGroupModel) {
         return;
     }
-    
+
     NSMutableArray *waitDeleteIndexPathsArray = [[NSMutableArray alloc] init];
     NSMutableArray *shouldReloadRowIndexPaths = [[NSMutableArray alloc] init];
     NSMutableArray *shouldReloadRowModels = [[NSMutableArray alloc] init];
-    
+
     if (currentGroupModel.level == 0) {
         for (NSNumber *sectionNumber in groupsDictionary.allKeys) {
             NSInteger section = [sectionNumber integerValue];
             if (section != indexPath.section) {
                 NSArray *groupModelForRowArray = [groupsDictionary objectForKey:sectionNumber];
-                for (NSInteger row = 0; row < groupModelForRowArray.count; row ++) {
+                for (NSInteger row = 0; row < groupModelForRowArray.count; row++) {
                     XGroupTableModel *model = [groupModelForRowArray x_objectAtIndex:row];
                     if (model.nextIsShowing) {
                         [model setNextIsShowing:NO];
-                        
+
                         if (row == 0) {
                             NSIndexPath *shouldReloadRowIndexPath = [NSIndexPath indexPathForRow:row inSection:section];
                             [shouldReloadRowIndexPaths x_addObject:shouldReloadRowIndexPath];
                             [shouldReloadRowModels x_addObject:model];
                         }
                     }
-                    
+
                     if (row != 0) {
                         NSIndexPath *waitDeleteIndexPath = [NSIndexPath indexPathForRow:row inSection:section];
                         [waitDeleteIndexPathsArray x_addObject:waitDeleteIndexPath];
@@ -1207,16 +1209,16 @@
                 }
             }
         }
-        
-        
+
+
     } else {
         NSNumber *sectionNumber = [NSNumber numberWithInteger:indexPath.section];
-        
+
         NSArray *groupModelForRowArray = [groupsDictionary objectForKey:sectionNumber];
-        
+
         NSMutableArray *waitDeleteModelArray = [[NSMutableArray alloc] init];
-        
-        for (NSInteger row = 0; row < groupModelForRowArray.count; row ++) {
+
+        for (NSInteger row = 0; row < groupModelForRowArray.count; row++) {
             XGroupTableModel *model = [groupModelForRowArray x_objectAtIndex:row];
             if (model.level == currentGroupModel.level) {
                 if (model != currentGroupModel && model.nextIsShowing) {
@@ -1228,12 +1230,12 @@
             } else if (model.level > currentGroupModel.level) {
                 [model setNextIsShowing:NO];
                 [waitDeleteModelArray x_addObject:model];
-                
+
                 NSIndexPath *waitDeleteIndexPath = [NSIndexPath indexPathForRow:row inSection:indexPath.section];
                 [waitDeleteIndexPathsArray x_addObject:waitDeleteIndexPath];
             }
         }
-        
+
         if (![XTool isArrayEmpty:waitDeleteModelArray]) {
             NSMutableArray *groupModelForRowMutableArray = [[NSMutableArray alloc] init];
             if (![XTool isArrayEmpty:groupModelForRowArray]) {
@@ -1243,21 +1245,19 @@
             [groupsDictionary x_setObject:groupModelForRowMutableArray forKey:sectionNumber];
         }
     }
-    
+
     if (![XTool isArrayEmpty:shouldReloadRowIndexPaths] &&
         ![XTool isArrayEmpty:shouldReloadRowModels] &&
         shouldReloadRowIndexPaths.count == shouldReloadRowModels.count) {
-        
-        if(_delegate && [_delegate respondsToSelector:@selector(shouldUpdateRow:atIndexPath:model:)]) {
-            for (NSInteger i=0; i<shouldReloadRowIndexPaths.count; i++) {
+        if (_delegate && [_delegate respondsToSelector:@selector(shouldUpdateRow:atIndexPath:model:)]) {
+            for (NSInteger i = 0; i < shouldReloadRowIndexPaths.count; i++) {
                 NSIndexPath *shouldReloadRowIndexPath = [shouldReloadRowIndexPaths x_objectAtIndex:i];
                 id shouldReloadRowModel = [shouldReloadRowModels x_objectAtIndex:i];
                 [_delegate shouldUpdateRow:tableView atIndexPath:shouldReloadRowIndexPath model:shouldReloadRowModel];
             }
         }
-        
     }
-    
+
     if (![XTool isArrayEmpty:waitDeleteIndexPathsArray]) {
         if (_animated) {
             [tableView beginUpdates];
@@ -1294,11 +1294,11 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     NSInteger sectionsCount = 0;
-    
+
     if ([XTool isDictionaryEmpty:groupsDictionary]) {
         return sectionsCount;
     }
-    
+
     sectionsCount = groupsDictionary.count;
 
     return sectionsCount;
@@ -1306,42 +1306,42 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger rowsCount = 0;
-    
+
     if ([XTool isDictionaryEmpty:groupsDictionary]) {
         return rowsCount;
     }
-    
+
     NSArray *groupModelForRowArray = [groupsDictionary objectForKey:[NSNumber numberWithInteger:section]];
     if ([XTool isArrayEmpty:groupModelForRowArray]) {
         return rowsCount;
     }
-    
+
     rowsCount = groupModelForRowArray.count;
-    
+
     return rowsCount;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     XGroupTableCell *cell = nil;
-    
+
     if ([XTool isDictionaryEmpty:groupsDictionary]) {
         return cell;
     }
-    
+
     NSArray *groupModelForRowArray = [groupsDictionary objectForKey:[NSNumber numberWithInteger:indexPath.section]];
     if ([XTool isArrayEmpty:groupModelForRowArray]) {
         return cell;
     }
-    
+
     XGroupTableModel *model = (XGroupTableModel *)[groupModelForRowArray x_objectAtIndex:indexPath.row];
     if (!model) {
         return cell;
     }
-    
+
     if ([XTool isStringEmpty:model.cellClassName]) {
         return cell;
     }
-    
+
     cell = (XGroupTableCell *)[tableView dequeueReusableCellWithIdentifier:model.cellClassName forIndexPath:indexPath];
     if (!cell) {
         cell = [[XGroupTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:model.cellClassName];
@@ -1356,16 +1356,16 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat rowHeight = 0;
-    
+
     if ([XTool isDictionaryEmpty:groupsDictionary]) {
         return rowHeight;
     }
-    
+
     NSArray *groupModelForRowArray = [groupsDictionary objectForKey:[NSNumber numberWithInteger:indexPath.section]];
     if ([XTool isArrayEmpty:groupModelForRowArray]) {
         return rowHeight;
     }
-    
+
     XGroupTableModel *model = (XGroupTableModel *)[groupModelForRowArray x_objectAtIndex:indexPath.row];
     if (!model) {
         return rowHeight;
@@ -1374,9 +1374,9 @@
     if ([XTool isStringEmpty:model.cellClassName]) {
         return rowHeight;
     }
-    
+
     rowHeight = [NSClassFromString(model.cellClassName) getCellHeight:model width:tableView.frame.size.width];
-    
+
     return rowHeight;
 }
 
@@ -1384,21 +1384,21 @@
     if ([XTool isDictionaryEmpty:groupsDictionary]) {
         return nil;
     }
-    
+
     NSArray *groupModelForRowArray = [groupsDictionary objectForKey:[NSNumber numberWithInteger:indexPath.section]];
     if ([XTool isArrayEmpty:groupModelForRowArray]) {
         return nil;
     }
-    
+
     XGroupTableModel *model = (XGroupTableModel *)[groupModelForRowArray x_objectAtIndex:indexPath.row];
     if (!model) {
         return nil;
     }
-    
+
     if (model.allowSelect) {
         return indexPath;
     }
-    
+
     return nil;
 }
 
@@ -1406,7 +1406,7 @@
     if (!_showSelectedBackground) {
         [tableView deselectRowAtIndexPath:indexPath animated:NO];
     }
-    
+
     XGroupTableCell *cell = (XGroupTableCell *)[tableView cellForRowAtIndexPath:indexPath];
     [self selectRowAtIndexPath:indexPath withCurrentGroupModel:cell.currentGroupTableModel];
 }

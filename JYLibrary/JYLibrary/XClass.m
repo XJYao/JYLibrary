@@ -8,6 +8,7 @@
 
 #import "XClass.h"
 
+
 @implementation XClass
 
 Class NSObjectClass() {

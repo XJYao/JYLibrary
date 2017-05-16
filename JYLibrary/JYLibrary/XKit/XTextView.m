@@ -9,7 +9,9 @@
 #import "XTextView.h"
 #import "UILabel+XLabel.h"
 
-@implementation XTextView {
+
+@implementation XTextView
+{
     UILabel *placeHolderLabel;
 }
 
@@ -40,19 +42,19 @@
     }
 }
 
-- (void)delete:(id)sender {
+- (void) delete:(id)sender {
     //实现长按选择删除方法,如果不实现这方法,点击删除按钮会崩溃!
 }
 
 - (void)checkTextLimited {
-    bool isChinese;//判断当前输入法是否是中文
-    if ([[[UITextInputMode currentInputMode] primaryLanguage] isEqualToString: @"en-US"]) {
+    bool isChinese; //判断当前输入法是否是中文
+    if ([[[UITextInputMode currentInputMode] primaryLanguage] isEqualToString:@"en-US"]) {
         isChinese = NO;
     } else {
         isChinese = YES;
     }
     NSString *text = [self.text stringByReplacingOccurrencesOfString:@"?" withString:@""];
-    if (isChinese) {//中文输入法下
+    if (isChinese) { //中文输入法下
         UITextRange *selectedRange = [self markedTextRange];
         //获取高亮部分
         UITextPosition *position = [self positionFromPosition:selectedRange.start offset:0];
@@ -72,9 +74,9 @@
             [self setText:[newText substringToIndex:_maxLengthForInput]];
         }
     }
-    
+
     id x_delegate = self.delegate;
-    if(x_delegate && [x_delegate respondsToSelector:@selector(updateInputLengthForTextView:)]) {
+    if (x_delegate && [x_delegate respondsToSelector:@selector(updateInputLengthForTextView:)]) {
         [x_delegate updateInputLengthForTextView:self];
     }
 }
@@ -95,13 +97,13 @@
 
 - (void)setPlaceholder:(NSString *)placeholder {
     _placeholder = placeholder;
-    
+
     if (!placeHolderLabel) {
         placeHolderLabel = [[UILabel alloc] init];
         [placeHolderLabel setBackgroundColor:[UIColor clearColor]];
-        [placeHolderLabel setAutoresizingMask:(UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight)];
+        [placeHolderLabel setAutoresizingMask:(UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight)];
         [placeHolderLabel setNumberOfLines:0];
-        [placeHolderLabel setLineBreakMode:NSLineBreakByWordWrapping|NSLineBreakByTruncatingTail];
+        [placeHolderLabel setLineBreakMode:NSLineBreakByWordWrapping | NSLineBreakByTruncatingTail];
         [placeHolderLabel setFont:self.font];
         [placeHolderLabel setTextColor:_placeholderColor];
         [placeHolderLabel setAlpha:0];
@@ -118,14 +120,14 @@
 }
 
 - (void)updatePlaceHolderLabelFrame {
-    if(placeHolderLabel) {
+    if (placeHolderLabel) {
         CGFloat offset = 8;
-        
+
         CGFloat width = [placeHolderLabel labelSize].width;
         CGFloat height = [placeHolderLabel heightForWidth:width];
         CGFloat x = 0;
         CGFloat y = 0;
-        
+
         if (_placeholderAlignment & XTextViewPlaceholderAlignmentLeft) {
             x = offset;
         } else if (_placeholderAlignment & XTextViewPlaceholderAlignmentRight) {
@@ -133,7 +135,7 @@
         } else if (_placeholderAlignment & XTextViewPlaceholderAlignmentCenterX) {
             x = (self.frame.size.width - width) / 2.0;
         }
-        
+
         if (_placeholderAlignment & XTextViewPlaceholderAlignmentTop) {
             y = offset;
         } else if (_placeholderAlignment & XTextViewPlaceholderAlignmentBottom) {
@@ -141,7 +143,7 @@
         } else if (_placeholderAlignment & XTextViewPlaceholderAlignmentCenterY) {
             y = (self.frame.size.height - height) / 2.0;
         }
-        
+
         [placeHolderLabel setFrame:CGRectMake(x, y, width, height)];
     }
 }

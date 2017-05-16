@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface XNotification : NSObject
 
 + (instancetype)sharedManager;

@@ -10,28 +10,29 @@
 #import "XIOSVersion.h"
 #import "NSArray+XArray.h"
 
+
 @implementation NSString (XString)
 
 - (NSArray<NSString *> *)subStringsPerLength:(NSUInteger)length {
     NSMutableArray *subStrings = [[NSMutableArray alloc] init];
-    
+
     NSUInteger index = 0;
-    
+
     while (index < self.length) {
         NSUInteger len = MIN(self.length - index, length);
         NSRange range = NSMakeRange(index, len);
-        
+
         range = [self rangeOfComposedCharacterSequencesForRange:range];
-        
+
         NSString *substring = [self substringWithRange:range];
-        
+
         index += range.length;
-        
+
         if (substring) {
             [subStrings x_addObject:substring];
         }
     }
-    
+
     return subStrings;
 }
 
@@ -46,7 +47,7 @@
 
 - (void)enumerateCharactersPerLength:(NSUInteger)length characters:(void (^)(const char *))block {
     [self enumerateSubStringsPerLength:length subString:^(NSString *subString) {
-        
+
         if (block) {
             block([subString UTF8String]);
         }
@@ -58,24 +59,23 @@
 }
 
 - (NSString *)percentEscapedString {
-    
     NSString *charactersString = @":#[]@!$&'()*+,;=";
-    
+
     if ([XIOSVersion isIOS7OrGreater]) {
-        NSMutableCharacterSet * allowedCharacterSet = [[NSCharacterSet URLQueryAllowedCharacterSet] mutableCopy];
+        NSMutableCharacterSet *allowedCharacterSet = [[NSCharacterSet URLQueryAllowedCharacterSet] mutableCopy];
         [allowedCharacterSet removeCharactersInString:charactersString];
-        
+
         NSMutableString *escaped = [[NSMutableString alloc] init];
-        
+
         NSArray<NSString *> *subStrings = [self subStringsPerLength:50];
         for (NSString *subString in subStrings) {
             NSString *encoded = [subString stringByAddingPercentEncodingWithAllowedCharacters:allowedCharacterSet];
             [escaped appendString:encoded];
         }
-        
+
         return escaped;
     }
-    
+
     CFStringRef escapedRef = CFURLCreateStringByAddingPercentEscapes(NULL, (__bridge CFStringRef)self, NULL, (CFStringRef)charactersString, kCFStringEncodingUTF8);
     NSString *escaped = (__bridge NSString *)escapedRef;
     CFRelease(escapedRef);

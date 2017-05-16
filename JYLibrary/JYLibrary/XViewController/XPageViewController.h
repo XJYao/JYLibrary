@@ -33,17 +33,18 @@
 
 @end
 
+
 @interface XPageViewController : UIViewController
 
-@property (nonatomic, weak)   id <XPageViewControllerDelegate> delegate;
+@property (nonatomic, weak) id<XPageViewControllerDelegate> delegate;
 
-@property (nonatomic, assign)   NSInteger       currentPageIndex;   //default is 0.
+@property (nonatomic, assign) NSInteger currentPageIndex; //default is 0.
 
-@property (nonatomic, assign)   BOOL            bounce;             //default is YES.
+@property (nonatomic, assign) BOOL bounce; //default is YES.
 
-@property (nonatomic, strong)   NSMutableArray  *   viewControllers;
+@property (nonatomic, strong) NSMutableArray *viewControllers;
 
-@property (nonatomic, strong, readonly)   UIScrollView    *   scrollView;
+@property (nonatomic, strong, readonly) UIScrollView *scrollView;
 
 - (instancetype)initWithViewControllers:(NSArray *)viewControllers;
 

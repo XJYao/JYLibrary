@@ -15,16 +15,19 @@
 #import "XThread.h"
 #import "NSArray+XArray.h"
 
-@interface XPhotoBrowser() <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout> {
-    UILabel             *   pageNumberLabel;
-    UICollectionView    *   photoBrowserCollectionView;
-    UIActivityIndicatorView * loading;
-    NSArray             *   imagesArray;
-    
-    NSInteger               currentPageIndex;
+
+@interface XPhotoBrowser () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+{
+    UILabel *pageNumberLabel;
+    UICollectionView *photoBrowserCollectionView;
+    UIActivityIndicatorView *loading;
+    NSArray *imagesArray;
+
+    NSInteger currentPageIndex;
 }
 
 @end
+
 
 @implementation XPhotoBrowser
 
@@ -41,7 +44,7 @@
 
 - (void)initialize {
     [self setBackgroundColor:[UIColor clearColor]];
-    
+
     _placeHolderImage = nil;
     _maximumZoomScale = 2.0;
     _minimumZoomScale = 1.0;
@@ -57,10 +60,10 @@
     [pageNumberLabel setFont:_pageNumberFont];
     [pageNumberLabel setText:@"0/0"];
     [self addSubview:pageNumberLabel];
-    
+
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     [flowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
-    
+
     CGSize pageNumberLabelSize = [pageNumberLabel labelSize];
     CGFloat pageNumberLabelHeight = pageNumberLabelSize.height;
     photoBrowserCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height - pageNumberLabelHeight) collectionViewLayout:flowLayout];
@@ -75,7 +78,7 @@
     [photoBrowserCollectionView setDelegate:self];
     [photoBrowserCollectionView setDataSource:self];
     [self addSubview:photoBrowserCollectionView];
-    
+
     loading = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
     [loading setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhite];
     [self addSubview:loading];
@@ -94,7 +97,7 @@
 - (void)updateFrame {
     [self updatePageNumberLabelFrame];
     [self updateGalleryFrame];
-    
+
     [loading setCenter:self.center];
 }
 
@@ -112,7 +115,7 @@
     CGFloat galleryCollectionViewHeight = self.frame.size.height - pageNumberLabel.frame.size.height;
     CGFloat galleryCollectionViewX = 0;
     CGFloat galleryCollectionViewY = 0;
-    
+
     [photoBrowserCollectionView setFrame:CGRectMake(galleryCollectionViewX, galleryCollectionViewY, galleryCollectionViewWidth, galleryCollectionViewHeight)];
 }
 
@@ -126,9 +129,9 @@
         } else if (pageIndex < 0) {
             pageIndex = 0;
         }
-        index = pageIndex+1;
+        index = pageIndex + 1;
     }
-    
+
     NSString *text = [[NSString stringWithFormat:@"%d", (int)index] stringByAppendingString:@"/"];
     text = [text stringByAppendingString:[NSString stringWithFormat:@"%d", (int)imagesArray.count]];
     [pageNumberLabel setText:text];
@@ -139,42 +142,42 @@
 
 - (void)loadImages:(NSArray *)images {
     [loading startAnimating];
-    
+
     x_dispatch_async_default(^{
-        
+
         [XThread semaphoreCreate:0 executingBlock:^(WaitSignal waitSignal, SendSignal sendSignal) {
-            
+
             if (![XTool isArrayEmpty:images]) {
                 NSMutableArray *newMultiImages = [[NSMutableArray alloc] init];
-                
+
                 __block NSInteger index = 0;
                 for (id imageObject in images) {
                     if ([imageObject isKindOfClass:[NSString class]]) {
                         x_dispatch_async_default(^{
                             NSData *data = [[NSData alloc] initWithContentsOfFile:imageObject];
                             NSArray *imagesWithData = [UIImage imagesWithData:data];
-                            
+
                             @synchronized(self) {
                                 [newMultiImages addObjectsFromArray:imagesWithData];
-                                
+
                                 if (index == images.count - 1) {
                                     imagesArray = newMultiImages;
                                     sendSignal();
                                 } else {
-                                    index ++;
+                                    index++;
                                 }
                             }
-                            
+
                         });
                     } else if ([imageObject isKindOfClass:[UIImage class]]) {
                         @synchronized(self) {
                             [newMultiImages x_addObject:imageObject];
-                            
+
                             if (index == images.count - 1) {
                                 imagesArray = newMultiImages;
                                 sendSignal();
                             } else {
-                                index ++;
+                                index++;
                             }
                         }
                     }
@@ -183,9 +186,9 @@
                 imagesArray = images;
                 sendSignal();
             }
-            
+
             waitSignal();
-            
+
             x_dispatch_main_async(^{
                 [loading stopAnimating];
                 [photoBrowserCollectionView reloadData];
@@ -202,7 +205,7 @@
     [photoBrowserCollectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionRight animated:animated];
 }
 
-#pragma mark -- UICollectionViewDataSource
+#pragma mark-- UICollectionViewDataSource
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     NSInteger sectionCount = 0;
@@ -214,11 +217,11 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     NSInteger itemCountForSection = 0;
-    
+
     if (![XTool isArrayEmpty:imagesArray]) {
         itemCountForSection = imagesArray.count;
     }
-    
+
     return itemCountForSection;
 }
 
@@ -232,7 +235,7 @@
         if (!cell) {
             return nil;
         }
-        
+
         [cell setPlaceholderImage:_placeHolderImage];
         [cell setMaximumZoomScale:_maximumZoomScale];
         [cell setMinimumZoomScale:_minimumZoomScale];
@@ -251,9 +254,9 @@
     return cell;
 }
 
-#pragma mark --UICollectionViewDelegateFlowLayout
+#pragma mark--UICollectionViewDelegateFlowLayout
 
--  (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat width = collectionView.frame.size.width;
     CGFloat height = collectionView.frame.size.height;
     CGSize size = CGSizeMake(width, height);
@@ -292,7 +295,7 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     CGFloat galleryScrollViewWidth = scrollView.frame.size.width;
     NSInteger offsetX = scrollView.contentOffset.x;
-    currentPageIndex = offsetX/galleryScrollViewWidth;
+    currentPageIndex = offsetX / galleryScrollViewWidth;
     [self setPageIndex:currentPageIndex];
 }
 
