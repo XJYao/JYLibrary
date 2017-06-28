@@ -230,7 +230,17 @@
     NSString *webKitFolderInCachesfs = [NSString stringWithFormat:@"%@/Caches/%@/fsCachedData", libraryDirectory, bundleId];
     [[NSFileManager defaultManager] removeItemAtPath:webKitFolderInCachesfs error:&error];
 
+    NSString *cachesPath = [NSString stringWithFormat:@"%@/Caches", libraryDirectory];
+    NSArray *files = [XFileManager getAllFiles:cachesPath];
+    for (NSString *file in files) {
+        NSString *path = [NSString stringWithFormat:@"%@/%@", cachesPath, file];
+        
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        [fileManager removeItemAtPath:path error:NULL];
+    }
+    
     [[NSURLCache sharedURLCache] removeAllCachedResponses];
+    [[NSURLCache sharedURLCache] setMemoryCapacity:0];
     [[NSURLCache sharedURLCache] setDiskCapacity:0];
 }
 
