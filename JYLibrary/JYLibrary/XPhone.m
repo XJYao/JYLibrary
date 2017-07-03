@@ -88,7 +88,7 @@
 
 + (void)openURL:(NSURL *)url {
     if ([XIOSVersion isIOS10OrGreater]) {
-        [[UIApplication sharedApplication] openURL:url options:nil completionHandler:^(BOOL success){
+        [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:^(BOOL success){
 
         }];
     } else {
