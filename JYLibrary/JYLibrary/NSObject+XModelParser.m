@@ -1065,6 +1065,11 @@ NSString *XModelParser_SettingName(NSString *gettingName) {
             } break;
         }
     }
+    
+    if (ivars) {
+        free(ivars);
+        ivars = NULL;
+    }
 
     return YES;
 }
