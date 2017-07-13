@@ -480,12 +480,16 @@ static void releaseAssetCallback(void *info) {
     CFRelease(imageOptions);
     CFRelease(thumbnailSize);
     CFRelease(imageSource);
-
+    
     if (!thumbnailImage) {
         return nil;
     }
+    
+    UIImage *image = [UIImage imageWithCGImage:thumbnailImage];
 
-    return [UIImage imageWithCGImage:thumbnailImage];
+    CFRelease(thumbnailImage);
+    
+    return image;
 }
 
 @end
