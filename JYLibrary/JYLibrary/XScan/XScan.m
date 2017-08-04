@@ -34,6 +34,9 @@ typedef void (^XScanCompletedBlock)(NSString *);
 
     if (self) {
         if ([XIOSVersion isIOS7OrGreater]) {
+            
+            __weak typeof(self) weak_self = self;
+            
             NSString *mediaType = AVMediaTypeVideo;
 
             [XDeviceAuthorization cameraAuthorizationStatus:^(XDeviceAuthorizationStatus authorizationStatus) {
@@ -59,7 +62,7 @@ typedef void (^XScanCompletedBlock)(NSString *);
                     AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:device error:NULL];
 
                     output = [[AVCaptureMetadataOutput alloc] init];
-                    [output setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
+                    [output setMetadataObjectsDelegate:weak_self queue:dispatch_get_main_queue()];
 
                     session = [[AVCaptureSession alloc] init];
                     [session setSessionPreset:AVCaptureSessionPresetHigh];

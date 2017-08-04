@@ -8,11 +8,15 @@
 
 #import "XImageCode.h"
 #import "XIOSVersion.h"
+#import "XTool.h"
 
 
 @implementation XImageCode
 
 + (NSString *)readStringFromImage:(UIImage *)image {
+    if ([XTool isObjectNull:image]) {
+        return nil;
+    }
     NSString *string = nil;
 
     if ([XIOSVersion isIOS8OrGreater]) {
