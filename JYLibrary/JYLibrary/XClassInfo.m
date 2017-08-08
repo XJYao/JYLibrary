@@ -430,24 +430,44 @@ XEncodingType getEncodingType(const char *typeEncoding) {
     _version = class_getVersion(cls);
     _instanceSize = class_getInstanceSize(cls);
 
-    //method
-    unsigned int methodsCount = 0;
-    Method *methods = class_copyMethodList(cls, &methodsCount);
+    //class method
+    unsigned int classMethodsCount = 0;
+    Method *classMethods = class_copyMethodList(object_getClass(cls), &classMethodsCount);
+    
+    if (classMethods && classMethodsCount > 0) {
+        NSMutableDictionary *methodInfos = [[NSMutableDictionary alloc] initWithCapacity:classMethodsCount];
+        
+        for (int i = 0; i < classMethodsCount; i++) {
+            XMethodInfo *methodInfo = [[XMethodInfo alloc] initWithMethod:classMethods[i]];
+            if (methodInfo && methodInfo.name) {
+                [methodInfos x_setObject:methodInfo forKey:methodInfo.name];
+            }
+        }
+        
+        _classMethodInfos = methodInfos;
+    }
+    if (classMethods) {
+        free(classMethods);
+    }
+    
+    //instance method
+    unsigned int instanceMethodsCount = 0;
+    Method *instanceMethods = class_copyMethodList(cls, &instanceMethodsCount);
 
-    if (methods && methodsCount > 0) {
-        NSMutableDictionary *methodInfos = [[NSMutableDictionary alloc] initWithCapacity:methodsCount];
+    if (instanceMethods && instanceMethodsCount > 0) {
+        NSMutableDictionary *methodInfos = [[NSMutableDictionary alloc] initWithCapacity:instanceMethodsCount];
 
-        for (int i = 0; i < methodsCount; i++) {
-            XMethodInfo *methodInfo = [[XMethodInfo alloc] initWithMethod:methods[i]];
+        for (int i = 0; i < instanceMethodsCount; i++) {
+            XMethodInfo *methodInfo = [[XMethodInfo alloc] initWithMethod:instanceMethods[i]];
             if (methodInfo && methodInfo.name) {
                 [methodInfos x_setObject:methodInfo forKey:methodInfo.name];
             }
         }
 
-        _methodInfos = methodInfos;
+        _instanceMethodInfos = methodInfos;
     }
-    if (methods) {
-        free(methods);
+    if (instanceMethods) {
+        free(instanceMethods);
     }
 
     //property
@@ -510,8 +530,11 @@ XEncodingType getEncodingType(const char *typeEncoding) {
         free(protocols);
     }
 
-    if (!_methodInfos) {
-        _methodInfos = @{};
+    if (!_classMethodInfos) {
+        _classMethodInfos = @{};
+    }
+    if (!_instanceMethodInfos) {
+        _instanceMethodInfos = @{};
     }
     if (!_propertyInfos) {
         _propertyInfos = @{};

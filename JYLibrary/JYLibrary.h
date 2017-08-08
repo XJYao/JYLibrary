@@ -89,6 +89,7 @@
 #import "NSDate+XDate.h"
 #import "NSString+XPinyin.h"
 #import "NSAttributedString+XAttributedString.h"
+#import "NSData+XMD5.h"
 
 //XUIControl
 #import "XAlertContainer.h"

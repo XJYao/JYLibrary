@@ -179,7 +179,8 @@ typedef NS_OPTIONS(NSUInteger, XEncodingType) {
 @property (nonatomic, assign, readonly) size_t instanceSize;
 @property (nonatomic, strong, readonly) XClassInfo *superClassInfo;
 @property (nonatomic, strong, readonly) NSDictionary<NSString *, XIvarInfo *> *ivarInfos;
-@property (nonatomic, strong, readonly) NSDictionary<NSString *, XMethodInfo *> *methodInfos;
+@property (nonatomic, strong, readonly) NSDictionary<NSString *, XMethodInfo *> *classMethodInfos;
+@property (nonatomic, strong, readonly) NSDictionary<NSString *, XMethodInfo *> *instanceMethodInfos;
 @property (nonatomic, strong, readonly) NSDictionary<NSString *, XPropertyInfo *> *propertyInfos;
 @property (nonatomic, strong, readonly) NSDictionary<NSString *, XProtocolInfo *> *protocolInfos;
 
