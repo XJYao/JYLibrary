@@ -433,23 +433,23 @@ XEncodingType getEncodingType(const char *typeEncoding) {
     //class method
     unsigned int classMethodsCount = 0;
     Method *classMethods = class_copyMethodList(object_getClass(cls), &classMethodsCount);
-    
+
     if (classMethods && classMethodsCount > 0) {
         NSMutableDictionary *methodInfos = [[NSMutableDictionary alloc] initWithCapacity:classMethodsCount];
-        
+
         for (int i = 0; i < classMethodsCount; i++) {
             XMethodInfo *methodInfo = [[XMethodInfo alloc] initWithMethod:classMethods[i]];
             if (methodInfo && methodInfo.name) {
                 [methodInfos x_setObject:methodInfo forKey:methodInfo.name];
             }
         }
-        
+
         _classMethodInfos = methodInfos;
     }
     if (classMethods) {
         free(classMethods);
     }
-    
+
     //instance method
     unsigned int instanceMethodsCount = 0;
     Method *instanceMethods = class_copyMethodList(cls, &instanceMethodsCount);

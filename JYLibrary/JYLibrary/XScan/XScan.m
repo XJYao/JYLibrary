@@ -34,9 +34,8 @@ typedef void (^XScanCompletedBlock)(NSString *);
 
     if (self) {
         if ([XIOSVersion isIOS7OrGreater]) {
-            
             __weak typeof(self) weak_self = self;
-            
+
             NSString *mediaType = AVMediaTypeVideo;
 
             [XDeviceAuthorization cameraAuthorizationStatus:^(XDeviceAuthorizationStatus authorizationStatus) {

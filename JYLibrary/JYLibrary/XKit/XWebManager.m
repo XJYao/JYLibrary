@@ -234,11 +234,11 @@
     NSArray *files = [XFileManager getAllFiles:cachesPath];
     for (NSString *file in files) {
         NSString *path = [NSString stringWithFormat:@"%@/%@", cachesPath, file];
-        
+
         NSFileManager *fileManager = [NSFileManager defaultManager];
         [fileManager removeItemAtPath:path error:NULL];
     }
-    
+
     [[NSURLCache sharedURLCache] removeAllCachedResponses];
     [[NSURLCache sharedURLCache] setMemoryCapacity:0];
     [[NSURLCache sharedURLCache] setDiskCapacity:0];

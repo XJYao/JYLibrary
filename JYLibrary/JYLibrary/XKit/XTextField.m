@@ -21,21 +21,33 @@
 
 @synthesize multiLinePlaceholder;
 
-- (instancetype)init {
-    self = [super init];
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
     if (self) {
-        _maxLengthForInput = 0;
-        _multiLinePlaceholderEnable = NO;
-        multiLinePlaceholder = nil;
-        _multiLineAttributedPlaceholder = nil;
-        _multiLinePlaceholderFont = self.font;
-        _multiLinePlaceholderColor = self.textColor;
-        _multiLinePlaceholderAlignment = self.textAlignment;
-        [self addTarget:self action:@selector(textFieldDidBegin) forControlEvents:UIControlEventEditingDidBegin];
-        [self addTarget:self action:@selector(textFieldDidEnd) forControlEvents:UIControlEventEditingDidEnd];
-        [self addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+        [self initialize];
     }
     return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self initialize];
+    }
+    return self;
+}
+
+- (void)initialize {
+    _maxLengthForInput = 0;
+    _multiLinePlaceholderEnable = NO;
+    multiLinePlaceholder = nil;
+    _multiLineAttributedPlaceholder = nil;
+    _multiLinePlaceholderFont = self.font;
+    _multiLinePlaceholderColor = self.textColor;
+    _multiLinePlaceholderAlignment = self.textAlignment;
+    [self addTarget:self action:@selector(textFieldDidBegin) forControlEvents:UIControlEventEditingDidBegin];
+    [self addTarget:self action:@selector(textFieldDidEnd) forControlEvents:UIControlEventEditingDidEnd];
+    [self addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
 }
 
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender {

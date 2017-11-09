@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface NSData (XMD5)
 
 + (NSString *)getFileMD5WithPath:(NSString *)path;
