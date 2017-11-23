@@ -15,15 +15,27 @@
     UILabel *placeHolderLabel;
 }
 
+- (instancetype)initWithCoder:(NSCoder *)coder {
+    self = [super initWithCoder:coder];
+    if (self) {
+        [self initialize];
+    }
+    return self;
+}
+
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _maxLengthForInput = 0;
-        _placeholder = @"";
-        _placeholderColor = [UIColor lightGrayColor];
-        _placeholderAlignment = XTextViewPlaceholderAlignmentLeft | XTextViewPlaceholderAlignmentTop;
+        [self initialize];
     }
     return self;
+}
+
+- (void)initialize {
+    _maxLengthForInput = 0;
+    _placeholder = @"";
+    _placeholderColor = [UIColor lightGrayColor];
+    _placeholderAlignment = XTextViewPlaceholderAlignmentLeft | XTextViewPlaceholderAlignmentTop;
 }
 
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender {
