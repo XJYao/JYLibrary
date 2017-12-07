@@ -34,4 +34,12 @@
 - (CGFloat)getAlphaFromColor;
 + (CGFloat)getAlphaFromColor:(UIColor *)color;
 
+/**
+ 十六进制转UIColor
+
+ @param hexString 十六进制
+ @return UIColor
+ */
++ (UIColor *)UIColorWithHexString:(NSString *)hexString;
+
 @end
