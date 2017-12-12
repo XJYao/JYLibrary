@@ -25,59 +25,73 @@
 }
 
 + (BOOL)isStringEmpty:(NSString *)str {
-    if (![self isObjectNull:str] && str.length > 0) {
-        return NO;
-    } else {
+    if ([self isObjectNull:str]) {
         return YES;
     }
+    if (![str isKindOfClass:[NSString class]]) {
+        return YES;
+    }
+    return str.length == 0;
 }
 
 + (BOOL)isArrayEmpty:(NSArray *)array {
-    if ([self isObjectNull:array] || array.count <= 0) {
+    if ([self isObjectNull:array]) {
         return YES;
-    } else {
-        return NO;
     }
+    if (![array isKindOfClass:[NSArray class]]) {
+        return YES;
+    }
+    return array.count == 0;
 }
 
 + (BOOL)isDictionaryEmpty:(NSDictionary *)dictionary {
-    if ([self isObjectNull:dictionary] || dictionary.count <= 0) {
+    if ([self isObjectNull:dictionary]) {
         return YES;
-    } else {
-        return NO;
     }
+    if (![dictionary isKindOfClass:[NSDictionary class]]) {
+        return YES;
+    }
+    return dictionary.count == 0;
 }
 
 + (BOOL)isSetEmpty:(NSSet *)aSet {
-    if ([self isObjectNull:aSet] || aSet.count <= 0) {
+    if ([self isObjectNull:aSet]) {
         return YES;
-    } else {
-        return NO;
     }
+    if (![aSet isKindOfClass:[NSSet class]]) {
+        return YES;
+    }
+    return aSet.count == 0;
 }
 
 + (BOOL)isIndexSetEmpty:(NSIndexSet *)indexSet {
-    if ([self isObjectNull:indexSet] || indexSet.count <= 0) {
+    if ([self isObjectNull:indexSet]) {
         return YES;
-    } else {
-        return NO;
     }
+    if (![indexSet isKindOfClass:[NSIndexSet class]]) {
+        return YES;
+    }
+    return indexSet.count == 0;
 }
 
 + (BOOL)isDataEmpty:(NSData *)data {
-    if ([self isObjectNull:data] || data.length <= 0) {
+    if ([self isObjectNull:data]) {
         return YES;
-    } else {
-        return NO;
     }
+    if (![data isKindOfClass:[NSData class]]) {
+        return YES;
+    }
+    return data.length == 0;
 }
 
 + (BOOL)isURLEmpty:(NSURL *)url {
-    if ([self isObjectNull:url] || [self isStringEmpty:url.absoluteString]) {
+    if ([self isObjectNull:url]) {
         return YES;
-    } else {
-        return NO;
     }
+    if (![url isKindOfClass:[NSURL class]]) {
+        return YES;
+    }
+    return [self isStringEmpty:url.absoluteString];
 }
 
 + (BOOL)isClassNull:(Class)cls {
