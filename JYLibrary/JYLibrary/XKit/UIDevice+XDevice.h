@@ -41,15 +41,15 @@
 // */
 //@property (nonatomic, copy, readonly) NSString *ipAddressCell;
 
-///**
-// 设备型号
-// */
-//@property (nonatomic, copy, readonly) NSString *machineModel;
-//
-///**
-// 设备名称
-// */
-//@property (nonatomic, copy, readonly) NSString *machineModelName;
+/**
+ 设备型号
+ */
+@property (nonatomic, copy, readonly) NSString *deviceModel;
+
+/**
+ 设备名称
+ */
+@property (nonatomic, copy, readonly) NSString *deviceModelName;
 
 /**
  物理地址

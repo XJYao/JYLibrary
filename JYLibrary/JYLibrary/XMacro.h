@@ -11,6 +11,7 @@
 
 #import <sys/time.h>
 #import <objc/runtime.h>
+#import "UIDevice+XDevice.h"
 
 /**
  调试输出
@@ -67,12 +68,12 @@
 /**
  状态栏高度,根据系统版本决定.IOS7及以上,状态栏高度为20,否则为0
  */
-#define statusBarHeight 20.0f
+#define SafeAreaTopHeight ([[UIDevice currentDevice].deviceModelName isEqualToString:@"iPhone X"] ? 44 : 20)
+#define SafeAreaBottomHeight ([[UIDevice currentDevice].deviceModelName isEqualToString:@"iPhone X"] ? 34 : 0)
+
+#define statusBarHeight SafeAreaTopHeight
 #define statusBarOriginY ((floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1) ? ([UIApplication sharedApplication].isStatusBarHidden ? 0.0f : statusBarHeight) : 0.0f) //因为是宏替换,而且?的优先级比较低,因此需要加个括号保证?先执行
 #define navigationBarHeight 44
-
-#define SafeAreaTopHeight ([UIScreen mainScreen].bounds.size.height == 812.0 ? 88 : 64)
-#define SafeAreaBottomHeight ([UIScreen mainScreen].bounds.size.height == 812.0 ? 34 : 0)
 
 /**
  tag的起始值
