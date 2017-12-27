@@ -13,4 +13,6 @@
 
 + (NSDate *)dateWithSystemZone:(NSDate *)date;
 
++ (NSDate *)zeroOfDate;
+
 @end

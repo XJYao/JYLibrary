@@ -140,7 +140,7 @@
             @"iPhone10,1" : @"iPhone 8",
             @"iPhone10,2" : @"iPhone 8 Plus",
             @"iPhone10,3" : @"iPhone X",
-            
+
             @"iPad1,1" : @"iPad 1",
             @"iPad2,1" : @"iPad 2 (WiFi)",
             @"iPad2,2" : @"iPad 2 (GSM)",
