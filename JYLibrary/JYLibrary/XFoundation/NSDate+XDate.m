@@ -21,18 +21,17 @@
 }
 
 + (NSDate *)zeroOfDate {
+    NSDate *today = [NSDate date];
+    
     NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *components = [calendar components:NSUIntegerMax fromDate:[NSDate date]];
+    NSDateComponents *components = [calendar components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond fromDate:today];
     components.hour = 0;
     components.minute = 0;
     components.second = 0;
 
-    NSTimeInterval ts = (double)(int)[[calendar dateFromComponents:components] timeIntervalSince1970];
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:ts];
-    NSTimeZone *zone = [NSTimeZone systemTimeZone];
-    NSInteger interval = [zone secondsFromGMTForDate:date];
-    NSDate *localeDate = [date dateByAddingTimeInterval:interval];
-    return localeDate;
+    NSDate *date = [calendar dateFromComponents:components];
+    
+    return date;
 }
 
 @end
