@@ -22,7 +22,7 @@
     if ([XTool isStringEmpty:self.text]) {
         labelSize = CGSizeZero;
     } else {
-        if ([XIOSVersion isIOS7OrGreater]) {
+        if (@available(iOS 7.0, *)) {
             NSDictionary *tdic = [NSDictionary dictionaryWithObjectsAndKeys:self.font, NSFontAttributeName, nil];
             labelSize = [self.text boundingRectWithSize:maximumLabelSize options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:tdic context:nil].size;
         } else {
