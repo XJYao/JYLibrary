@@ -11,32 +11,32 @@
 
 @interface XClass : NSObject
 
-Class NSObjectClass();
+Class NSObjectClass(void);
 
-Class NSStringClass();
+Class NSStringClass(void);
 
-Class NSMutableStringClass();
+Class NSMutableStringClass(void);
 
-Class NSAttributedStringClass();
+Class NSAttributedStringClass(void);
 
-Class NSArrayClass();
+Class NSArrayClass(void);
 
-Class NSMutableArrayClass();
+Class NSMutableArrayClass(void);
 
-Class NSDictionaryClass();
+Class NSDictionaryClass(void);
 
-Class NSMutableDictionaryClass();
+Class NSMutableDictionaryClass(void);
 
-Class NSSetClass();
+Class NSSetClass(void);
 
-Class NSMutableSetClass();
+Class NSMutableSetClass(void);
 
-Class NSCountedSetClass();
+Class NSCountedSetClass(void);
 
-Class NSDataClass();
+Class NSDataClass(void);
 
-Class NSValueClass();
+Class NSValueClass(void);
 
-Class NSNumberClass();
+Class NSNumberClass(void);
 
 @end
